@@ -1,0 +1,51 @@
+services:
+  web:
+    container_name: web
+    build:
+      dockerfile: ./docker/web/Dockerfile
+    volumes:
+      - type: bind
+        source: .\src\
+        target: /var/www/html
+    ports:
+      - 8080:80
+    restart: always
+    depends_on:
+      - php
+  php:
+    container_name: php
+    build:
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - type: bind
+        source: .\src\
+        target: /var/www/html
+    restart: always
+    depends_on:
+      - db
+  admin:
+    container_name: admin
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      - PMA_ARBITRARY=1
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: mariadb:latest
+    restart: always
+    volumes:
+      - type: bind
+        source: C:\Docker\Volume\learning-php-laravel\MariaDB\
+        target: /var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=P@ssWord0123
+      - MARIADB_DATABASE=ec_site
+      - MARIADB_USER=ec_admin
+      - MARIADB_PASSWORD=P@ssWord0123
+      - "TZ=Asia/Tokyo"
