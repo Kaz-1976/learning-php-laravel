@@ -1,0 +1,11 @@
+{
+    "php.validate.executablePath": "./php.cmd",
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "html.format.templating": true,
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[blade]": {
+        "editor.defaultFormatter": "shufo.vscode-blade-formatter"
+    }
+}

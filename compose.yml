@@ -2,35 +2,29 @@ services:
   web:
     container_name: web
     build:
+      context: .
       dockerfile: ./docker/web/Dockerfile
     volumes:
       - type: bind
         source: .\src\
         target: /var/www/html
     ports:
-      - 8080:80
+      - 80:80
     restart: always
-    depends_on:
-      - php
-  php:
-    container_name: php
+  app:
+    container_name: app
+    env_file:
+      - ./src/.env
     build:
+      context: .
       dockerfile: ./docker/php/Dockerfile
     volumes:
       - type: bind
         source: .\src\
         target: /var/www/html
+    # ports:
+    #   - 5173:5173
     restart: always
-    depends_on:
-      - db
-  admin:
-    container_name: admin
-    image: phpmyadmin:latest
-    restart: always
-    ports:
-      - 8081:80
-    environment:
-      - PMA_ARBITRARY=1
     depends_on:
       - db
   db:
@@ -44,8 +38,18 @@ services:
     ports:
       - 3306:3306
     environment:
-      - MARIADB_ROOT_PASSWORD=P@ssWord0123
+      - MARIADB_ROOT_PASSWORD=ipenw023
       - MARIADB_DATABASE=ec_site
       - MARIADB_USER=ec_admin
-      - MARIADB_PASSWORD=P@ssWord0123
+      - MARIADB_PASSWORD=ipenw023
       - "TZ=Asia/Tokyo"
+  admin:
+    container_name: admin
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    depends_on:
+      - db
