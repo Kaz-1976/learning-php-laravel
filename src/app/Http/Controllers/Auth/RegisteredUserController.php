@@ -19,7 +19,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('ec_site.register');
     }
 
     /**
@@ -30,21 +30,27 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'user_id' => ['required', 'string', 'max:255','unique:' . EcUser::class],
+            'user_name' => ['required', 'string', 'max:255'],
+            'user_kana' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . EcUser::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = EcUser::create([
-            'name' => $request->name,
+            'user_id' => $request->user_id,
+            'user_name' => $request->user_name,
+            'user_kana' => $request->user_kana,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'enable_flg' => $request->enable_flg,
+            'admin_flg' => $request->admin_flg
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('index', absolute: false));
     }
 }

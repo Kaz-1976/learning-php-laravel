@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Hash;
 use App\Models\EcUser;
 
 class EcUsersTableSeeder extends Seeder
@@ -29,7 +30,7 @@ class EcUsersTableSeeder extends Seeder
                 'user_name' => env('DEFAULT_ADMIN_NAME', '管理者（スーパーユーザー）'),
                 'user_kana' => env('DEFAULT_ADMIN_KANA', 'かんりしゃ（すーぱーゆーざー）'),
                 'email' => env('DEFAULT_ADMIN_EMAIL', 'ec_admin@example.local'),
-                'password' => password_hash(env('DEFAULT_ADMIN_PASSWORD', 'ec_admin'), PASSWORD_DEFAULT),
+                'password' => Hash::make(env('DEFAULT_ADMIN_PASSWORD', 'ec_admin')),
                 'admin_flg' => true,
                 'enable_flg' => true,
                 'last_login_at' => null,

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-full bg-white" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <!-- Common -->
@@ -11,46 +11,54 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Title -->
-    <title>@yield('PageTitle')：{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('pagetitle')：{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/css/common.css">
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
 
     <!-- Script -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <header>
-        <div class="ec-header-title-wrapper">
-            <h1><a href="/">{{ config('app.name', 'Laravel') }}</a></h1>
+<body class="h-full">
+    <header class="flex flex-row items-stretch sticky t-0 w-full h-20 px-5 bg-sky-300">
+        <div class="flex my-auto">
+            <h1 class="flex text-4xl font-bold align-middle leading-5">
+                <a href="{{ route('ec_site.index') }}">{{ config('app.name', 'Laravel') }}</a>
+            </h1>
         </div>
-        <div class="ec-header-link-wrapper">
+        <div class="flex">
             <ul class="ec-header-link">
-                <li class="ec-header-link-item">
-                    <a class="ec-icon-button" href="./cart.php">
-                        <i class="fa-solid fa-cart-shopping" alt="ショッピングカート"></i>
-                    </a>
-                </li>
-                <li class="ec-header-link-item">
-                    <form id="form-logout" action="./index.php" method="POST">
-                        @csrf
-                        <button class="ec-icon-button" type="submit" form="form-logout" name="action" value="logout">
+                @auth
+                    @if (!Auth::user()->admin_flg)
+                    <li class="ec-header-link-item">
+                        <a class="ec-icon-button" href="{{ route('cartdetails.index') }}">
+                            <i class="fa-solid fa-cart-shopping" alt="ショッピングカート"></i>
+                        </a>
+                    </li>
+                    @endif
+                    <li class="ec-header-link-item">
+                        <a class="ec-icon-button" href="{{ route('auth.logout') }}">
                             <i class="fa-solid fa-right-from-bracket fa-2xl" alt="ログアウト"></i>
-                        </button>
-                    </form>
-                </li>
+                        </a>
+                    </li>
+                @endauth
             </ul>
         </div>
     </header>
-    <div class="ec-header-margin"></div>
-    <div class="wrapper">
-        @yield('Content')
+    <div class="h-20"></div>
+    <div class="container mx-auto">
+        <div class="container mx-auto">
+            <h2 class="text-3xl text-center font-bold">@yield('pagetitle')</h2>
+        </div>
+        @yield('content')
     </div>
-    <div class="ec-footer-margin"></div>
-    <footer>
-        <div class="ec-footer-item">
-            <p class="ec-footer-string">{{ Auth::user()->name }}さんがログイン中</p>
+    <div class="h-20"></div>
+    <footer class="fixed bottom-0 w-full h-20 bg-sky-300">
+        <div class="leading-8">
+            @auth
+            <p class="text-3xl text-center font-bold">{{ Auth::user()->user_name }}さんがログイン中</p>
+            @endauth
         </div>
     </footer>
 </body>

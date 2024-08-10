@@ -92,7 +92,12 @@ input[type="number"] {
     border-color: #282d33;
     border-style: solid;
     border-radius: 8px;
-    gap: 16px;
+}
+
+.container-item-noframe {
+    width: calc(100% - 32px);
+    margin: 16px;
+    padding: 16px;
 }
 
 .ec-header-margin {
@@ -176,6 +181,7 @@ input[type="number"] {
     width: 100%;
     display: flex;
     margin: auto;
+    padding: 16px 0;
     justify-content: center;
 }
 
@@ -265,13 +271,27 @@ input[type="number"] {
     vertical-align: middle;
 }
 
-.ec-list-update {
-    width: 100%;
+.ec-form-register-button {
+    width: 30%;
+    height: 3rem;
+    line-height: 3rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    margin: 0 auto;
+    padding: 0;
 }
 
-.ec-list-update-wrapper {
+.ec-form-register-input {
+    width: 35%;
+    height: 3rem;
+    line-height: 3rem;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.ec-form-update-wrapper {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -281,27 +301,26 @@ input[type="number"] {
     border-top: 2px solid #282d33;
 }
 
-.ec-list-update-wrapper:last-child {
+.ec-form-update-wrapper:last-child {
     border-bottom: 2px solid #282d33;
 }
 
-.ec-list-update-form {
+.ec-form-update {
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: stretch;
     gap: 4px;
 }
 
-.ec-list-update-form-item {
+.ec-form-update-input {
     width: 80%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.ec-list-update-form-item-input {
+.ec-form-update-input-item {
     width: 100%;
     height: 3rem;
     line-height: 3rem;
@@ -310,21 +329,28 @@ input[type="number"] {
     justify-content: space-between;
 }
 
-.ec-list-update-form-item-buttons {
+.ec-form-update-button {
     width: 20%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: stretch;
     gap: 4px;
     padding: 0 0 0 4px;
 }
 
-.ec-list-update-form-item-button {
+.ec-form-update-button-item {
     width: 100%;
     display: flex;
     flex-grow: 1;
     flex-shrink: 1;
+}
+
+.ec-list-disable {
+    background-color: #515a66;
+}
+
+.ec-list-admin {
+    background-color: #798799;
 }
 
 .ec-label {
