@@ -11,9 +11,9 @@ Route::prefix('ec_site')->group(function () {
     // ルートページ
     Route::get('/', [IndexController::class, 'index'])->name('ec_site.index');
 
-    // ユーザー管理ページ
+    // 管理メニューページ
     Route::middleware('auth')->group(function () {
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+        Route::get('/admin', [AdminController::class, 'index'])->name('ec_site.admin');
     });
 
     // ユーザー管理ページ
@@ -33,11 +33,12 @@ Route::prefix('ec_site')->group(function () {
     // 商品一覧ページ
     Route::middleware('auth')->group(function () {
         Route::get('/list', [EcProductController::class, 'list'])->name('products.list');
+        Route::post('/list', [EcProductController::class, 'cart'])->name('products.cart');
     });
 
     // カートページ
     Route::middleware('auth')->group(function () {
-        Route::get('/cart', [EcCartDetailController::class, 'list'])->name('cartdetails.index');
+        Route::get('/cart', [EcCartDetailController::class, 'list'])->name('cart.index');
     });
 
     //認証ページ

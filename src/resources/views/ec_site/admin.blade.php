@@ -3,18 +3,18 @@
 @section('pagetitle','管理メニュー')
 
 @section('content')
-<div class="container-item container-item-frame">
-    <form class="ec-menu-button" id="form-link-admin-users" action="./admin-users.php" method="POST">
-        <input type="hidden" name="csrf-token" value="<?php echo $token; ?>">
-        <button class="ec-button" type="submit" form="form-link-admin-users" name="action" value="admin-users">
-            <span class="ec-menu-button-text">ユーザー管理</span>
-        </button>
-    </form>
-    <form class="ec-menu-button" id="form-link-admin-products" action="./admin-products.php" method="POST">
-        <input type="hidden" name="csrf-token" value="<?php echo $token; ?>">
-        <button class="ec-button" type="submit" form="form-link-admin-products" name="action" value="admin-products">
-            <span class="ec-menu-button-text">商品管理</span>
-        </button>
-    </form>
+<div class="container flex flex-col w-full gap-y-1 my-4">
+    <a class="w-full h-16 flex m-auto text-2xl text-center font-bold bg-sky-500 dark:bg-sky-300" href="{{ route('users.index') }}">
+        <div class="flex m-auto">
+            ユーザー管理
+        </div>
+    </a>
+    @if (Auth::user()->user_id != env('DEFAULT_ADMIN_ID'))
+    <a class="w-full h-16 flex m-auto text-2xl text-center font-bold bg-sky-500 dark:bg-sky-300" href="{{ route('products.index') }}">
+        <div class="flex m-auto">
+            商品管理
+        </div>
+    </a>
+    @endif
 </div>
 @endsection

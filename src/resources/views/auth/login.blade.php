@@ -5,15 +5,15 @@
 @section('content')
 <!-- Session Status -->
 <x-auth-session-status class="mb-4" :status="session('status')" />
-<div class="m-auto mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+<div class="container w-auto m-auto mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
     <form class="space-y-6" method="POST" action="{{ route('login') }}">
         @csrf
 
-        <!-- Email Address -->
+        <!-- User ID -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-input-label for="user_id" :value="__('ID')" />
+            <x-text-input id="user_id" class="block mt-1 w-full" type="text" name="user_id" :value="old('user_id')" required autofocus autocomplete="user_id" />
+            <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
         </div>
 
         <!-- Password -->
@@ -36,21 +36,26 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                {{ __('Register') }}
-            </a>
+        <div class="flex items-center justify-between">
 
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                <a class="underline text-m text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button class="ms-3 text-m">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
     </form>
+    @if (Route::has('register'))
+    <div class="container my-4 text-center text-m text-gray-600 dark:text-gray-400">
+        アカウントをお持ちでない方は
+        <a class="underline text-m text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('register') }}">
+            {{ __('Register') }}
+        </a>
+    </div>
+    @endif
 </div>
 @endsection

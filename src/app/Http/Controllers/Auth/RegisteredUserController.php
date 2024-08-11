@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\EcUser;
+use App\Models\EcUser as Authenticatable;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('ec_site.register');
+        return view('auth.register');
     }
 
     /**
@@ -30,14 +30,14 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'user_id' => ['required', 'string', 'max:255','unique:' . EcUser::class],
+            'user_id' => ['required', 'string', 'max:255','unique:' . Authenticatable::class],
             'user_name' => ['required', 'string', 'max:255'],
             'user_kana' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . EcUser::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . Authenticatable::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = EcUser::create([
+        $user = Authenticatable::create([
             'user_id' => $request->user_id,
             'user_name' => $request->user_name,
             'user_kana' => $request->user_kana,

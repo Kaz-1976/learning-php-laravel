@@ -5,22 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class IndexController extends Controller
+class ListController extends Controller
 {
     public function index ()
     {
-        // ユーザー情報取得
-        $auth = Auth::user();
         // インデックスページ
         if (Auth::check()){
-            // 管理者／一般
+            // ユーザー情報取得
+            $auth = Auth::user();
+            // 管理者なら管理メニューへ
             if ($auth->admin_flg) {
-                return redirect(route('ec_site.admin'));
-            } else {
-                return redirect(route('products.list'));
+                return redirect(route('ec_site.admin', ['auth' => $auth]));
             }
         } else {
             return redirect(route('login'));
         }
+        // 商品情報
+
+
     }
 }
