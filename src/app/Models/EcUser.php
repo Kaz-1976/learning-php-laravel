@@ -23,6 +23,10 @@ class EcUser extends Authenticatable
         'user_kana',
         'email',
         'password',
+        'enable_flg',
+        'admin_flg',
+        'created_by',
+        'updated_by'
     ];
 
     /**

@@ -50,7 +50,7 @@
         </div>
     </header>
     <div class="relative container m-auto p-4">
-        <div class="container m-auto py-4">
+        <div class="container mx-auto py-8">
             <h2 class="text-3xl text-center font-bold dark:text-white">@yield('pagetitle')</h2>
         </div>
         @yield('content')

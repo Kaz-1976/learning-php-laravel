@@ -53,6 +53,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('index', absolute: false));
+        return redirect(route('ec_site.index', absolute: false));
     }
 }

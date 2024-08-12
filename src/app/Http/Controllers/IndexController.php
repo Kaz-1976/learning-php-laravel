@@ -17,7 +17,7 @@ class IndexController extends Controller
             if ($auth->admin_flg) {
                 return redirect(route('ec_site.admin'));
             } else {
-                return redirect(route('products.list'));
+                return redirect(route('items.index'));
             }
         } else {
             return redirect(route('login'));

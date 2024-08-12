@@ -9,8 +9,8 @@
             @csrf
 
             <!-- フラグ -->
-            <x-text-input type="hidden" name="enable_flg" value="1" />
-            <x-text-input type="hidden" name="admin_flg" value="0" />
+            <x-text-input type="hidden" name="enable_flg" :value="1" />
+            <x-text-input type="hidden" name="admin_flg" :value="0" />
 
             <!-- ユーザーID -->
             <div class="mt-4">

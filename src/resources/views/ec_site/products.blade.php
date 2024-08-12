@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 {{-- ページタイトル --}}
-@section('pagetitle', '商品一覧')
+@section('pagetitle', '商品管理')
 
 {{-- ページコンテンツ --}}
 @section('content')

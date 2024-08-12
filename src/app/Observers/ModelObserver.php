@@ -13,6 +13,7 @@ class ModelObserver
     {
         // 作成者IDを更新
         $model->created_by = isEmpty(Auth::user()) ? 1 : Auth::user()->id;
+        $model->updated_by = isEmpty(Auth::user()) ? 1 : Auth::user()->id;;
     }
 
     public function updating(Model $model)
