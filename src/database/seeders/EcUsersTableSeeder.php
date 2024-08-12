@@ -20,7 +20,7 @@ class EcUsersTableSeeder extends Seeder
         // 外部キー制約無効化
         Schema::disableForeignKeyConstraints();
         // テーブルのクリア
-        DB::table('ec_users')->truncate();
+        // DB::table('ec_users')->truncate();
         // ユーザー登録：データー設定
         $ec_users = [
             // スーパーユーザー

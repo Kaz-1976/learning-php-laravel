@@ -10,8 +10,20 @@ use function PHPUnit\Framework\isEmpty;
 
 class EcUserController extends Controller
 {
+
+    protected $fillable = [
+        'user_id',
+        'user_name',
+        'user_kana',
+        'email',
+        'password',
+        'enable_flg',
+        'admin_flg',
+    ];
+
     // ログインしてなければログインページへ
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
@@ -21,7 +33,7 @@ class EcUserController extends Controller
         //
         $ec_users = EcUser::all();
         //
-        return view('ec_site/users', [ 'ec_users' => $ec_users ]);
+        return view('ec_site/users', ['ec_users' => $ec_users]);
     }
 
     // ユーザー登録
@@ -33,16 +45,12 @@ class EcUserController extends Controller
         $ec_user->user_id = $request->user_id;
         $ec_user->user_name = $request->user_name;
         $ec_user->user_kana = $request->user_kana;
-        $ec_user->email = $request->user_mail;
-        $ec_user->password = password_hash($request->user_password, PASSWORD_DEFAULT);
-        $ec_user->admin_flg = $request->user_admin === 1 ? true : false;
-        $ec_user->enable_flg = $request->user_enable === 1 ? true : false;
-        $ec_user->last_login_at = null;
-        $ec_user->email_verified_at = null;
+        $ec_user->email = $request->email;
+        $ec_user->password = password_hash($request->password, PASSWORD_DEFAULT);
+        $ec_user->enable_flg = $request->enable_flg === 1 ? true : false;
+        $ec_user->admin_flg = $request->admin_flg === 1 ? true : false;
         // ユーザー登録
         $ec_user->save();
-        // リダイレクト
-        return redirect('/ec_site/users');
     }
 
     // ユーザー更新
@@ -64,7 +72,7 @@ class EcUserController extends Controller
                 $ec_user->user_name = $request->user_name;
                 $ec_user->user_kana = $request->user_kana;
                 $ec_user->email = $request->user_mail;
-                if(isEmpty($request->user_password)){
+                if (isEmpty($request->user_password)) {
                     $ec_user->password = password_hash($request->user_password, PASSWORD_DEFAULT);
                 }
                 $ec_user->admin_flg = $request->user_admin === 1 ? true : false;
@@ -75,7 +83,5 @@ class EcUserController extends Controller
         }
         // ユーザー登録
         $ec_user->save();
-        // リダイレクト
-        return redirect('/ec_site/users');
     }
 }

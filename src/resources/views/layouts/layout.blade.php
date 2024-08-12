@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full bg-white" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-full dark:bg-sky-950" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <!-- Common -->
@@ -31,11 +31,11 @@
             <ul class="flex my-auto list-inside">
                 @auth
                     @if (!Auth::user()->admin_flg)
-                    <li class="inline m-auto text-2xl">
-                        <a class="ec-icon-button" href="{{ route('cart.index') }}">
-                            <i class="text-sky-950 fa-solid fa-cart-shopping" alt="ショッピングカート"></i>
-                        </a>
-                    </li>
+                        <li class="inline m-auto text-2xl">
+                            <a class="ec-icon-button" href="{{ route('cart.index') }}">
+                                <i class="text-sky-950 fa-solid fa-cart-shopping" alt="ショッピングカート"></i>
+                            </a>
+                        </li>
                     @endif
                     <li class="inline m-auto text-2xl">
                         <form method="POST" action="{{ route('logout') }}">
@@ -49,19 +49,18 @@
             </ul>
         </div>
     </header>
-    <div class="h-20 dark:bg-sky-950"></div>
-    <div class="container mx-auto">
-        <div class="container mx-auto">
+    <div class="relative container m-auto p-4">
+        <div class="container m-auto py-4">
             <h2 class="text-3xl text-center font-bold dark:text-white">@yield('pagetitle')</h2>
         </div>
         @yield('content')
     </div>
-    <div class="h-20 dark:bg-sky-950"></div>
+    <div class="relative h-20 dark:bg-sky-950"></div>
     <footer class="flex fixed bottom-0 w-full h-20 bg-sky-500 dark:bg-sky-300">
         @auth
-        <div class="flex m-auto leading-8">
-            <p class="text-3xl text-center text-sky-950 font-bold">{{ Auth::user()->user_name }}さんがログイン中</p>
-        </div>
+            <div class="flex m-auto leading-8">
+                <p class="text-3xl text-center text-sky-950 font-bold">{{ Auth::user()->user_name }}さんがログイン中</p>
+            </div>
         @endauth
     </footer>
 </body>

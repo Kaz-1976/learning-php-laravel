@@ -30,11 +30,13 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'user_id' => ['required', 'string', 'max:255','unique:' . Authenticatable::class],
+            'user_id' => ['required', 'string', 'max:255', 'unique:' . Authenticatable::class],
             'user_name' => ['required', 'string', 'max:255'],
             'user_kana' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . Authenticatable::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'enable_flg' => ['required'],
+            'admin_flg' => ['required']
         ]);
 
         $user = Authenticatable::create([
