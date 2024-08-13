@@ -34,7 +34,7 @@ Route::prefix('ec_site')->group(function () {
     // 商品一覧ページ
     Route::middleware('auth')->group(function () {
         Route::get('/items', [ItemController::class, 'index'])->name('items.index');
-        Route::post('/items', [ItemController::class, 'cart'])->name('items.cart');
+        Route::post('/items/update', [ItemController::class, 'update'])->name('items.update');
     });
 
     // カートページ

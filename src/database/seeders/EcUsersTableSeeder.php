@@ -27,8 +27,8 @@ class EcUsersTableSeeder extends Seeder
             [
                 'remember_token' => null,
                 'user_id' => env('DEFAULT_ADMIN_ID', 'ec_admin'),
-                'user_name' => env('DEFAULT_ADMIN_NAME', '管理者（スーパーユーザー）'),
-                'user_kana' => env('DEFAULT_ADMIN_KANA', 'かんりしゃ（すーぱーゆーざー）'),
+                'user_name' => env('DEFAULT_ADMIN_NAME', 'スーパーユーザー'),
+                'user_kana' => env('DEFAULT_ADMIN_KANA', 'すーぱーゆーざー'),
                 'email' => env('DEFAULT_ADMIN_EMAIL', 'ec_admin@example.local'),
                 'password' => Hash::make(env('DEFAULT_ADMIN_PASSWORD', 'ec_admin')),
                 'admin_flg' => true,

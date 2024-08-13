@@ -21,23 +21,24 @@
 </head>
 
 <body class="h-full dark:bg-sky-950">
-    <header class="sticky flex flex-row justify-between items-stretch  t-0 w-full h-20 px-5 bg-sky-500 dark:bg-sky-300">
+    <header
+        class="fixed top-0 z-50 flex flex-row justify-between items-stretch t-0 w-full h-20 px-5 bg-sky-500 dark:bg-sky-300">
         <div class="flex my-auto">
             <h1 class="flex text-4xl text-sky-950 font-bold align-middle leading-5">
                 <a href="{{ route('ec_site.index') }}">{{ config('app.name', 'Laravel') }}</a>
             </h1>
         </div>
         <div class="flex">
-            <ul class="flex my-auto list-inside">
+            <ul class="flex my-auto list-inside gap-2">
                 @auth
                     @if (!Auth::user()->admin_flg)
-                        <li class="inline m-auto text-2xl">
+                        <li class="inline m-auto text-xl">
                             <a class="ec-icon-button" href="{{ route('cart.index') }}">
                                 <i class="text-sky-950 fa-solid fa-cart-shopping" alt="ショッピングカート"></i>
                             </a>
                         </li>
                     @endif
-                    <li class="inline m-auto text-2xl">
+                    <li class="inline m-auto text-xl">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit">
@@ -49,6 +50,7 @@
             </ul>
         </div>
     </header>
+    <div class="relative h-20 dark:bg-sky-950"></div>
     <div class="relative container m-auto p-4">
         <div class="container mx-auto py-8">
             <h2 class="text-3xl text-center font-bold dark:text-white">@yield('pagetitle')</h2>
@@ -56,7 +58,7 @@
         @yield('content')
     </div>
     <div class="relative h-20 dark:bg-sky-950"></div>
-    <footer class="flex fixed bottom-0 w-full h-20 bg-sky-500 dark:bg-sky-300">
+    <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-500 dark:bg-sky-300">
         @auth
             <div class="flex m-auto leading-8">
                 <p class="text-3xl text-center text-sky-950 font-bold">{{ Auth::user()->user_name }}さんがログイン中</p>

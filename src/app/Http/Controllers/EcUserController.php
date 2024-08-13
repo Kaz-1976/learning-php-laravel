@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Models\EcUser;
-use Illuminate\Support\Facades\Hash;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -42,16 +42,21 @@ class EcUserController extends Controller
     {
         // ユーザー生成
         $ec_user = new EcUser();
+
         // ユーザー設定
         $ec_user->user_id = $request->user_id;
         $ec_user->user_name = $request->user_name;
         $ec_user->user_kana = $request->user_kana;
         $ec_user->email = $request->email;
         $ec_user->password = Hash::make($request->password);
-        $ec_user->enable_flg = $request->enable_flg;
-        $ec_user->admin_flg = $request->admin_flg;
+        $ec_user->enable_flg = is_integer($request->enable_flg) ? $request->enable_flg : ($request->enable_flg == 'on' ? 1 : 0);
+        $ec_user->admin_flg = is_integer($request->admin_flg) ? $request->admin_flg : ($request->admin_flg == 'on' ? 1 : 0);
+
         // ユーザー登録
         $ec_user->save();
+
+        //
+        return redirect(route('users.index'));
     }
 
     // ユーザー更新
