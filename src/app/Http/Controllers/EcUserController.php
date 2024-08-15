@@ -20,6 +20,8 @@ class EcUserController extends Controller
         'password',
         'enable_flg',
         'admin_flg',
+        'last_login_at',
+        'email_verified_at',
     ];
 
     // ログインしてなければログインページへ

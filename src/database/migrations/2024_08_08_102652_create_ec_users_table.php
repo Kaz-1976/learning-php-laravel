@@ -23,13 +23,12 @@ return new class extends Migration
             $table->string('password', 255)->comment('パスワード');
             $table->boolean('admin_flg')->comment('管理フラグ');
             $table->boolean('enable_flg')->comment('有効フラグ');
-            $table->timestamp('last_login_at')->nullable()->comment('最終ログイン日時');
-            $table->timestamp('email_verified_at')->nullable()->comment('メールアドレス確認日時');
+            $table->dateTime('last_login_at')->nullable()->comment('最終ログイン日時');
+            $table->dateTime('email_verified_at')->nullable()->comment('メールアドレス確認日時');
             $table->foreignId('created_by')->comment('作成ユーザー')->constrained('ec_users');
-            $table->timestamp('created_at')->comment('作成日時');
+            $table->dateTime('created_at')->comment('作成日時');
             $table->foreignId('updated_by')->comment('最終更新ユーザー')->constrained('ec_users');
-            $table->timestamp('updated_at')->comment('最終更新日時');
-
+            $table->dateTime('updated_at')->comment('最終更新日時');
         });
     }
 

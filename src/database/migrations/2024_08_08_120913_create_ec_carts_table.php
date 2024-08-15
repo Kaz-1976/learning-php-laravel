@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->comment('ユーザーID')->constrained('ec_users');
             $table->boolean('checkout_flg')->comment('決済フラグ');
             $table->foreignId('created_by')->comment('作成ユーザー')->constrained('ec_users');
-            $table->timestamp('created_at')->comment('作成日時');
+            $table->dateTime('created_at')->comment('作成日時');
             $table->foreignId('updated_by')->comment('最終更新ユーザー')->constrained('ec_users');
-            $table->timestamp('updated_at')->comment('最終更新日時');
+            $table->dateTime('updated_at')->comment('最終更新日時');
         });
     }
 
