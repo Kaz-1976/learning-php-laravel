@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full dark:bg-sky-950" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-full" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <!-- Common -->
@@ -20,7 +20,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="h-full dark:bg-sky-950">
+<body class="h-full bg-sky-100 dark:bg-sky-950">
     <header
         class="fixed top-0 z-50 flex flex-row justify-between items-stretch t-0 w-full h-20 px-5 bg-sky-500 dark:bg-sky-300">
         <div class="flex my-auto">
@@ -33,8 +33,8 @@
                 @auth
                     @if (!Auth::user()->admin_flg)
                         <li class="inline m-auto text-xl">
-                            <a class="ec-icon-button" href="{{ route('cart.index') }}">
-                                <i class="text-sky-950 fa-solid fa-cart-shopping" alt="ショッピングカート"></i>
+                            <a href="{{ route('cart.index') }}">
+                                <i class="w-full h-full text-sky-950 fa-solid fa-cart-shopping fa-2xl" alt="ショッピングカート"></i>
                             </a>
                         </li>
                     @endif
@@ -42,7 +42,8 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit">
-                                <i class="text-sky-950 fa-solid fa-right-from-bracket fa-2xl" alt="ログアウト"></i>
+                                <i class="w-full h-full text-sky-950 fa-solid fa-right-from-bracket fa-2xl"
+                                    alt="ログアウト"></i>
                             </button>
                         </form>
                     </li>
@@ -50,14 +51,14 @@
             </ul>
         </div>
     </header>
-    <div class="relative h-20 dark:bg-sky-950"></div>
+    <div class="relative h-20 bg-sky-100 dark:bg-sky-950"></div>
     <div class="relative container m-auto p-4">
         <div class="container mx-auto py-8">
             <h2 class="text-3xl text-center font-bold dark:text-white">@yield('pagetitle')</h2>
         </div>
         @yield('content')
     </div>
-    <div class="relative h-20 dark:bg-sky-950"></div>
+    <div class="relative h-20 bg-sky-100 dark:bg-sky-950"></div>
     <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-500 dark:bg-sky-300">
         @auth
             <div class="flex m-auto leading-8">

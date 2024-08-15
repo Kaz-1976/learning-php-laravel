@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = route('ec_site.index');
 
     /**
      * Create a new controller instance.
@@ -49,7 +49,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'user_id' => ['required', 'string', 'max:255'],
+            'user_id' => ['required', 'string', 'max:255', 'unique:users'],
             'user_name' => ['required', 'string', 'max:255'],
             'user_kana' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -71,8 +71,8 @@ class RegisterController extends Controller
             'user_kana' => $data['user_kana'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'admin_flg' => $data['admin_flg'],
             'enable_flg' => $data['enable_flg'],
+            'admin_flg' => $data['admin_flg'],
         ]);
     }
 }

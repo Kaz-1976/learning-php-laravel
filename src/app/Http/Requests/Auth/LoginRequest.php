@@ -41,7 +41,10 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('user_id', 'password'), $this->boolean('remember'))) {
+        // ユーザーの有効状態チェックを追加
+        $this->merge(['enable_flg' => 1]);
+
+        if (! Auth::attempt($this->only('user_id', 'password', 'enable_flg'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -80,6 +83,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('user_id')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('user_id')) . '|' . $this->ip());
     }
 }

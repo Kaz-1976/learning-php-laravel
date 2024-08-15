@@ -55,13 +55,13 @@
                 <div class="py-4 flex flex-row justify-between">
                     <div class="my-auto flex flex-row basis-1/4">
                         <x-text-input class="w-8 h-8" type="checkbox" id="register-enable" name="enable_flg"
-                            :value="old('enable_flg')" required autofocus autocomplete="enable_flg" />
+                            :value="old('enable_flg')" autofocus autocomplete="enable_flg" />
                         <x-input-label class="my-auto pl-2 flex" for="register-enable" :value="__('有効')" />
                         <x-input-error :messages="$errors->get('enable_flg')" class="mt-2" />
                     </div>
                     <div class="my-auto flex flex-row basis-1/4">
                         <x-text-input class="w-8 h-8" type="checkbox" id="register-admin" name="admin_flg"
-                            :value="old('admin_flg')" required autofocus autocomplete="admin_flg" />
+                            :value="old('admin_flg')" autofocus autocomplete="admin_flg" />
                         <x-input-label class="my-auto pl-2 flex" for="register-admin" :value="__('管理者')" />
                         <x-input-error :messages="$errors->get('enable_flg')" class="mt-2" />
                     </div>

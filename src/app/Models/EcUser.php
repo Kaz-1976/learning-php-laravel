@@ -12,7 +12,7 @@ class EcUser extends Authenticatable
     use HasFactory;
     use Notifiable;
 
-        /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
@@ -51,5 +51,4 @@ class EcUser extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
 }
