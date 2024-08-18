@@ -18,6 +18,9 @@
 
     <!-- Script -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- Script -->
+    <script src="{{ asset('js/common.js') }}"></script>
 </head>
 
 <body class="h-full bg-sky-100 dark:bg-sky-950">

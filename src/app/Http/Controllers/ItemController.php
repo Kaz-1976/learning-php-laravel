@@ -23,10 +23,7 @@ class ItemController extends Controller
         }
 
         // 商品情報
-        $ec_products = EcProduct::where('ec_products.public_flg', 1)
-            ->join('ec_stocks', 'ec_products.id', '=', 'ec_stocks.product_id')
-            ->orderBy('ec_products.id', 'asc')
-            ->get();
+        $ec_products = EcProduct::where('ec_products.public_flg', '=', 1)->get();
 
         //
         return view('ec_site.items', ['ec_products' => $ec_products]);
