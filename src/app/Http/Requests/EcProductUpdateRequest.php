@@ -25,6 +25,7 @@ class EcProductUpdateRequest extends FormRequest
             'product_name' => '商品名',
             'qty' => '数量',
             'price' => '価格',
+            'image' => '画像',
         ];
     }
 
@@ -37,7 +38,7 @@ class EcProductUpdateRequest extends FormRequest
     {
         return [
             'product_name' => ['required', 'string', 'max:255'],
-            'qty' => ['required', 'integer', 'mix:0'],
+            'qty' => ['required', 'integer', 'min:0'],
             'price' => ['required', 'integer', 'min:1'],
             'image' => ['image', 'max:1024']
         ];
