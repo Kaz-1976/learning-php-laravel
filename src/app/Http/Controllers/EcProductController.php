@@ -29,7 +29,7 @@ class EcProductController extends Controller
     public function index()
     {
         //
-        $ec_products = EcProduct::all();
+        $ec_products = EcProduct::paginate(5);
         //
         return view('ec_site.products', ['ec_products' => $ec_products]);
     }
@@ -94,5 +94,4 @@ class EcProductController extends Controller
         //
         return redirect(route('products.index'));
     }
-
 }

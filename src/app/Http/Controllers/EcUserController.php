@@ -36,7 +36,7 @@ class EcUserController extends Controller
     public function index()
     {
         //
-        $ec_users = EcUser::all();
+        $ec_users = EcUser::paginate(5);
         //
         return view('ec_site.users', ['ec_users' => $ec_users]);
     }
