@@ -70,17 +70,17 @@
                         <x-input-label class="my-auto pl-2 flex" for="register-enable" :value="__('有効')" />
                     </div>
                     <div class="my-auto flex flex-row basis-1/6">
-                        <x-text-input class="w-8 h-8" type="checkbox" id="register-admin" name="admin_flg" autofocus/>
+                        <x-text-input class="w-8 h-8" type="checkbox" id="register-admin" name="admin_flg" autofocus />
                         <x-input-label class="my-auto pl-2 flex" for="register-admin" :value="__('管理者')" />
                     </div>
                     <div class="my-auto flex flex-row basis-2/6">
                         <x-secondary-button class="flex basis-full" type='reset' name="reset" :value="1">
-                            <span class="flex m-auto text-2xl text-center font-bold">{{ __('リセット') }}</span>
+                            <span class="flex m-auto text-xl text-center font-bold">{{ __('リセット') }}</span>
                         </x-secondary-button>
                     </div>
                     <div class="my-auto flex flex-row basis-2/6">
                         <x-primary-button class="flex basis-full" form="register" name="register" :value="1">
-                            <span class="flex m-auto text-2xl text-center font-bold">{{ __('Register') }}</span>
+                            <span class="flex m-auto text-xl text-center font-bold">{{ __('Register') }}</span>
                         </x-primary-button>
                     </div>
                 </div>
@@ -88,11 +88,11 @@
         </div>
         <div class="container">
             @php
-                $array = array();
+                $array = [];
             @endphp
             @foreach ($ec_users as $ec_user)
                 @php
-                    array_push($array, $ec_user->id );
+                    array_push($array, $ec_user->id);
                 @endphp
                 <div
                     class="w-full p-4 flex flex-row basis-full gap-2 border-b-2 border-sky-50 {{ $ec_user->enable_flg ? ($ec_user->admin_flg ? 'bg-sky-800' : 'bg-sky-700') : 'bg-sky-900' }}">
@@ -102,11 +102,12 @@
                         <input type="hidden" name="id" value="{{ $ec_user->id }}" />
                         <input type="hidden" name="enable_flg" value="{{ $ec_user->enable_flg }}" />
                         <input type="hidden" name="admin_flg" value="{{ $ec_user->admin_flg }}" />
-                        <div class="flex flex-col basis-4/5 gap-1">                           <div class="block">
+                        <div class="flex flex-col basis-4/5 gap-1">
+                            <div class="block">
                                 <x-input-label for="update-user-id-{{ $ec_user->id }}" :value="__('ID')" />
                                 <x-text-input class="block mt-1 w-full" type="text"
-                                    id="update-user-id-{{ $ec_user->id }}" name="user_id" :value="$ec_user->user_id"
-                                    required :readonly="$ec_user->user_id === env('DEFAULT_ADMIN_ID', 'ec_admin')"  autofocus autocomplete="user_id" placeholder="EcTaro" />
+                                    id="update-user-id-{{ $ec_user->id }}" name="user_id" :value="$ec_user->user_id" required
+                                    :readonly="$ec_user->user_id === env('DEFAULT_ADMIN_ID', 'ec_admin')" autofocus autocomplete="user_id" placeholder="EcTaro" />
                                 @if (old('update') == $ec_user->id)
                                     <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
                                 @endif
@@ -162,7 +163,7 @@
                                 @if ($ec_user->user_id != env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id != Auth::user()->user_id)
                                     <x-secondary-button class="w-full" type="submit" name="enable" :value="$ec_user->id">
                                         <span
-                                            class="flex m-auto text-2xl text-center font-bold">{{ __($ec_user->enable_flg ? '無効' : '有効') }}</span>
+                                            class="flex m-auto text-xl text-center font-bold">{{ __($ec_user->enable_flg ? '無効' : '有効') }}</span>
                                     </x-secondary-button>
                                 @endif
                             </div>
@@ -170,25 +171,28 @@
                                 @if (Auth::user()->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id != Auth::user()->user_id)
                                     <x-secondary-button class="w-full" type="submit" name="admin" :value="$ec_user->id">
                                         <span
-                                            class="flex m-auto text-2xl text-center font-bold">{{ __($ec_user->admin_flg ? '一般' : '管理者') }}</span>
+                                            class="flex m-auto text-xl text-center font-bold">{{ __($ec_user->admin_flg ? '一般' : '管理者') }}</span>
                                     </x-secondary-button>
                                 @endif
                             </div>
                             <div class="flex basis-full">
                                 <x-secondary-button class="w-full" type="reset" name="reset">
-                                    <span
-                                        class="flex m-auto text-2xl text-center font-bold">{{ __('リセット') }}</span>
+                                    <span class="flex m-auto text-xl text-center font-bold">{{ __('リセット') }}</span>
                                 </x-secondary-button>
                             </div>
                             <div class="flex basis-full">
-                                <x-primary-button class="w-full" form="update-{{ $ec_user->id }}" name="update" :value="$ec_user->id">
-                                    <span class="flex m-auto text-2xl text-center font-bold">{{ __('更新') }}</span>
+                                <x-primary-button class="w-full" form="update-{{ $ec_user->id }}" name="update"
+                                    :value="$ec_user->id">
+                                    <span class="flex m-auto text-xl text-center font-bold">{{ __('更新') }}</span>
                                 </x-primary-button>
                             </div>
                         </div>
                     </form>
                 </div>
             @endforeach
+        </div>
+        <div class="container">
+            {!! $ec_users->render() !!}
         </div>
     </div>
 @endsection
