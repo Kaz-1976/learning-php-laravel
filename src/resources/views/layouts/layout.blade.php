@@ -25,9 +25,9 @@
 
 <body class="h-full bg-sky-100 dark:bg-sky-950">
     <header
-        class="fixed top-0 z-50 flex flex-row justify-between items-stretch t-0 w-full h-20 px-5 bg-sky-500 dark:bg-sky-300">
+        class="fixed top-0 z-50 flex flex-row justify-between items-stretch t-0 w-full h-20 px-5 bg-sky-700/80 dark:bg-sky-300/80">
         <div class="flex my-auto">
-            <h1 class="flex text-4xl text-sky-950 font-bold align-middle leading-5">
+            <h1 class="flex text-4xl text-sky-50 dark:text-sky-950 font-bold align-middle leading-5">
                 <a href="{{ route('ec_site.index') }}">{{ config('app.name', 'Laravel') }}</a>
             </h1>
         </div>
@@ -37,7 +37,8 @@
                     @if (!Auth::user()->admin_flg)
                         <li class="inline m-auto text-xl">
                             <a href="{{ route('cart.index') }}">
-                                <i class="w-full h-full text-sky-950 fa-solid fa-cart-shopping fa-2xl" alt="ショッピングカート"></i>
+                                <i class="w-full h-full text-sky-50 dark:text-sky-950 fa-solid fa-cart-shopping fa-2xl"
+                                    alt="ショッピングカート"></i>
                             </a>
                         </li>
                     @endif
@@ -45,7 +46,7 @@
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit">
-                                <i class="w-full h-full text-sky-950 fa-solid fa-right-from-bracket fa-2xl"
+                                <i class="w-full h-full text-sky-50 dark:text-sky-950 fa-solid fa-right-from-bracket fa-2xl"
                                     alt="ログアウト"></i>
                             </button>
                         </form>
@@ -57,15 +58,17 @@
     <div class="relative h-20 bg-sky-100 dark:bg-sky-950"></div>
     <div class="relative container m-auto p-4">
         <div class="container mx-auto py-8">
-            <h2 class="text-3xl text-center font-bold dark:text-white">@yield('pagetitle')</h2>
+            <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50 ">@yield('pagetitle')</h2>
         </div>
         @yield('content')
     </div>
     <div class="relative h-20 bg-sky-100 dark:bg-sky-950"></div>
-    <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-500 dark:bg-sky-300">
+    <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-700/80 dark:bg-sky-300/80">
         @auth
             <div class="flex m-auto leading-8">
-                <p class="text-3xl text-center text-sky-950 font-bold">{{ Auth::user()->user_name }}さんがログイン中</p>
+                <p class="text-2xl text-center text-sky-50 dark:text-sky-950 font-bold">
+                    {{ Auth::user()->user_name }}さんがログイン中
+                </p>
             </div>
         @endauth
     </footer>

@@ -70,7 +70,7 @@ class EcProductController extends Controller
         $ec_product = EcProduct::find($request->id);
 
         switch (true) {
-            case $request->has('public_flg'):
+            case $request->has('public'):
                 // 有効フラグ更新
                 $ec_product->public_flg = $ec_product->public_flg == 1 ? 0 : 1;
                 // 保存

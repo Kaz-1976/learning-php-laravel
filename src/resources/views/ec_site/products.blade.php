@@ -6,7 +6,7 @@
 {{-- ページコンテンツ --}}
 @section('content')
     <div class="container flex flex-col gap-4">
-        <div class="container p-4 border-solid border-2 border-sky-50 rounded-lg">
+        <div class="container p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50">
             <form class="flex flex-row gap-4" id="register" action="{{ route('products.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
@@ -93,13 +93,12 @@
                         'data:' . $ec_product->product_image_type . ';base64,' . $ec_product->product_image_data;
                 @endphp
                 <div
-                    class="w-full p-4 flex flex-row basis-full gap-2 border-b-2 border-sky-50 {{ $ec_product->enable_flg ? ($ec_product->admin_flg ? 'bg-sky-800' : 'bg-sky-700') : 'bg-sky-900' }}">
+                    class="w-full p-4 flex flex-row basis-full gap-2 border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_product->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
                     <form class="flex flex-row basis-full gap-2" id="update-{{ $ec_product->id }}"
                         action="{{ route('products.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $ec_product->id }}" />
-                        <input type="hidden" name="enable_flg" value="{{ $ec_product->enable_flg }}" />
-                        <input type="hidden" name="admin_flg" value="{{ $ec_product->admin_flg }}" />
+                        <input type="hidden" name="public_flg" value="{{ $ec_product->public_flg }}" />
                         <div class="flex flex-col grow-0 basis-64 h-64 m-auto">
                             <div class="block w-64 h-64 border-solid border-2 border-sky-50">
                                 <img class="block w-full h-hull object-cover overflow-hidden"
@@ -155,8 +154,7 @@
                             </div>
                             <div class="flex flex-col basis-1/5 gap-2">
                                 <div class="flex basis-full">
-                                    <x-secondary-button class="w-full" type="submit" name="public_flg"
-                                        :value="$ec_product->id">
+                                    <x-secondary-button class="w-full" type="submit" name="public" :value="$ec_product->id">
                                         <span
                                             class="flex m-auto text-xl text-center font-bold">{{ __($ec_product->public_flg ? '非公開' : '公開') }}</span>
                                     </x-secondary-button>
@@ -190,13 +188,17 @@
             const ids = @json($id);
             const images = @json($image);
 
+            // ------------------------------------------------------------
             // 登録フォーム用処理登録
+            // ------------------------------------------------------------
             // 画像ロード処理
             loadImage('register-image', 'register-image-preview');
             // フォームリセット時画像消去
             productFormReset('register', '');
 
+            // ------------------------------------------------------------
             // 更新フォーム用処理登録
+            // ------------------------------------------------------------
             ids.forEach(id => {
                 // 画像ロード処理
                 loadImage('update-' + id + '-image', 'update-' + id + '-image-preview');
