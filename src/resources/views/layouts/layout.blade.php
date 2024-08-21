@@ -21,6 +21,13 @@
 
     <!-- Script -->
     <script src="{{ asset('js/common.js') }}"></script>
+
+    <!-- CSS -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 
 <body class="h-full bg-sky-100 dark:bg-sky-950">
@@ -56,8 +63,8 @@
         </div>
     </header>
     <div class="relative h-20 bg-sky-100 dark:bg-sky-950"></div>
-    <div class="relative container m-auto p-4">
-        <div class="container mx-auto py-8">
+    <div class="relative container flex flex-col m-auto p-8">
+        <div class="flex mx-auto py-4">
             <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50 ">@yield('pagetitle')</h2>
         </div>
         @yield('content')

@@ -23,7 +23,7 @@ class ItemController extends Controller
         }
 
         // 商品情報
-        $ec_products = EcProduct::where('ec_products.public_flg', '=', 1)->paginate(8);
+        $ec_products = EcProduct::where('public_flg', '=', 1)->paginate(8);
 
         //
         return view('ec_site.items', ['ec_products' => $ec_products]);
