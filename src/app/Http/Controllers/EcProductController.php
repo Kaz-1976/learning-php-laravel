@@ -19,12 +19,6 @@ class EcProductController extends Controller
         'public_flg',
     ];
 
-    // ログインしてなければログインページへ
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     // 一覧表示
     public function index()
     {
