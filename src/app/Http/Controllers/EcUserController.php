@@ -26,12 +26,6 @@ class EcUserController extends Controller
         'email_verified_at',
     ];
 
-    // ログインしてなければログインページへ
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     // 一覧表示
     public function index()
     {
