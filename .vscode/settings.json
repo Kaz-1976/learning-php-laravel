@@ -1,11 +1,19 @@
 {
-    "php.validate.executablePath": "./php.cmd",
-    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
-    "html.format.templating": true,
+    "[blade]": {
+        "editor.defaultFormatter": "shufo.vscode-blade-formatter"
+    },
     "[css]": {
         "editor.defaultFormatter": "vscode.css-language-features"
     },
-    "[blade]": {
-        "editor.defaultFormatter": "shufo.vscode-blade-formatter"
-    }
+    "blade.format.enable": true,
+    "css.completion.completePropertyWithSemicolon": false,
+    "css.completion.triggerPropertyValueCompletion": false,
+    "css.format.spaceAroundSelectorSeparator": true,
+    "css.validate": true,
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "html.format.templating": true,
+    "php.validate.executablePath": "./php.cmd",
+    "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.experimental.configFile": "src/tailwind.config.js",
+    "tailwindCSS.hovers": true
 }

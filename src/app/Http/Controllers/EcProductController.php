@@ -23,7 +23,7 @@ class EcProductController extends Controller
     public function index()
     {
         //
-        $ec_products = EcProduct::paginate(5);
+        $ec_products = EcProduct::orderBy('id','asc')->paginate(5);
         //
         return view('ec_site.products', ['ec_products' => $ec_products]);
     }

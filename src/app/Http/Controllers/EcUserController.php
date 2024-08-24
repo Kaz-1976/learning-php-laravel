@@ -30,7 +30,7 @@ class EcUserController extends Controller
     public function index()
     {
         //
-        $ec_users = EcUser::paginate(5);
+        $ec_users = EcUser::orderBy('id','asc')->paginate(5);
         //
         return view('ec_site.users', ['ec_users' => $ec_users]);
     }
