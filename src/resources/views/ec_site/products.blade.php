@@ -175,7 +175,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="container">
+        <div class="container flex pt-2">
             {{ $ec_products->render() }}
         </div>
     </div>

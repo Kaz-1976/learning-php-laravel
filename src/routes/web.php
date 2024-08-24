@@ -14,7 +14,6 @@ Route::prefix('ec_site')->group(function () {
 
     // 管理者
     Route::middleware([\App\Http\Middleware\CheckAdmin::class])->group(function () {
-
         // 管理メニューページ
         Route::get('/admin', [AdminController::class, 'index'])->name('ec_site.admin');
 
@@ -31,7 +30,6 @@ Route::prefix('ec_site')->group(function () {
 
     // 利用者
     Route::middleware([\App\Http\Middleware\CheckNormal::class])->group(function () {
-
         // 商品一覧ページ
         Route::get('/items', [ItemController::class, 'index'])->name('items.index');
         Route::post('/items/store', [ItemController::class, 'store'])->name('items.store');
