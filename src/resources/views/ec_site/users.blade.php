@@ -86,6 +86,9 @@
                 </div>
             </form>
         </div>
+        <div class="container w-full pt-1">
+            {{ $ec_users->render() }}
+        </div>
         <div class="container">
             @php
                 $array = [];
@@ -95,7 +98,7 @@
                     array_push($array, $ec_user->id);
                 @endphp
                 <div
-                    class="w-full p-4 flex flex-row basis-full gap-2 border-b-2 border-sky-50 {{ $ec_user->enable_flg ? ($ec_user->admin_flg ? 'bg-sky-300 dark:bg-sky-800' : 'bg-sky-400 dark:bg-sky-700') : 'bg-sky-200 dark:bg-sky-900' }}">
+                    class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-50 {{ $ec_user->enable_flg ? ($ec_user->admin_flg ? 'bg-sky-300 dark:bg-sky-800' : 'bg-sky-400 dark:bg-sky-700') : 'bg-sky-200 dark:bg-sky-900' }}">
                     <form class="flex flex-row basis-full gap-2" id="update-{{ $ec_user->id }}"
                         action="{{ route('users.update') }}" method="POST">
                         @csrf
@@ -191,8 +194,8 @@
                 </div>
             @endforeach
         </div>
-        <div class="container">
-            {!! $ec_users->render() !!}
+        <div class="container w-full">
+            {{ $ec_users->render() }}
         </div>
     </div>
 @endsection

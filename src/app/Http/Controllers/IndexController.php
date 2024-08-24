@@ -12,15 +12,14 @@ class IndexController extends Controller
         // インデックスページ
         if (Auth::check()) {
             // ユーザー情報取得
-            $auth = Auth::user();
+            $user = Auth::user();
             // 管理者／一般
-            if ($auth->admin_flg) {
+            if ($user->admin_flg) {
                 return redirect(route('ec_site.admin'));
             } else {
                 return redirect(route('items.index'));
             }
-        } else {
-            return redirect(route('login'));
         }
+        return redirect(route('login'));
     }
 }

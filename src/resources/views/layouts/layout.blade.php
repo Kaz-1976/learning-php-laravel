@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <!-- Common -->
@@ -30,7 +30,7 @@
     </style>
 </head>
 
-<body class="h-full bg-sky-100 dark:bg-sky-950">
+<body class="w-full bg-sky-50 dark:bg-sky-950">
     <header
         class="fixed top-0 z-50 flex flex-row justify-between items-stretch t-0 w-full h-20 px-5 bg-sky-700/80 dark:bg-sky-300/80">
         <div class="flex my-auto">
@@ -62,14 +62,18 @@
             </ul>
         </div>
     </header>
-    <div class="relative h-20 bg-sky-100 dark:bg-sky-950"></div>
-    <div class="relative container flex flex-col m-auto p-8">
-        <div class="flex mx-auto py-4">
-            <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50 ">@yield('pagetitle')</h2>
+    <div class="block h-20 bg-sky-100 dark:bg-sky-950"></div>
+    <article class="w-full max-w-screen-xl mx-auto">
+        <div class="flex flex-col">
+            <div class="flex mx-auto p-4">
+                <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50 ">@yield('pagetitle')</h2>
+            </div>
+            <div class="flex flex-col w-full p-4">
+                @yield('content')
+            </div>
         </div>
-        @yield('content')
-    </div>
-    <div class="relative h-20 bg-sky-100 dark:bg-sky-950"></div>
+    </article>
+    <div class="block h-20 bg-sky-100 dark:bg-sky-950"></div>
     <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-700/80 dark:bg-sky-300/80">
         @auth
             <div class="flex m-auto leading-8">
