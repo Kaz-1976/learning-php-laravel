@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EcUserController;
 use App\Http\Controllers\EcProductController;
-use App\Http\Controllers\EcCartDetailController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('ec_site')->group(function () {
@@ -35,7 +35,7 @@ Route::prefix('ec_site')->group(function () {
         Route::post('/items/store', [ItemController::class, 'store'])->name('items.store');
 
         // カートページ
-        Route::get('/cart', [EcCartDetailController::class, 'index'])->name('cart.index');
+        Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     });
 
     //認証ページ
