@@ -21,6 +21,8 @@ return new class extends Migration
             $table->dateTime('created_at')->comment('作成日時');
             $table->foreignId('updated_by')->comment('最終更新ユーザー')->constrained('ec_users');
             $table->dateTime('updated_at')->comment('最終更新日時');
+            // ユニークインデックス
+            $table->unique(['cart_id', 'product_id']);
         });
     }
 

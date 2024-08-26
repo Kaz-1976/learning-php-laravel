@@ -22,16 +22,16 @@
                             src="data:{{ $ec_product->product_image_type }};base64,{{ $ec_product->product_image_data }}">
                     </div>
                 </div>
-                <form class="flex flex-col w-full gap-2" id="item-{{ $ec_product->id }}"
-                    action="{{ route('items.store') }}" method="POST">
+                <form class="flex flex-col w-full gap-2" id="item-{{ $ec_product->id }}" action="{{ route('items.store') }}"
+                    method="POST">
                     @csrf
-                    <input type="hidden" name="item-{{ $ec_product->id }}-id" value="{{ $ec_product->id }}">
-                    <input type="hidden" name="item-{{ $ec_product->id }}-name" value="{{ $ec_product->product_name }}">
+                    <input type="hidden" name="id" value="{{ $ec_product->id }}">
+                    <input type="hidden" name="name" value="{{ $ec_product->product_name }}">
                     <div class="flex flex-row mx-2">
                         <x-input-label class="w-3/12 m-auto text-center" for="item-{{ $ec_product->id }}-price"
                             :value="__('価格')" />
                         <x-text-input class="w-7/12 text-right" type="number" id="item-{{ $ec_product->id }}-price"
-                            name="price" :value="$ec_product->price" :disabled="true" />
+                            name="price" :value="$ec_product->price" :readonly="true" />
                         <x-input-label class="w-2/12 mt-auto mx-auto text-center" for="item-{{ $ec_product->id }}-price"
                             :value="__('円')" />
                     </div>
@@ -39,21 +39,26 @@
                         <x-input-label class="w-3/12 m-auto text-center" for="item-{{ $ec_product->id }}-qty"
                             :value="__('在庫')" />
                         <x-text-input class="w-7/12 text-right" type="number" id="item-{{ $ec_product->id }}-qty"
-                            name="qty" :value="$ec_product->qty" :disabled="true" />
+                            name="qty" :value="$ec_product->qty" :readonly="true" />
                         <x-input-label class="w-2/12 mt-auto mx-auto text-center" for="item-{{ $ec_product->id }}-qty"
                             :value="__('個')" />
                     </div>
-                    <div class="flex flex-row mx-2">
-                        <x-input-label class="w-3/12 m-auto text-center" for="item-{{ $ec_product->id }}-order-qty"
-                            :value="__('注文')" />
-                        <x-text-input class="w-7/12 text-right" type="number" id="item-{{ $ec_product->id }}-order-qty"
-                            name="order-qty" :value="1" />
-                        <x-input-label class="w-2/12 mt-auto mx-auto text-center"
-                            for="item-{{ $ec_product->id }}-order-qty" :value="__('個')" />
+                    <div class="flex flex-col">
+                        <div class="flex flex-row mx-2">
+                            <x-input-label class="w-3/12 m-auto text-center" for="item-{{ $ec_product->id }}-order"
+                                :value="__('注文')" />
+                            <x-text-input class="w-7/12 text-right" type="number" id="item-{{ $ec_product->id }}-order"
+                                name="order" :value="1" />
+                            <x-input-label class="w-2/12 mt-auto mx-auto text-center"
+                                for="item-{{ $ec_product->id }}-order" :value="__('個')" />
+                        </div>
+                        @if (old('update') == $ec_product->id)
+                            <x-input-error :messages="$errors->get('order')" class="my-2" />
+                        @endif
                     </div>
                     <div class="flex mx-2">
                         @if ($ec_product->qty == 0)
-                            <x-primary-button class="w-full h-8" name="update" :value="$ec_product->id">
+                            <x-primary-button class="w-full h-8" name="update" :value="$ec_product->id" disabled>
                                 <i class="m-auto fa-solid fa-minus"></i>
                             </x-primary-button>
                         @else
