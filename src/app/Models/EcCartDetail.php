@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class EcCartDetail extends Model
 {
     use HasFactory;
+
+    public function ec_carts()
+    {
+        return $this->belongsTo(EcCart::class, 'cart_id', 'id');
+    }
+
+    public function ec_products()
+    {
+        return $this->belongsTo(EcProduct::class, 'product_id', 'id');
+    }
 }

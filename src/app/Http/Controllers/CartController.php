@@ -11,10 +11,9 @@ class CartController extends Controller
     {
         // カート情報
         $ec_cart_details = EcCartDetail::query()
-            ->with('ec_products')
-            ->where('ec_cart_details.cart_id', '=', session()->get('cart-id'))
-            ->where('ec_cart_details.product_id', '=', 'ec_products.id')
-            ->orderBy('ec_cart_details.id')
+            ->find(session()->get('cart-id'))
+            ->with(['ec_products:id,name,image_data,image_type,qty,price'])
+            ->orderBy('id', 'asc')
             ->paginate(6);
         //
         return view('ec_site.cart', ['ec_cart_details' => $ec_cart_details]);

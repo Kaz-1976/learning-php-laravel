@@ -11,9 +11,9 @@ use App\Http\Controllers\Controller;
 class EcProductController extends Controller
 {
     protected $fillable = [
-        'product_name',
-        'product_image_data',
-        'product_image_type',
+        'name',
+        'image_data',
+        'image_type',
         'qty',
         'price',
         'public_flg',
@@ -23,7 +23,7 @@ class EcProductController extends Controller
     public function index()
     {
         //
-        $ec_products = EcProduct::orderBy('id','asc')->paginate(5);
+        $ec_products = EcProduct::orderBy('id', 'asc')->paginate(6);
         //
         return view('ec_site.products', ['ec_products' => $ec_products]);
     }
@@ -38,14 +38,14 @@ class EcProductController extends Controller
         $ec_product = new EcProduct();
 
         // 商品設定
-        $ec_product->product_name = $valid_data->product_name;
+        $ec_product->name = $valid_data->name;
         $ec_product->qty = $valid_data->qty;
         $ec_product->price = $valid_data->price;
         $ec_product->public_flg = $request->public_flg == 'on' ? true : false;
 
         // 画像設定
-        $ec_product->product_image_data = base64_encode(file_get_contents($request->image->getRealPath()));
-        $ec_product->product_image_type = mime_content_type($request->image->getRealPath());
+        $ec_product->image_data = base64_encode(file_get_contents($request->image->getRealPath()));
+        $ec_product->image_type = mime_content_type($request->image->getRealPath());
 
         // 登録
         $ec_product->save();
@@ -72,13 +72,13 @@ class EcProductController extends Controller
                 break;
             case $request->has('update'):
                 // 商品設定
-                $ec_product->product_name = $valid_data->product_name;
+                $ec_product->name = $valid_data->name;
                 $ec_product->qty = $valid_data->qty;
                 $ec_product->price = $valid_data->price;
                 // 画像設定
                 if (!empty($request->image)) {
-                    $ec_product->product_image_data = base64_encode(file_get_contents($request->image->getRealPath()));
-                    $ec_product->product_image_type = mime_content_type($request->image->getRealPath());
+                    $ec_product->image_data = base64_encode(file_get_contents($request->image->getRealPath()));
+                    $ec_product->image_type = mime_content_type($request->image->getRealPath());
                 }
                 // 保存
                 $ec_product->save();

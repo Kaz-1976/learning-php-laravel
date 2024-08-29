@@ -15,12 +15,18 @@ class EcProduct extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'product_name',
-        'product_image_data',
-        'product_image_type',
+        'name',
+        'image_data',
+        'image_type',
         'qty',
         'price',
         'public_flg',
         'created_by',
         'updated_by'
-    ];}
+    ];
+
+    public function ec_cart_details()
+    {
+        return $this->hasMany(EcCartDetail::class, 'product_id', 'id');
+    }
+}
