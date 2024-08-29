@@ -19,10 +19,10 @@
                     {{-- 商品名 --}}
                     <div>
                         <x-input-label for="register-product-name" :value="__('商品名')" />
-                        <x-text-input class="block mt-1 w-full" type="text" id="register-product-name"
-                            name="product_name" :value="old('product_name')" required autofocus />
+                        <x-text-input class="block mt-1 w-full" type="text" id="register-product-name" name="name"
+                            :value="old('name')" required autofocus />
                         @if (old('register') == '1')
-                            <x-input-error :messages="$errors->get('product_name')" class="my-2" />
+                            <x-input-error :messages="$errors->get('name')" class="my-2" />
                         @endif
                     </div>
                     {{-- 数量 --}}
@@ -92,8 +92,7 @@
             @foreach ($ec_products as $ec_product)
                 @php
                     $id[] = $ec_product->id;
-                    $image[$ec_product->id] =
-                        'data:' . $ec_product->product_image_type . ';base64,' . $ec_product->product_image_data;
+                    $image[$ec_product->id] = 'data:' . $ec_product->image_type . ';base64,' . $ec_product->image_data;
                 @endphp
                 <div
                     class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_product->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
@@ -106,7 +105,7 @@
                             <div class="block w-64 h-64 border-solid border-2 border-sky-50">
                                 <img class="block w-full h-hull object-cover overflow-hidden"
                                     id="update-{{ $ec_product->id }}-image-preview"
-                                    src="data:{{ $ec_product->product_image_type }};base64,{{ $ec_product->product_image_data }}">
+                                    src="data:{{ $ec_product->image_type }};base64,{{ $ec_product->image_data }}">
                             </div>
                         </div>
                         <div class="flex flex-row grow gap-2">
@@ -114,10 +113,10 @@
                                 <div class="block">
                                     <x-input-label for="update-{{ $ec_product->id }}-name" :value="__('名称')" />
                                     <x-text-input class="block mt-1 w-full" type="text"
-                                        id="update-{{ $ec_product->id }}-name" name="product_name" :value="$ec_product->product_name"
-                                        required autofocus autocomplete="product_name" />
+                                        id="update-{{ $ec_product->id }}-name" name="name" :value="$ec_product->name" required
+                                        autofocus autocomplete="name" />
                                     @if (old('update') == $ec_product->id)
-                                        <x-input-error :messages="$errors->get('product_name')" class="mt-2" />
+                                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                     @endif
                                 </div>
                                 <div class="block">

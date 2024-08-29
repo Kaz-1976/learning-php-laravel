@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,7 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //外部キー制約解除
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        //
         Schema::create('ec_cart_details', function (Blueprint $table) {
+            //
             $table->foreignId('cart_id')->comment('カートID')->constrained('ec_carts');
             $table->id()->primary()->comment('カート明細ID');
             $table->foreignId('product_id')->comment('商品ID')->constrained('ec_products');
@@ -21,9 +26,11 @@ return new class extends Migration
             $table->dateTime('created_at')->comment('作成日時');
             $table->foreignId('updated_by')->comment('最終更新ユーザー')->constrained('ec_users');
             $table->dateTime('updated_at')->comment('最終更新日時');
-            // ユニークインデックス
-            $table->unique(['cart_id', 'product_id']);
+            //
+            $table->unique(['cart_id', 'product_id'], 'ec_cart_details_cart_id_product_id_unique');
         });
+        //外部キー制約設定
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -37,6 +44,8 @@ return new class extends Migration
             $table->dropForeign('ec_cart_detail_product_id_foreign');
             $table->dropForeign('ec_cart_detail_created_by_foreign');
             $table->dropForeign('ec_cart_detail_updated_by_foreign');
+            // ユニークキー削除
+            $table->dropUnique('ec_cart_details_cart_id_product_id_unique');
         });
     }
 };

@@ -22,7 +22,7 @@ class EcProductUpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'product_name' => '商品名',
+            'name' => '商品名',
             'qty' => '数量',
             'price' => '価格',
             'image' => '画像',
@@ -37,7 +37,7 @@ class EcProductUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'qty' => ['required', 'integer', 'min:0'],
             'price' => ['required', 'integer', 'min:1'],
             'image' => ['image', 'max:1024']

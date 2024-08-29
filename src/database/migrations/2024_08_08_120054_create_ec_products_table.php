@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('ec_products', function (Blueprint $table) {
             $table->id()->primary()->comment('商品ID');
-            $table->string('product_name', 255)->comment('商品名');
-            $table->longText('product_image_data')->comment('商品画像データ');
-            $table->string('product_image_type', 64)->comment('商品画像タイプ');
+            $table->string('name', 255)->comment('商品名');
+            $table->longText('image_data')->comment('商品画像データ');
+            $table->string('image_type', 64)->comment('商品画像タイプ');
             $table->integer('qty')->comment('在庫');
             $table->integer('price')->comment('価格');
             $table->boolean('public_flg')->comment('公開フラグ');
