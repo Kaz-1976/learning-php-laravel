@@ -36,6 +36,8 @@ Route::prefix('ec_site')->group(function () {
 
         // カートページ
         Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+        Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+        Route::post('/cart/delete', [CartController::class, 'delete'])->name('cart.delete');
     });
 
     //認証ページ

@@ -5,79 +5,116 @@
 
 {{-- ページコンテンツ --}}
 @section('content')
-    @if (false)
+    @if (empty($ec_cart_details))
         <div>
-            <p>カートは空です</p>
+            <div class="">
+                <a class="" href="">
+                    <span class="">商品一覧</span>
+                </a>
+            </div>
+            <div class="flex ">
+                <p class="">ショッピングカートは空です。</p>
+            </div>
+            <div class="">
+                <a class="" href="">
+                    <span class="">商品一覧</span>
+                </a>
+            </div>
         </div>
     @else
-        <div class="w-full p-2">
-            {{ $ec_cart_details->render() }}
-        </div>
-        <div class="flex flex-row flex-wrap py-2 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
-            @foreach ($ec_cart_details as $ec_cart_detail)
-                <div class="flex flex-col basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 p-2 gap-2">
-                    <div class="flex flex-row w-full p-2 rounded-lg bg-sky-200 dark:bg-sky-700">
-                        <p class="flex m-auto text-center text-xl text-sky-950 dark:text-sky-50 font-bold">
-                            {{ $ec_cart_detail->ec_product->name }}
-                        </p>
-                    </div>
-                    <div class="flex flex-row basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 mx-auto">
-                        <div class="w-full max-w-72 justify-center align-middle">
-                            <img class="w-56 h-56 top-0 bottom-0 left-0 right-0 object-cover overflow-hidden"
-                                src="data:{{ $ec_cart_detail->ec_product->image_type }};base64,{{ $ec_cart_detail->ec_product->image_data }}">
-                        </div>
-                    </div>
-                    <form class="flex flex-col w-full gap-2" id="item-{{ $ec_cart_detail->id }}"
-                        action="{{ route('items.store') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $ec_cart_detail->id }}">
-                        <input type="hidden" name="name" value="{{ $ec_cart_detail->ec_product->name }}">
-                        <div class="flex flex-row mx-2">
-                            <x-input-label class="w-3/12 m-auto text-center" for="item-{{ $ec_cart_detail->id }}-price"
-                                :value="__('価格')" />
-                            <x-text-input class="w-7/12 text-right" type="number" id="item-{{ $ec_cart_detail->id }}-price"
-                                name="price" :value="$ec_cart_detail->price" :readonly="true" />
-                            <x-input-label class="w-2/12 mt-auto mx-auto text-center"
-                                for="item-{{ $ec_cart_detail->id }}-price" :value="__('円')" />
-                        </div>
-                        <div class="flex flex-row mx-2">
-                            <x-input-label class="w-3/12 m-auto text-center" for="item-{{ $ec_cart_detail->id }}-qty"
-                                :value="__('在庫')" />
-                            <x-text-input class="w-7/12 text-right" type="number" id="item-{{ $ec_cart_detail->id }}-qty"
-                                name="qty" :value="$ec_cart_detail->qty" :readonly="true" />
-                            <x-input-label class="w-2/12 mt-auto mx-auto text-center"
-                                for="item-{{ $ec_cart_detail->id }}-qty" :value="__('個')" />
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="flex flex-row mx-2">
-                                <x-input-label class="w-3/12 m-auto text-center" for="item-{{ $ec_cart_detail->id }}-order"
-                                    :value="__('注文')" />
-                                <x-text-input class="w-7/12 text-right" type="number"
-                                    id="item-{{ $ec_cart_detail->id }}-order" name="order" :value="1" />
-                                <x-input-label class="w-2/12 mt-auto mx-auto text-center"
-                                    for="item-{{ $ec_cart_detail->id }}-order" :value="__('個')" />
+        <div>
+            <div class="container w-full pb-1">
+                {{ $ec_cart_details->render() }}
+            </div>
+            <div class="container">
+                @foreach ($ec_cart_details as $ec_cart_detail)
+                    <div
+                        class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_cart_detail->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
+                        <form class="flex flex-row basis-full gap-2" id="update-{{ $ec_cart_detail->id }}"
+                            action="{{ route('cart.update') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $ec_cart_detail->id }}" />
+                            <div class="flex flex-col grow-0 basis-64 h-64 m-auto">
+                                <div class="block w-64 h-64 border-solid border-2 border-sky-50">
+                                    <img class="block w-full h-hull object-cover overflow-hidden"
+                                        id="update-{{ $ec_cart_detail->id }}-image-preview"
+                                        src="data:{{ $ec_cart_detail->ec_products->image_type }};base64,{{ $ec_cart_detail->ec_products->image_data }}">
+                                </div>
                             </div>
-                            @if (old('update') == $ec_cart_detail->id)
-                                <x-input-error :messages="$errors->get('order')" class="my-2" />
-                            @endif
-                        </div>
-                        <div class="flex mx-2">
-                            @if ($ec_cart_detail->qty == 0)
-                                <x-primary-button class="w-full h-8" name="update" :value="$ec_cart_detail->id" disabled>
-                                    <i class="m-auto fa-solid fa-minus"></i>
-                                </x-primary-button>
-                            @else
-                                <x-primary-button class="w-full h-8" name="update" :value="$ec_cart_detail->id">
-                                    <i class="m-auto fa-solid fa-cart-arrow-down fa-2xl" alt="カートに入れる"></i>
-                                </x-primary-button>
-                            @endif
-                        </div>
-                    </form>
-                </div>
-            @endforeach
-        </div>
-        <div class="w-full p-2">
-            {{ $ec_cart_details->render() }}
+                            <div class="flex flex-row grow gap-2">
+                                <div class="flex flex-col basis-4/5 gap-1">
+                                    <div class="block">
+                                        <x-input-label for="update-{{ $ec_cart_detail->id }}-name" :value="__('名称')" />
+                                        <x-text-input class="block mt-1 w-full" type="text"
+                                            id="update-{{ $ec_cart_detail->id }}-name" name="name" :disabled="true"
+                                            :value="$ec_cart_detail->ec_products->name" />
+                                        @if (old('update') == $ec_cart_detail->id)
+                                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                        @endif
+                                    </div>
+                                    <div class="block">
+                                        <x-input-label for="update-{{ $ec_cart_detail->id }}-price" :value="__('価格')" />
+                                        <div class="flex flex-row content-stretch gap-2">
+                                            <x-text-input class="block mt-1 w-full text-right" type="number"
+                                                id="update-{{ $ec_cart_detail->id }}-price" name="price"
+                                                :disabled="true" :value="$ec_cart_detail->price" />
+                                            <x-input-label class="mt-auto" for="update-{{ $ec_cart_detail->id }}-price"
+                                                :value="__('円')" />
+                                        </div>
+                                        @if (old('update') == $ec_cart_detail->id)
+                                            <x-input-error :messages="$errors->get('price')" class="mt-2" />
+                                        @endif
+                                    </div>
+                                    <div class="block">
+                                        <x-input-label for="update-{{ $ec_cart_detail->id }}-qty" :value="__('数量')" />
+                                        <div class="flex flex-row content-stretch gap-2">
+                                            <x-text-input class="block mt-1 w-full text-right" type="number"
+                                                id="update-{{ $ec_cart_detail->id }}-qty" name="qty" :value="$ec_cart_detail->qty"
+                                                required autofocus />
+                                            <x-input-label class="mt-auto" for="update-{{ $ec_cart_detail->id }}-qty"
+                                                :value="__('個')" />
+                                        </div>
+                                        @if (old('update') == $ec_cart_detail->id)
+                                            <x-input-error :messages="$errors->get('qty')" class="mt-2" />
+                                        @endif
+                                    </div>
+                                    <div class="block">
+                                        <x-input-label for="update-{{ $ec_cart_detail->id }}-sub-total"
+                                            :value="__('小計')" />
+                                        <div class="flex flex-row content-stretch gap-2">
+                                            <x-text-input class="block mt-1 w-full text-right" type="number"
+                                                id="update-{{ $ec_cart_detail->id }}-sub-total" name="sub-total"
+                                                :disabled="true" :value="$ec_cart_detail->price * $ec_cart_detail->qty" />
+                                            <x-input-label class="mt-auto" for="update-{{ $ec_cart_detail->id }}-sub-total"
+                                                :value="__('円')" />
+                                        </div>
+                                        @if (old('update') == $ec_cart_detail->id)
+                                            <x-input-error :messages="$errors->get('price')" class="mt-2" />
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="flex flex-col basis-1/5 gap-2">
+                                    <div class="flex basis-full">
+                                        <x-secondary-button class="w-full" type="submit" name="update">
+                                            <span
+                                                class="flex m-auto text-xl text-center font-bold">{{ __('削除') }}</span>
+                                        </x-secondary-button>
+                                    </div>
+                                    <div class="flex basis-full">
+                                        <x-primary-button class="w-full" name="update" :value="$ec_cart_detail->id">
+                                            <span
+                                                class="flex m-auto text-xl text-center font-bold">{{ __('更新') }}</span>
+                                        </x-primary-button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
+            <div class="container w-full pt-1">
+                {{ $ec_cart_details->render() }}
+            </div>
         </div>
     @endif
 @endsection
