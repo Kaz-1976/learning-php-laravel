@@ -164,7 +164,7 @@
                         <div class="flex flex-col basis-1/5 gap-2">
                             <div class="flex basis-full">
                                 @if ($ec_user->user_id != env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id != Auth::user()->user_id)
-                                    <x-secondary-button class="w-full" type="submit" name="enable" :value="$ec_user->id">
+                                    <x-secondary-button class="w-full" name="enable" :value="$ec_user->id">
                                         <span
                                             class="flex m-auto text-xl text-center font-bold">{{ __($ec_user->enable_flg ? '無効' : '有効') }}</span>
                                     </x-secondary-button>
@@ -172,7 +172,7 @@
                             </div>
                             <div class="flex basis-full">
                                 @if (Auth::user()->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id != Auth::user()->user_id)
-                                    <x-secondary-button class="w-full" type="submit" name="admin" :value="$ec_user->id">
+                                    <x-secondary-button class="w-full" name="admin" :value="$ec_user->id">
                                         <span
                                             class="flex m-auto text-xl text-center font-bold">{{ __($ec_user->admin_flg ? '一般' : '管理者') }}</span>
                                     </x-secondary-button>
@@ -198,4 +198,8 @@
             {{ $ec_users->render() }}
         </div>
     </div>
+@endsection
+
+@section('script')
+
 @endsection

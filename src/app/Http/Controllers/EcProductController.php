@@ -68,7 +68,7 @@ class EcProductController extends Controller
                 // 有効フラグ更新
                 $ec_product->public_flg = $ec_product->public_flg == 1 ? 0 : 1;
                 // 保存
-                $ec_product->update();
+                $ec_product->save();
                 break;
             case $request->has('update'):
                 // 商品設定

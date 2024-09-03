@@ -50,7 +50,7 @@
                             <x-text-input class="w-7/12 text-right" type="number" id="item-{{ $ec_product->id }}-order"
                                 name="order" :value="1" />
                             <x-input-label class="w-2/12 mt-auto mx-auto text-center"
-                                for="item-{{ $ec_product->id }}-order" :value="__('個')" />
+                                for="item-{{ $ec_product->id }}-order" :value="__('点')" />
                         </div>
                         @if (old('update') == $ec_product->id)
                             <x-input-error :messages="$errors->get('order')" class="my-2" />

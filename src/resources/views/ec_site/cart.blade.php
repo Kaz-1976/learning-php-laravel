@@ -7,26 +7,51 @@
 @section('content')
     @if (empty($ec_cart_details))
         <div>
-            <div class="">
-                <a class="" href="">
-                    <span class="">商品一覧</span>
+            <div class="flex my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
+                <a class="m-auto" href="{{ route('items.index') }}">
+                    <span class="text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
                 </a>
             </div>
-            <div class="flex ">
-                <p class="">ショッピングカートは空です。</p>
+            <div class="flex my-4 p-4">
+                <p class="m-auto text-sky-50 dark:text-sky-950">ショッピングカートは空です。</p>
             </div>
-            <div class="">
-                <a class="" href="">
-                    <span class="">商品一覧</span>
+            <div class="flex my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
+                <a class="m-auto" href="{{ route('items.index') }}">
+                    <span class="text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
                 </a>
             </div>
         </div>
     @else
         <div>
-            <div class="container w-full pb-1">
+            <div class="flex flex-row gap-2">
+                <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
+                    <form class="m-auto" method="POST" action="{{ route('cart.clear') }}">
+                        @csrf
+                        <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
+                        <button type="submit" name="clear">
+                            <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">空にする</span>
+                        </button>
+                    </form>
+                </div>
+                <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
+                    <a class="m-auto" href="{{ route('items.index') }}">
+                        <span class="text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
+                    </a>
+                </div>
+                <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
+                    <form class="m-auto" method="POST" action="{{ route('cart.checkout') }}">
+                        @csrf
+                        <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
+                        <button type="submit" name="checkout">
+                            <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">購入する</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="w-full py-2">
                 {{ $ec_cart_details->render() }}
             </div>
-            <div class="container">
+            <div class="">
                 @foreach ($ec_cart_details as $ec_cart_detail)
                     <div
                         class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_cart_detail->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
@@ -35,8 +60,9 @@
                             @csrf
                             <input type="hidden" name="id" value="{{ $ec_cart_detail->id }}" />
                             <div class="flex flex-col grow-0 basis-64 h-64 m-auto">
-                                <div class="block w-64 h-64 border-solid border-2 border-sky-50">
-                                    <img class="block w-full h-hull object-cover overflow-hidden"
+                                <div
+                                    class="block w-64 h-64 border-solid border-2 border-sky-950 dark:border-sky-50  overflow-hidden">
+                                    <img class="block w-full h-hull object-cover"
                                         id="update-{{ $ec_cart_detail->id }}-image-preview"
                                         src="data:{{ $ec_cart_detail->ec_products->image_type }};base64,{{ $ec_cart_detail->ec_products->image_data }}">
                                 </div>
@@ -72,7 +98,7 @@
                                                 id="update-{{ $ec_cart_detail->id }}-qty" name="qty" :value="$ec_cart_detail->qty"
                                                 required autofocus />
                                             <x-input-label class="mt-auto" for="update-{{ $ec_cart_detail->id }}-qty"
-                                                :value="__('個')" />
+                                                :value="__('点')" />
                                         </div>
                                         @if (old('update') == $ec_cart_detail->id)
                                             <x-input-error :messages="$errors->get('qty')" class="mt-2" />
@@ -95,7 +121,8 @@
                                 </div>
                                 <div class="flex flex-col basis-1/5 gap-2">
                                     <div class="flex basis-full">
-                                        <x-secondary-button class="w-full" type="submit" name="update">
+                                        <x-secondary-button class="w-full" name="delete" :value="$ec_cart_detail->id"
+                                            formaction="{{ route('cart.update') }}">
                                             <span
                                                 class="flex m-auto text-xl text-center font-bold">{{ __('削除') }}</span>
                                         </x-secondary-button>
@@ -112,8 +139,48 @@
                     </div>
                 @endforeach
             </div>
-            <div class="container w-full pt-1">
+            <div class="w-full py-2">
                 {{ $ec_cart_details->render() }}
+            </div>
+            <div class="flex flex-row w-full p-2 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
+                <div class="flex flex-row basis-1/5">
+                    <span class="flex w-full text-center text-4xl text-sky-950 dark:text-sky-50">合計</span>
+                </div>
+                <div class="flex flex-row basis-2/5 items-end">
+                    <span
+                        class="w-4/5 text-right text-4xl text-sky-950 dark:text-sky-50">{{ $ec_cart_total->total_qty }}</span>
+                    <span class="w-1/5 h-fit text-center text-2xl text-sky-900 dark:text-sky-100">点</span>
+                </div>
+                <div class="flex flex-row basis-2/5 items-end">
+                    <span
+                        class="w-4/5 text-right text-4xl text-sky-950 dark:text-sky-50">{{ $ec_cart_total->total_price }}</span>
+                    <span class="w-1/5 h-fit text-center text-2xl text-sky-900 dark:text-sky-100">円</span>
+                </div>
+            </div>
+            <div class="flex flex-row gap-2">
+                <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
+                    <form class="m-auto" method="POST" action="{{ route('cart.clear') }}">
+                        @csrf
+                        <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
+                        <button type="submit" name="clear">
+                            <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">空にする</span>
+                        </button>
+                    </form>
+                </div>
+                <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
+                    <a class="m-auto" href="{{ route('items.index') }}">
+                        <span class="text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
+                    </a>
+                </div>
+                <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
+                    <form class="m-auto" method="POST" action="{{ route('cart.checkout') }}">
+                        @csrf
+                        <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
+                        <button type="submit" name="checkout">
+                            <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">購入する</span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     @endif
