@@ -31,7 +31,7 @@
                         <div class="flex flex-row content-stretch gap-2">
                             <x-text-input class="basis-auto mt-1 w-full text-right" type="number" id="register-qty"
                                 name="qty" :value="old('qty')" required autofocus />
-                            <x-input-label class="mt-auto" for="register-qty" :value="__('個')" />
+                            <x-input-label class="mt-auto" for="register-qty" :value="__('点')" />
                         </div>
                         @if (old('register') == '1')
                             <x-input-error :messages="$errors->get('qty')" class="my-2" />
@@ -87,16 +87,18 @@
         <div class="container">
             @php
                 $id = [];
+                $form = [];
                 $image = [];
             @endphp
             @foreach ($ec_products as $ec_product)
                 @php
                     $id[] = $ec_product->id;
+                    $form[$ec_product->id] = 'update-' . (string) $ec_product->id;
                     $image[$ec_product->id] = 'data:' . $ec_product->image_type . ';base64,' . $ec_product->image_data;
                 @endphp
                 <div
                     class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_product->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
-                    <form class="flex flex-row basis-full gap-2" id="update-{{ $ec_product->id }}"
+                    <form class="flex flex-row basis-full gap-2" id="{{ $form[$ec_product->id] }}"
                         action="{{ route('products.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $ec_product->id }}" />
@@ -104,41 +106,40 @@
                         <div class="flex flex-col grow-0 basis-64 h-64 m-auto">
                             <div class="block w-64 h-64 border-solid border-2 border-sky-50">
                                 <img class="block w-full h-hull object-cover overflow-hidden"
-                                    id="update-{{ $ec_product->id }}-image-preview"
-                                    src="data:{{ $ec_product->image_type }};base64,{{ $ec_product->image_data }}">
+                                    id="{{ $form[$ec_product->id] }}-image-preview" src="{{ $image[$ec_product->id] }}">
                             </div>
                         </div>
                         <div class="flex flex-row grow gap-2">
                             <div class="flex flex-col basis-4/5 gap-1">
                                 <div class="block">
-                                    <x-input-label for="update-{{ $ec_product->id }}-name" :value="__('名称')" />
+                                    <x-input-label for="{{ $form[$ec_product->id] }}-name" :value="__('名称')" />
                                     <x-text-input class="block mt-1 w-full" type="text"
-                                        id="update-{{ $ec_product->id }}-name" name="name" :value="$ec_product->name" required
+                                        id="{{ $form[$ec_product->id] }}-name" name="name" :value="$ec_product->name" required
                                         autofocus autocomplete="name" />
                                     @if (old('update') == $ec_product->id)
                                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                     @endif
                                 </div>
                                 <div class="block">
-                                    <x-input-label for="update-{{ $ec_product->id }}-qty" :value="__('数量')" />
+                                    <x-input-label for="{{ $form[$ec_product->id] }}-qty" :value="__('数量')" />
                                     <div class="flex flex-row content-stretch gap-2">
                                         <x-text-input class="block mt-1 w-full text-right" type="number"
-                                            id="update-{{ $ec_product->id }}-qty" name="qty" :value="$ec_product->qty"
+                                            id="{{ $form[$ec_product->id] }}-qty" name="qty" :value="$ec_product->qty"
                                             required autofocus />
-                                        <x-input-label class="mt-auto" for="update-{{ $ec_product->id }}-qty"
-                                            :value="__('個')" />
+                                        <x-input-label class="mt-auto" for="{{ $form[$ec_product->id] }}-qty"
+                                            :value="__('点')" />
                                     </div>
                                     @if (old('update') == $ec_product->id)
                                         <x-input-error :messages="$errors->get('qty')" class="mt-2" />
                                     @endif
                                 </div>
                                 <div class="block">
-                                    <x-input-label for="update-{{ $ec_product->id }}-price" :value="__('価格')" />
+                                    <x-input-label for="{{ $form[$ec_product->id] }}-price" :value="__('価格')" />
                                     <div class="flex flex-row content-stretch gap-2">
                                         <x-text-input class="block mt-1 w-full text-right" type="number"
-                                            id="update-{{ $ec_product->id }}-price" name="price" :value="$ec_product->price"
+                                            id="{{ $form[$ec_product->id] }}-price" name="price" :value="$ec_product->price"
                                             required autofocus />
-                                        <x-input-label class="mt-auto" for="update-{{ $ec_product->id }}-price"
+                                        <x-input-label class="mt-auto" for="{{ $form[$ec_product->id] }}-price"
                                             :value="__('円')" />
                                     </div>
                                     @if (old('update') == $ec_product->id)
@@ -146,9 +147,9 @@
                                     @endif
                                 </div>
                                 <div>
-                                    <x-input-label for="update-{{ $ec_product->id }}-image" :value="__('画像')" />
+                                    <x-input-label for="{{ $form[$ec_product->id] }}-image" :value="__('画像')" />
                                     <x-text-input class="block mt-1 w-full" type="file"
-                                        id="update-{{ $ec_product->id }}-image" name="image" accept="image/*" />
+                                        id="{{ $form[$ec_product->id] }}-image" name="image" accept="image/*" />
                                     @if (old('update') == $ec_product->id)
                                         <x-input-error :messages="$errors->get('image')" class="mt-2" />
                                     @endif
@@ -156,18 +157,21 @@
                             </div>
                             <div class="flex flex-col basis-1/5 gap-2">
                                 <div class="flex basis-full">
-                                    <x-secondary-button class="w-full" type="submit" name="public" :value="$ec_product->id">
+                                    <x-secondary-button class="w-full" id="{{ $form[$ec_product->id] }}-btn-public"
+                                        type="submit" name="public" :value="$ec_product->id">
                                         <span
                                             class="flex m-auto text-xl text-center font-bold">{{ __($ec_product->public_flg ? '非公開' : '公開') }}</span>
                                     </x-secondary-button>
                                 </div>
                                 <div class="flex basis-full">
-                                    <x-secondary-button class="w-full" type="reset" name="reset">
+                                    <x-secondary-button class="w-full" id="{{ $form[$ec_product->id] }}-btn-reset"
+                                        type="reset" name="reset">
                                         <span class="flex m-auto text-xl text-center font-bold">{{ __('リセット') }}</span>
                                     </x-secondary-button>
                                 </div>
                                 <div class="flex basis-full">
-                                    <x-primary-button class="w-full" name="update" :value="$ec_product->id">
+                                    <x-primary-button class="w-full" id="{{ $form[$ec_product->id] }}-btn-submit"
+                                        form="{{ $form[$ec_product->id] }}" name="update" :value="$ec_product->id">
                                         <span class="flex m-auto text-xl text-center font-bold">{{ __('更新') }}</span>
                                     </x-primary-button>
                                 </div>
@@ -188,6 +192,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             // 定数設定
             const ids = @json($id);
+            const forms = @json($form);
             const images = @json($image);
 
             // ------------------------------------------------------------
@@ -203,9 +208,9 @@
             // ------------------------------------------------------------
             ids.forEach(id => {
                 // 画像ロード処理
-                loadImage('update-' + id + '-image', 'update-' + id + '-image-preview');
+                loadImage(forms[id] + '-image', forms[id] + '-image-preview');
                 // フォームリセット時画像消去
-                productFormReset('update-' + id, images[id]);
+                productFormReset(forms[id], images[id]);
             });
         }, false);
     </script>
