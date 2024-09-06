@@ -4,7 +4,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CompleteController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\EcUserController;
 use App\Http\Controllers\EcProductController;
 use Illuminate\Support\Facades\Route;
@@ -40,10 +40,9 @@ Route::prefix('ec_site')->group(function () {
         Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
         Route::post('/cart/delete', [CartController::class, 'delete'])->name('cart.delete');
         Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-        Route::post('/cart/checkout', [CartController::class, 'clear'])->name('cart.checkout');
 
-        // 決済完了ページ
-        Route::post('/complete', [CompleteController::class, 'index'])->name('complete.index');
+        // 決済ページ
+        Route::post('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     });
 
     //認証ページ
