@@ -38,7 +38,7 @@ class ItemController extends Controller
                     // カートを生成する
                     $cart = new EcCart();
                     $cart->user_id = Auth::id();
-                    $cart->checkout_flg = false;
+                    $cart->checkout_flg = 0;
                     $cart->save();
                     // カートIDをEcUserモデルに保存
                     $ec_user = EcUser::find(Auth::id());
@@ -78,10 +78,19 @@ class ItemController extends Controller
                 }
             });
         } catch (\Exception $e) {
-            Log::error("カートへの登録に失敗しました。");
+            // ロールバック
+            DB::rollBack();
+            // ログ出力
+            Log::error("商品のカートへの登録に失敗しました。");
             Log::error($e);
+            //
+            return redirect()
+                ->route('users.index')
+                ->with('message', '商品のカートへの登録に失敗しました。');
         }
         // リダイレクト
-        return redirect(route('items.index'));
+        return redirect()
+            ->route('items.index')
+            ->with('message', '商品をカートに登録しました。 商品名： ' . $request->name . ' ／ 数量' . $order->order . '点');
     }
 }

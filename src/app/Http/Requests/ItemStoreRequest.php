@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\EcProduct;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ItemStoreRequest extends FormRequest
@@ -33,8 +34,11 @@ class ItemStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        // 商品レコード取得
+        $ec_product = EcProduct::find($this->id);
+
         return [
-            'order' => ['required', 'integer', 'min:1', 'max:' . $this->qty],
+            'order' => ['required', 'integer', 'min:1', 'max:' . $ec_product->qty],
         ];
     }
 }

@@ -68,6 +68,11 @@
             <div class="flex mx-auto p-4">
                 <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50 ">@yield('pagetitle')</h2>
             </div>
+            @if (session('message'))
+                <div class="flex flex-col w-full p-4">
+                    <p>{{ session('message') }}</p>
+                </div>
+            @endif
             <div class="flex flex-col w-full p-4">
                 @yield('content')
             </div>
@@ -77,7 +82,7 @@
     <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-700/80 dark:bg-sky-300/80">
         @auth
             <div class="flex m-auto leading-8">
-                <p class="text-2xl text-center text-sky-50 dark:text-sky-950 font-bold">
+                <p class="text-xl md:text-2xl text-center text-sky-50 dark:text-sky-950 font-bold">
                     {{ Auth::user()->user_name }}さんがログイン中
                 </p>
             </div>
