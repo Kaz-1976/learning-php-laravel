@@ -12,7 +12,6 @@
     "css.validate": true,
     "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
     "html.format.templating": true,
-    "php.validate.executablePath": "./php.cmd",
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.experimental.configFile": "src/tailwind.config.js",
     "tailwindCSS.hovers": true
