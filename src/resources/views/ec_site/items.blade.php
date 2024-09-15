@@ -58,12 +58,14 @@
                     </div>
                     <div class="flex mx-2">
                         @if ($ec_product->qty == 0)
-                            <x-primary-button class="w-full h-8" name="update" :value="$ec_product->id" disabled>
+                            <x-primary-button class="flex flex-row justify-center gap-2 w-full h-8" name="update" :value="$ec_product->id" disabled title="在庫切れ">
                                 <i class="m-auto fa-solid fa-minus"></i>
+                                <span class="flex text-sm font-bold">在庫切れ</span>
                             </x-primary-button>
                         @else
-                            <x-primary-button class="w-full h-8" name="update" :value="$ec_product->id">
-                                <i class="m-auto fa-solid fa-cart-arrow-down fa-2xl" alt="カートに入れる"></i>
+                            <x-primary-button class="flex flex-row justify-center gap-2 w-full h-8" name="update" :value="$ec_product->id" title="カートに入れる">
+                                <i class="flex fa-solid fa-cart-arrow-down fa-2xl"></i>
+                                <span class="flex text-sm font-bold">カートに入れる</span>
                             </x-primary-button>
                         @endif
                     </div>

@@ -7,10 +7,10 @@ use App\Http\Requests\EcUserCreateRequest;
 use App\Http\Requests\EcUserUpdateRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
-
-use function PHPUnit\Framework\isEmpty;
+use Illuminate\Support\Facades\DB;
 
 class EcUserController extends Controller
 {
@@ -45,7 +45,6 @@ class EcUserController extends Controller
         try {
             // ユーザー生成
             $ec_user = new EcUser();
-
             // ユーザー設定
             $ec_user->user_id = $valid_data->user_id;
             $ec_user->user_name = $valid_data->user_name;
@@ -54,111 +53,132 @@ class EcUserController extends Controller
             $ec_user->password = Hash::make($valid_data->password);
             $ec_user->enable_flg = $request->enable_flg == 'on' ? true : false;
             $ec_user->admin_flg = $request->admin_flg == 'on' ? true : false;
-
             // ユーザー登録
             $ec_user->save();
+            // メッセージ設定
+            $message = 'ユーザーの登録を完了しました。';
         } catch (\Exception $e) {
             // ログ出力
             Log::error('ユーザーの登録に失敗しました。');
             Log::error($e);
-            //
-            return redirect()
-                ->route('users.index')
-                ->with('message', 'ユーザーの登録に失敗しました。');
+            // メッセージ設定
+            $message = 'ユーザーの登録に失敗しました。';
         }
-        //
-        return redirect()
-            ->route('users.index')
-            ->with('message', 'ユーザーの登録を完了しました。');
+        // リターン
+        return redirect(url()->previous())
+            ->with('message', $message);
     }
 
     // ユーザー更新
     public function update(EcUserUpdateRequest $request)
     {
+        // セッションIDの再生成を避ける
+        $request->session()->regenerate(false);
         // 検証済みデータ
         $valid_data = $request->safe();
-
-        // フラグ設定
+        //
         switch (true) {
             case $request->has('enable'):
-                try {
-                    // ユーザーレコード取得
-                    $ec_user = EcUser::find($request->id);
-                    // 有効フラグ更新
-                    $ec_user->enable_flg = $ec_user->enable_flg == 1 ? 0 : 1;
-                    // 保存
-                    $ec_user->save();
-                } catch (\Exception $e) {
-                    // ログ出力
-                    Log::error('ユーザーの' . ($ec_user->enable_flg == 1 ? '無効' : '有効') . '化に失敗しました。');
-                    Log::error('ユーザーID： ' . $ec_user->user_id);
-                    Log::error($e);
-                    //
-                    return redirect()
-                        ->route('users.index')
-                        ->with('message', 'ユーザーの' . ($ec_user->enable_flg == 1 ? '無効' : '有効') . '化に失敗しました。ユーザーID： ' . $ec_user->user_id);
-                }
-                // メッセージ設定
-                session()->flush('message', 'ユーザーを' . ($ec_user->enable_flg == 1 ? '無効' : '有効') . '化しました。ユーザーID： ' . $ec_user->user_id);
+                $message = DB::transaction(function () use ($request, $valid_data) {
+                    try {
+                        // ユーザーレコード取得
+                        $ec_user = EcUser::find($request->id);
+                        // 有効フラグ更新
+                        $ec_user->enable_flg = $request->enable_flg == 1 ? 0 : 1;
+                        // 保存
+                        $ec_user->save();
+                        // コミット
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        // ロールバック
+                        DB::rollBack();
+                        // ログ出力
+                        Log::error('ユーザーの' . ($request->enable_flg == 1 ? '無効' : '有効') . '化に失敗しました。');
+                        Log::error('ユーザーID： ' . $request->user_id);
+                        Log::error($e);
+                        // メッセージ設定
+                        $message = 'ユーザーの' . ($request->enable_flg == 1 ? '無効' : '有効') . '化に失敗しました。ユーザーID： ' . $ec_user->user_id;
+                        return;
+                    }
+                    // メッセージ設定
+                    $message = 'ユーザーを' . ($request->enable_flg == 1 ? '無効' : '有効') . '化しました。ユーザーID： ' . $ec_user->user_id;
+                    // リターン
+                    return $message;
+                });
                 break;
             case $request->has('admin'):
-                try {
-                    // ユーザーレコード取得
-                    $ec_user = EcUser::find($request->id);
-                    // 管理者フラグ更新
-                    $ec_user->admin_flg = $ec_user->admin_flg == 1 ? 0 : 1;
-                    // 保存
-                    $ec_user->save();
-                } catch (\Exception $e) {
-                    // ログ出力
-                    Log::error('ユーザーを' . ($ec_user->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'への変更に失敗しました。');
-                    Log::error('ユーザーID： ' . $ec_user->user_id);
-                    Log::error($e);
-                    //
-                    return redirect()
-                        ->route('users.index')
-                        ->with('message', 'ユーザーの' . ($ec_user->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'への変更に失敗しました。ユーザーID： ' . $ec_user->user_id);
-                }
-                // メッセージ設定
-                session()->flush('message', 'ユーザーを' . ($ec_user->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'へ変更しました。ユーザーID： ' . $ec_user->user_id);
+                $message = DB::transaction(function () use ($request, $valid_data) {
+                    try {
+                        // ユーザーレコード取得
+                        $ec_user = EcUser::find($request->id);
+                        // 管理者フラグ更新
+                        $ec_user->admin_flg = $request->admin_flg == 1 ? 0 : 1;
+                        // 保存
+                        $ec_user->save();
+                        // コミット
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        // ロールバック
+                        DB::rollBack();
+                        // ログ出力
+                        Log::error('ユーザーを' . ($request->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'への変更に失敗しました。');
+                        Log::error('ユーザーID： ' . $request->user_id);
+                        Log::error($e);
+                        // メッセージ設定
+                        $message = 'ユーザーの' . ($request->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'への変更に失敗しました。ユーザーID： ' . $ec_user->user_id;
+                        return;
+                    }
+                    // メッセージ設定
+                    $message = 'ユーザーを' . ($request->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'へ変更しました。ユーザーID： ' . $ec_user->user_id;
+                    // リターン
+                    return $message;
+                });
                 break;
             case $request->has('update'):
-                try {
-                    // ユーザーレコード取得
-                    $ec_user = EcUser::find($request->id);
-                    // ユーザーレコード設定
-                    $ec_user->user_id = $valid_data->user_id;
-                    $ec_user->user_name = $valid_data->user_name;
-                    $ec_user->user_kana = $valid_data->user_kana;
-                    $ec_user->email = $valid_data->email;
-
-                    // パスワード設定
-                    if (!isEmpty($request->safe()->only(['password']))) {
-                        $ec_user->password = Hash::make($valid_data->password);
+                $message = DB::transaction(function () use ($request, $valid_data) {
+                    try {
+                        // ユーザーレコード取得
+                        $ec_user = EcUser::find($request->id);
+                        // ユーザーID設定
+                        if ($ec_user->user_id != $valid_data->user_id) {
+                            $ec_user->user_id = $valid_data->user_id;
+                        }
+                        // パスワード設定
+                        if (!empty($request->safe()->only(['password']))) {
+                            $ec_user->password = Hash::make($valid_data->password);
+                        }
+                        // ユーザーレコード設定
+                        $ec_user->user_name = $valid_data->user_name;
+                        $ec_user->user_kana = $valid_data->user_kana;
+                        $ec_user->email = $valid_data->email;
+                        // フラグ設定
+                        $ec_user->enable_flg = $request->enable_flg;
+                        $ec_user->admin_flg = $request->admin_flg;
+                        // 保存
+                        $ec_user->save();
+                        // コミット
+                        DB::commit();
+                    } catch (\Exception $e) {
+                        // ロールバック
+                        DB::rollBack();
+                        // ログ出力
+                        Log::error('ユーザー情報の更新に失敗しました。');
+                        Log::error('ユーザーID： ' . $ec_user->user_id);
+                        Log::error($e);
+                        // メッセージ設定
+                        $message = 'ユーザー情報の更新に失敗しました。ユーザーID： ' . $ec_user->user_id;
                     }
-
-                    // フラグ設定
-                    $ec_user->enable_flg = $request->enable_flg;
-                    $ec_user->admin_flg = $request->admin_flg;
-
-                    // 保存
-                    $ec_user->save();
-                } catch (\Exception $e) {
-                    // ログ出力
-                    Log::error('ユーザー情報の更新に失敗しました。');
-                    Log::error('ユーザーID： ' . $ec_user->user_id);
-                    Log::error($e);
-                    //
-                    return redirect()
-                        ->route('users.index')
-                        ->with('message', 'ユーザー情報の更新に失敗しました。ユーザーID： ' . $ec_user->user_id);
-                }
-                // メッセージ設定
-                session()->flush('message', 'ユーザー情報を更新しました。ユーザーID： ' . $ec_user->user_id);
+                    // メッセージ設定
+                    $message = 'ユーザー情報を更新しました。ユーザーID： ' . $ec_user->user_id;
+                    // リターン
+                    return $message;
+                });
                 break;
         }
-
-        //
-        return redirect()->route('users.index');
+        // セッションID再生成有効
+        $request->session()->regenerate(true);
+        // リターン
+        return redirect(url()->previous())
+            ->with('message', $message);
     }
 }

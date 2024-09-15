@@ -89,8 +89,7 @@ class ItemController extends Controller
                 ->with('message', '商品のカートへの登録に失敗しました。');
         }
         // リダイレクト
-        return redirect()
-            ->route('items.index')
-            ->with('message', '商品をカートに登録しました。 商品名： ' . $request->name . ' ／ 数量' . $order->order . '点');
+        return redirect(url()->previous())
+            ->with('message', '商品をカートに登録しました。 商品名： ' . $request->name . ' 数量： ' . $order->order . '点');
     }
 }

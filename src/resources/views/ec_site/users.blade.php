@@ -110,7 +110,7 @@
                                 <x-input-label for="update-user-id-{{ $ec_user->id }}" :value="__('ID')" />
                                 <x-text-input class="block mt-1 w-full" type="text"
                                     id="update-user-id-{{ $ec_user->id }}" name="user_id" :value="$ec_user->user_id" required
-                                    :readonly="$ec_user->user_id === env('DEFAULT_ADMIN_ID', 'ec_admin')" autofocus autocomplete="user_id" placeholder="EcTaro" />
+                                    :readonly="$ec_user->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') || $ec_user->user_id == Auth::user()->user_id" autofocus autocomplete="user_id" placeholder="EcTaro" />
                                 @if (old('update') == $ec_user->id)
                                     <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
                                 @endif
@@ -161,22 +161,12 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="flex flex-col basis-1/5 gap-2">
+                        <div class="flex flex-col-reverse basis-1/5 gap-2">
                             <div class="flex basis-full">
-                                @if ($ec_user->user_id != env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id != Auth::user()->user_id)
-                                    <x-secondary-button class="w-full" name="enable" :value="$ec_user->id">
-                                        <span
-                                            class="flex m-auto text-xl text-center font-bold">{{ __($ec_user->enable_flg ? '無効' : '有効') }}</span>
-                                    </x-secondary-button>
-                                @endif
-                            </div>
-                            <div class="flex basis-full">
-                                @if (Auth::user()->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id != Auth::user()->user_id)
-                                    <x-secondary-button class="w-full" name="admin" :value="$ec_user->id">
-                                        <span
-                                            class="flex m-auto text-xl text-center font-bold">{{ __($ec_user->admin_flg ? '一般' : '管理者') }}</span>
-                                    </x-secondary-button>
-                                @endif
+                                <x-primary-button class="w-full" form="update-{{ $ec_user->id }}" name="update"
+                                    :value="$ec_user->id">
+                                    <span class="flex m-auto text-xl text-center font-bold">{{ __('更新') }}</span>
+                                </x-primary-button>
                             </div>
                             <div class="flex basis-full">
                                 <x-secondary-button class="w-full" type="reset" name="reset">
@@ -184,10 +174,20 @@
                                 </x-secondary-button>
                             </div>
                             <div class="flex basis-full">
-                                <x-primary-button class="w-full" form="update-{{ $ec_user->id }}" name="update"
-                                    :value="$ec_user->id">
-                                    <span class="flex m-auto text-xl text-center font-bold">{{ __('更新') }}</span>
-                                </x-primary-button>
+                                @if (Auth::user()->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id != Auth::user()->user_id)
+                                    <x-secondary-button class="w-full" type="submit" name="admin" :value="$ec_user->id">
+                                        <span
+                                            class="flex m-auto text-xl text-center font-bold">{{ __($ec_user->admin_flg ? '一般' : '管理者') }}</span>
+                                    </x-secondary-button>
+                                @endif
+                            </div>
+                            <div class="flex basis-full">
+                                @if ($ec_user->user_id != env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id != Auth::user()->user_id)
+                                    <x-secondary-button class="w-full" type="submit" name="enable" :value="$ec_user->id">
+                                        <span
+                                            class="flex m-auto text-xl text-center font-bold">{{ __($ec_user->enable_flg ? '無効' : '有効') }}</span>
+                                    </x-secondary-button>
+                                @endif
                             </div>
                         </div>
                     </form>

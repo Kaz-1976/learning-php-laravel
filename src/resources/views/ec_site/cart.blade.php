@@ -5,7 +5,7 @@
 
 {{-- ページコンテンツ --}}
 @section('content')
-    @if (empty($ec_cart_data))
+    @if (empty($ec_cart_details))
         <div>
             <div class="flex my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
                 <a class="m-auto" href="{{ route('items.index') }}">
@@ -49,10 +49,10 @@
                 </div>
             </div>
             <div class="w-full py-2">
-                {{ $ec_cart_data->render() }}
+                {{ $ec_cart_details->render() }}
             </div>
             <div class="w-full">
-                @foreach ($ec_cart_data->ec_cart_details as $ec_cart_detail)
+                @foreach ($ec_cart_details as $ec_cart_detail)
                     <div
                         class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_cart_detail->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
                         <form class="flex flex-col md:flex-row basis-full w-full gap-2"
@@ -123,19 +123,19 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="flex flex-row md:flex-col basis-1/5 gap-2">
+                                <div class="flex flex-row-reverse md:flex-col-reverse basis-1/5 gap-2">
+                                    <div class="flex basis-full">
+                                        <x-primary-button class="w-full" name="update" :value="$ec_cart_detail->id">
+                                            <span
+                                                class="flex m-auto text-lg md:text-xl text-center font-bold">{{ __('更新') }}</span>
+                                        </x-primary-button>
+                                    </div>
                                     <div class="flex basis-full">
                                         <x-secondary-button class="w-full" type="submit" name="delete"
                                             :value="$ec_cart_detail->id" formaction="{{ route('cart.delete') }}">
                                             <span
                                                 class="flex m-auto text-lg md:text-xl text-center font-bold">{{ __('削除') }}</span>
                                         </x-secondary-button>
-                                    </div>
-                                    <div class="flex basis-full">
-                                        <x-primary-button class="w-full" name="update" :value="$ec_cart_detail->id">
-                                            <span
-                                                class="flex m-auto text-lg md:text-xl text-center font-bold">{{ __('更新') }}</span>
-                                        </x-primary-button>
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +144,7 @@
                 @endforeach
             </div>
             <div class="w-full py-2">
-                {{ $ec_cart_data->render() }}
+                {{ $ec_cart_details->render() }}
             </div>
             <div class="flex flex-row w-full py-4 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
                 <div class="flex flex-row basis-1/5 justify-center">
@@ -152,12 +152,12 @@
                 </div>
                 <div class="flex flex-row basis-2/5 items-end">
                     <span
-                        class="w-4/5 text-right font-bold text-2xl md:text-4xl text-sky-950 dark:text-sky-50">{{ number_format($ec_cart_total[0]->total_qty) }}</span>
+                        class="w-4/5 text-right font-bold text-2xl md:text-4xl text-sky-950 dark:text-sky-50">{{ number_format($ec_cart_total->total_qty) }}</span>
                     <span class="w-1/5 h-fit text-center text-xl md:text-2xl text-sky-900 dark:text-sky-100">点</span>
                 </div>
                 <div class="flex flex-row basis-2/5 items-end">
                     <span
-                        class="w-4/5 text-right font-bold text-2xl md:text-4xl text-sky-950 dark:text-sky-50">{{ number_format($ec_cart_total[0]->total_price) }}</span>
+                        class="w-4/5 text-right font-bold text-2xl md:text-4xl text-sky-950 dark:text-sky-50">{{ number_format($ec_cart_total->total_price) }}</span>
                     <span class="w-1/5 h-fit text-center text-xl md:text-2xl text-sky-900 dark:text-sky-100">円</span>
                 </div>
             </div>
