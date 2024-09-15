@@ -18,29 +18,36 @@ class CartController extends Controller
     {
         // カート情報
         if (empty(Auth::user()->cart_id)) {
-            $ec_cart_data = null;
+            $ec_cart_details = null;
             $ec_cart_total = null;
         } else {
-            // カート内合計の数量・価格を取得
-            $ec_cart_total = DB::table('ec_cart_details')
-                ->selectRaw('SUM(qty) as total_qty')
-                ->selectRaw('SUM(price * qty) as total_price')
-                ->where('cart_id', '=', Auth::user()->cart_id)
-                ->get();
-            // カート明細レコード取得
-            if ($ec_cart_total[0]->total_qty == 0) {
-                $ec_cart_data = null;
+            // カートチェック
+            $ec_cart = EcCart::find(Auth::user()->cart_id);
+            if ($ec_cart->checkout_flg != 0) {
+                $ec_cart_details = null;
+                $ec_cart_total = null;
             } else {
-                $ec_cart_data = EcCartDetail::query()
-                    ->with([
-                        'ec_products:id,name,image_data,image_type,price,qty,public_flg'
-                    ])
+                // カート内合計の数量・価格を取得
+                $ec_cart_total = DB::table('ec_cart_details')
+                    ->selectRaw('SUM(qty) as total_qty')
+                    ->selectRaw('SUM(price * qty) as total_price')
                     ->where('cart_id', '=', Auth::user()->cart_id)
-                    ->paginate(6);
+                    ->first();
+                // カート明細レコード取得
+                if ($ec_cart_total->total_qty == 0) {
+                    $ec_cart_details = null;
+                } else {
+                    $ec_cart_details = EcCartDetail::query()
+                        ->with([
+                            'ec_products:id,name,image_data,image_type,price,qty,public_flg'
+                        ])
+                        ->where('cart_id', '=', Auth::user()->cart_id)
+                        ->paginate(6);
+                }
             }
         }
         //
-        return view('ec_site.cart', ['ec_cart_data' => $ec_cart_data, 'ec_cart_total' => $ec_cart_total]);
+        return view('ec_site.cart', ['ec_cart_details' => $ec_cart_details, 'ec_cart_total' => $ec_cart_total]);
     }
 
     public function update(EcCartDetailUpdateRequest $request)
@@ -56,9 +63,8 @@ class CartController extends Controller
         $ec_cart_detail->qty = $valid_data->qty;
         $ec_cart_detail->save();
         //
-        return redirect()
-            ->route('cart.index')
-            ->with('message', '商品名： ' . $ec_cart_detail->name . ' の注文数量を更新しました。');
+        return redirect(url()->previous())
+            ->with('message', '商品名： ' . $request->name . ' の注文数量を更新しました。');
     }
 
     public function delete(Request $request)
@@ -71,16 +77,15 @@ class CartController extends Controller
         $ec_cart_detail->delete();
         $ec_cart_detail->save();
         //
-        return redirect()
-            ->route('cart.index')
-            ->with('message', '商品名： ' . $ec_cart_detail->name . ' をカートから削除しました。');
+        return redirect(url()->previous())
+            ->with('message', '商品名： ' . $request->name . ' をカートから削除しました。');
     }
 
     public function clear(Request $request)
     {
         // カートID
         $id = Auth::user()->cart_id;
-        // レコード全削除
+        // カートIDに紐付くカート明細レコード削除
         EcCartDetail::query()
             ->where('cart_id', $id)
             ->delete();
@@ -97,36 +102,43 @@ class CartController extends Controller
         // トランザクション開始
         try {
             DB::transaction(function () use ($cart_id,  $request) {
+                // カート情報取得
+                $ec_cart = EcCart::find($cart_id);
+                if ($ec_cart->checkout_flg != 0 ) {
+                    // ロールバック
+                    DB::rollBack();
+                    // ログ出力
+                    Log::error('購入処理に失敗しました。');
+                    Log::error('そのカートは決済済みです。');
+                    Log::error('カートID： ' . Auth::user()->cart_id);
+                    // リターン
+                    return redirect(url()->previous())
+                        ->with('message', '購入処理に失敗しました。');
+                }
                 // カート明細取得
-                $ec_cart_data = EcCart::query()
+                $ec_cart_details = EcCartDetail::query()
                     ->with([
-                        'ec_cart_details:cart_id,id,product_id,price,qty',
-                        'ec_cart_details.ec_products:id,name,image_data,image_type,price,qty,public_flg'
+                        'ec_products:id,name,image_data,image_type,price,qty,public_flg'
                     ])
-                    ->where('id', '=', $cart_id)
-                    ->where('checkout_flg', '=', 0)
+                    ->where('cart_id', '=', $cart_id)
                     ->get();
                 // 在庫引当処理
-                foreach ($ec_cart_data->ec_cart_details as $ec_cart_detail) {
+                foreach ($ec_cart_details as $ec_cart_detail) {
                     // 商品存在チェック
                     if (empty($ec_cart_detail->ec_products) || $ec_cart_detail->ec_products->public_flg == 0) {
                         // ロールバック
                         DB::rollBack();
                         //
-                        return redirect()
-                            ->route('cart.index')
+                        return redirect(url()->previous())
                             ->with('message', '商品が存在しません。 商品名： ' . (empty($ec_cart_detail->ec_products) ? 'NULL' : $ec_cart_detail->ec_products->name));
                     }
                     // 商品在庫チェック
                     if ($ec_cart_detail->ec_products->qty < $ec_cart_detail->qty) {
-                        // エラー：在庫不足
-                        session()->flush('message', '在庫が不足しています。 商品名： ' . $ec_cart_detail->ec_products->name . ' ／ 在庫数： ' . $ec_cart_detail->ec_products->qty);
                         // ロールバック
                         DB::rollBack();
                         //
-                        return redirect()
-                            ->route('cart.index')
-                            ->with('message', '注文数量に対して在庫が不足しています。 商品名： ' . $ec_cart_detail->ec_products->name . ' ／ 在庫数： ' . $ec_cart_detail->ec_products->qty);
+                        return redirect(url()->previous())
+                            ->with('message', '注文数量に対して在庫が不足しています。 商品名： ' . $ec_cart_detail->ec_products->name . ' 在庫数： ' . $ec_cart_detail->ec_products->qty);
                     }
                     // 商品レコード取得
                     $ec_product = EcProduct::find($ec_cart_detail->product_id);
@@ -146,10 +158,10 @@ class CartController extends Controller
                 $ec_user = EcUser::find(Auth::id());
                 $ec_user->cart_id = null;
                 $ec_user->save();
-                // ユーザー情報更新
-                Auth::user()->refresh();
                 // コミット
                 DB::commit();
+                // ユーザー情報更新
+                Auth::user()->refresh();
             });
         } catch (\Exception $e) {
             // ログ出力
@@ -157,10 +169,11 @@ class CartController extends Controller
             Log::error('カートID： ' . Auth::user()->cart_id);
             Log::error($e);
             //
-            return redirect()
-                ->route('cart.index')
+            return redirect(url()->previous())
                 ->with('message', '購入処理でエラーが発生しました。');
         }
+        // セッション
+        session()->flash('cart_id', $cart_id);
         // リダイレクト
         return redirect()
             ->route('complete.index')

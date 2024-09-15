@@ -81,12 +81,12 @@
             </div>
             <div class="flex flex-row basis-2/5 items-end">
                 <span
-                    class="w-4/5 text-right font-bold text-2xl md:text-4xl text-sky-950 dark:text-sky-50">{{ number_format($ec_cart_total[0]->total_qty) }}</span>
+                    class="w-4/5 text-right font-bold text-2xl md:text-4xl text-sky-950 dark:text-sky-50">{{ number_format($ec_cart_total->total_qty) }}</span>
                 <span class="w-1/5 h-fit text-center text-xl md:text-2xl text-sky-900 dark:text-sky-100">点</span>
             </div>
             <div class="flex flex-row basis-2/5 items-end">
                 <span
-                    class="w-4/5 text-right font-bold text-2xl md:text-4xl text-sky-950 dark:text-sky-50">{{ number_format($ec_cart_total[0]->total_price) }}</span>
+                    class="w-4/5 text-right font-bold text-2xl md:text-4xl text-sky-950 dark:text-sky-50">{{ number_format($ec_cart_total->total_price) }}</span>
                 <span class="w-1/5 h-fit text-center text-xl md:text-2xl text-sky-900 dark:text-sky-100">円</span>
             </div>
         </div>

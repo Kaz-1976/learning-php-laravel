@@ -38,7 +38,7 @@ class EcUserCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'string', 'max:255', 'unique:ec_users,user_id', 'regex:/^[a-zA-Z0-9]+$/'],
+            'user_id' => ['required', 'string', 'max:255', 'unique:ec_users,user_id'],
             'user_name' => ['required', 'string', 'max:255'],
             'user_kana' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:ec_users,email'],

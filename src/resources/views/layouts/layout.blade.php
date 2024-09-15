@@ -41,20 +41,31 @@
         <div class="flex">
             <ul class="flex my-auto list-inside gap-2">
                 @auth
-                    @if (!Auth::user()->admin_flg)
+                    @if (Auth::user()->admin_flg)
                         <li class="inline m-auto text-xl">
-                            <a href="{{ route('cart.index') }}">
-                                <i class="w-full h-full text-sky-50 dark:text-sky-950 fa-solid fa-cart-shopping fa-2xl"
-                                    alt="ショッピングカート"></i>
+                            <a href="{{ route('users.index') }}" title="ユーザー管理">
+                                <i class="fa-solid fa-users fa-2xl w-full h-full text-sky-50 dark:text-sky-950"></i>
+                            </a>
+                        </li>
+                        @if (Auth::user()->user_id != env('DEFAULT_ADMIN_ID','ec_admin'))
+                            <li class="inline m-auto text-xl">
+                                <a href="{{ route('products.index') }}" title="商品管理">
+                                    <i class="fa-solid fa-boxes-stacked fa-2xl w-full h-full text-sky-50 dark:text-sky-950"></i>
+                                </a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="inline m-auto text-xl">
+                            <a href="{{ route('cart.index') }}" title="ショッピングカート">
+                                <i class="w-full h-full text-sky-50 dark:text-sky-950 fa-solid fa-cart-shopping fa-2xl"></i>
                             </a>
                         </li>
                     @endif
                     <li class="inline m-auto text-xl">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit">
-                                <i class="w-full h-full text-sky-50 dark:text-sky-950 fa-solid fa-right-from-bracket fa-2xl"
-                                    alt="ログアウト"></i>
+                            <button type="submit" title="ログアウト">
+                                <i class="w-full h-full text-sky-50 dark:text-sky-950 fa-solid fa-right-from-bracket fa-2xl"></i>
                             </button>
                         </form>
                     </li>
@@ -66,11 +77,11 @@
     <article class="w-full max-w-screen-xl mx-auto">
         <div class="flex flex-col">
             <div class="flex mx-auto p-4">
-                <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50 ">@yield('pagetitle')</h2>
+                <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50">@yield('pagetitle')</h2>
             </div>
             @if (session('message'))
                 <div class="flex flex-col w-full p-4">
-                    <p>{{ session('message') }}</p>
+                    <p class="text-xl text-center font-bold text-sky-950 dark:text-sky-50">{{ session('message') }}</p>
                 </div>
             @endif
             <div class="flex flex-col w-full p-4">

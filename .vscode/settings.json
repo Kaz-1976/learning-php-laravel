@@ -1,6 +1,6 @@
 {
     "[blade]": {
-        "editor.defaultFormatter": "shufo.vscode-blade-formatter"
+        "editor.defaultFormatter": "onecentlin.laravel-blade"
     },
     "[css]": {
         "editor.defaultFormatter": "vscode.css-language-features"
@@ -10,7 +10,7 @@
     "css.completion.triggerPropertyValueCompletion": false,
     "css.format.spaceAroundSelectorSeparator": true,
     "css.validate": true,
-    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.defaultFormatter": "shufo.vscode-blade-formatter",
     "html.format.templating": true,
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.experimental.configFile": "src/tailwind.config.js",

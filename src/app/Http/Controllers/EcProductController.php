@@ -7,6 +7,7 @@ use App\Http\Requests\EcProductCreateRequest;
 use App\Http\Requests\EcProductUpdateRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class EcProductController extends Controller
@@ -48,19 +49,18 @@ class EcProductController extends Controller
             $ec_product->image_type = mime_content_type($request->image->getRealPath());
             // 登録
             $ec_product->save();
+            // メッセージ設定
+            $message = '商品情報を登録しました。';
         } catch (\Exception $e) {
             // ログ出力
             Log::error('商品情報の登録に失敗しました。');
             Log::error($e);
-            //
-            return redirect()
-                ->route('users.index')
-                ->with('message', '商品情報の登録に失敗しました。');
+            // メッセージ設定
+            $message = '商品情報の登録に失敗しました。';
         }
-        //
-        return redirect()
-            ->route('products.index')
-            ->with('message', '商品情報を登録しました。');
+        // リターン
+        return redirect(url()->previous())
+            ->with('message', $message);
     }
 
     // 商品更新
@@ -72,58 +72,66 @@ class EcProductController extends Controller
         switch (true) {
             case $request->has('public'):
                 // 商品公開フラグ更新
-                try {
-                    // 商品レコード取得
-                    $ec_product = EcProduct::find($request->id);
-                    // 公開フラグ更新
-                    $ec_product->public_flg = $ec_product->public_flg == 1 ? 0 : 1;
-                    // 保存
-                    $ec_product->save();
-                } catch (\Exception $e) {
-                    // ログ出力
-                    Log::error('商品の' . ($ec_product->public_flg == 1 ? '非公開' : '公開') . '設定に失敗しました。');
-                    Log::error('商品ID： ' . $ec_product->id);
-                    Log::error($e);
-                    //
-                    return redirect()
-                        ->route('users.index')
-                        ->with('message', '商品の' . ($ec_product->public_flg == 1 ? '非公開' : '公開') . '設定に失敗しました。商品名： ' . $ec_product->name);
-                }
-                // メッセージ設定
-                session()->flush('message', '商品を' . ($ec_product->public_flg == 1 ? '非公開' : '公開') . '設定にしました。商品名： ' . $ec_product->name);
+                $message = DB::transaction(function () use ($request, $valid_data) {
+                    try {
+                        // 商品レコード取得
+                        $ec_product = EcProduct::find($request->id);
+                        // 公開フラグ更新
+                        $ec_product->public_flg = $ec_product->public_flg == 1 ? 0 : 1;
+                        // 保存
+                        $ec_product->save();
+                    } catch (\Exception $e) {
+                        // ログ出力
+                        Log::error('商品の' . ($request->public_flg == 1 ? '非公開' : '公開') . '設定に失敗しました。');
+                        Log::error('商品ID： ' . $request->id . ' 商品名： ' . $valid_data->name);
+                        Log::error($e);
+                        // メッセージ設定
+                        $message = '商品の' . ($request->public_flg == 1 ? '非公開' : '公開') . '設定に失敗しました。商品名： ' . $valid_data->name;
+                        // リターン
+                        return $message;
+                    }
+                    // メッセージ設定
+                    $message = '商品を' . ($request->public_flg == 1 ? '非公開' : '公開') . '設定にしました。商品名： ' . $valid_data->name;
+                    // リターン
+                    return $message;
+                });
                 break;
             case $request->has('update'):
                 // 商品情報更新
-                try {
-                    // 商品レコード取得
-                    $ec_product = EcProduct::find($request->id);
-                    // 商品設定
-                    $ec_product->name = $valid_data->name;
-                    $ec_product->qty = $valid_data->qty;
-                    $ec_product->price = $valid_data->price;
-                    // 画像設定
-                    if (!empty($request->image)) {
-                        $ec_product->image_data = base64_encode(file_get_contents($request->image->getRealPath()));
-                        $ec_product->image_type = mime_content_type($request->image->getRealPath());
+                $message = DB::transaction(function () use ($request, $valid_data) {
+                    try {
+                        // 商品レコード取得
+                        $ec_product = EcProduct::find($request->id);
+                        // 商品設定
+                        $ec_product->name = $valid_data->name;
+                        $ec_product->qty = $valid_data->qty;
+                        $ec_product->price = $valid_data->price;
+                        // 画像設定
+                        if (!empty($request->image)) {
+                            $ec_product->image_data = base64_encode(file_get_contents($request->image->getRealPath()));
+                            $ec_product->image_type = mime_content_type($request->image->getRealPath());
+                        }
+                        // 保存
+                        $ec_product->save();
+                    } catch (\Exception $e) {
+                        // ログ出力
+                        Log::error('商品情報の更新に失敗しました。');
+                        Log::error('商品ID： ' . $request->id . ' ／ 商品名： ' . $valid_data->name);
+                        Log::error($e);
+                        // メッセージ設定
+                        $message = '商品情報の更新に失敗しました。商品ID： ' . $request->id . ' ／ 商品名： ' . $valid_data->name;
+                        // リターン
+                        return $message;
                     }
-                    // 保存
-                    $ec_product->save();
-                } catch (\Exception $e) {
-                    // ログ出力
-                    Log::error('商品情報の更新に失敗しました。');
-                    Log::error('商品ID： ' . $ec_product->id . ' ／ 商品名： ' . $ec_product->name);
-                    Log::error($e);
-                    //
-                    return redirect()
-                        ->route('users.index')
-                        ->with('message', '商品情報の更新に失敗しました。商品ID： ' . $ec_product->id . ' ／ 商品名： ' . $ec_product->name);
-                }
-                // メッセージ設定
-                session()->flush('message', '商品情報を更新しました。商品ID： ' . $ec_product->id . ' ／ 商品名： ' . $ec_product->name);
+                    // メッセージ設定
+                    $message = '商品情報を更新しました。商品ID： ' . $request->id . ' ／ 商品名： ' . $valid_data->name;
+                    // リターン
+                    return $message;
+                });
                 break;
         }
         //
-        return redirect()
-            ->route('products.index');
+        return redirect(url()->previous())
+            ->with('message', $message);
     }
 }
