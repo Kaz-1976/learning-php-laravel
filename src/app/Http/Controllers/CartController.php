@@ -72,10 +72,8 @@ class CartController extends Controller
         // 明細ID
         $id = $request->id;
         // 明細レコード取得
-        $ec_cart_detail = EcCartDetail::find($id);
-        // 明細レコード削除
-        $ec_cart_detail->delete();
-        $ec_cart_detail->save();
+        EcCartDetail::find($id)
+            ->delete();
         //
         return redirect(url()->previous())
             ->with('message', '商品名： ' . $request->name . ' をカートから削除しました。');
@@ -104,13 +102,13 @@ class CartController extends Controller
             DB::transaction(function () use ($cart_id,  $request) {
                 // カート情報取得
                 $ec_cart = EcCart::find($cart_id);
-                if ($ec_cart->checkout_flg != 0 ) {
+                if ($ec_cart->checkout_flg != 0) {
                     // ロールバック
                     DB::rollBack();
                     // ログ出力
                     Log::error('購入処理に失敗しました。');
                     Log::error('そのカートは決済済みです。');
-                    Log::error('カートID： ' . Auth::user()->cart_id);
+                    Log::error('カートID： ' . $cart_id);
                     // リターン
                     return redirect(url()->previous())
                         ->with('message', '購入処理に失敗しました。');
@@ -164,15 +162,17 @@ class CartController extends Controller
                 Auth::user()->refresh();
             });
         } catch (\Exception $e) {
+            // ロールバック
+            DB::rollBack();
             // ログ出力
             Log::error('購入処理に失敗しました。');
-            Log::error('カートID： ' . Auth::user()->cart_id);
+            Log::error('カートID： ' . $cart_id);
             Log::error($e);
             //
             return redirect(url()->previous())
                 ->with('message', '購入処理でエラーが発生しました。');
         }
-        // セッション
+        // セッション変数にカートIDを保存
         session()->flash('cart_id', $cart_id);
         // リダイレクト
         return redirect()
