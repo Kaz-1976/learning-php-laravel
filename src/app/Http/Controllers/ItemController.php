@@ -84,8 +84,7 @@ class ItemController extends Controller
             Log::error("商品のカートへの登録に失敗しました。");
             Log::error($e);
             //
-            return redirect()
-                ->route('users.index')
+            return redirect(url()->previous())
                 ->with('message', '商品のカートへの登録に失敗しました。');
         }
         // リダイレクト
