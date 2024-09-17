@@ -7,10 +7,8 @@
 @section('content')
 <div class="flex flex-col">
     <div class="flex">
-        <a class="m-auto text-center" href="{{ route('items.index') }}">
-            <div class="flex basis-full my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
-                <span class="text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
-            </div>
+        <a class="flex basis-full my-2 p-4 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
+            <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
         </a>
     </div>
     <div class="w-full py-2">
@@ -92,10 +90,8 @@
         </div>
     </div>
     <div class="flex">
-        <a class="m-auto text-center" href="{{ route('items.index') }}">
-            <div class="flex basis-full my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
-                <span class="text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
-            </div>
+        <a class="flex basis-full my-2 p-4 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
+            <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
         </a>
     </div>
 </div>

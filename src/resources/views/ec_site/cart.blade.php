@@ -7,40 +7,38 @@
 @section('content')
 @if (empty($ec_cart_details))
 <div>
-    <a class="flex basis-full my-2 p-4 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
+    <a class="flex basis-full my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
         <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
     </a>
-    <div class="flex my-4 p-4">
+    <div class="flex my-4 py-8">
         <p class="flex m-auto text-xl font-bold text-sky-950 dark:text-sky-50">ショッピングカートは空です。</p>
     </div>
-    <a class="flex basis-full my-2 p-4 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
+    <a class="flex basis-full my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
         <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
     </a>
 </div>
 @else
 <div>
     <div class="flex flex-row gap-2">
-        <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
-            <form class="w-full h-full m-auto" method="POST" action="{{ route('cart.clear') }}">
-                @csrf
-                <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
-                <button class="w-full h-full" type="submit" name="clear">
-                    <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">空にする</span>
-                </button>
-            </form>
-        </div>
-        <a class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
+        <form class="flex basis-1/3 my-2 rounded bg-sky-900 dark:bg-sky-100" method="POST"
+            action="{{ route('cart.clear') }}">
+            @csrf
+            <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
+            <button class="w-full h-full p-2" type="submit" name="clear">
+                <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">空にする</span>
+            </button>
+        </form>
+        <a class="flex basis-1/3 my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
             <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
         </a>
-        <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
-            <form class="w-full h-full m-auto" method="POST" action="{{ route('cart.checkout') }}">
-                @csrf
-                <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
-                <button class="w-full h-full" type="submit" name="clear">
-                    <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">購入する</span>
-                </button>
-            </form>
-        </div>
+        <form class="flex basis-1/3 my-2 rounded bg-sky-900 dark:bg-sky-100" method="POST"
+            action="{{ route('cart.checkout') }}">
+            @csrf
+            <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
+            <button class="w-full h-full p-2" type="submit" name="clear">
+                <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">購入する</span>
+            </button>
+        </form>
     </div>
     <div class="w-full py-2">
         {{ $ec_cart_details->render() }}
@@ -151,27 +149,25 @@
         </div>
     </div>
     <div class="flex flex-row gap-2">
-        <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
-            <form class="w-full h-full m-auto" method="POST" action="{{ route('cart.clear') }}">
-                @csrf
-                <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
-                <button class="w-full h-full" type="submit" name="clear">
-                    <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">空にする</span>
-                </button>
-            </form>
-        </div>
-        <a class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
+        <form class="flex basis-1/3 my-2 rounded bg-sky-900 dark:bg-sky-100" method="POST"
+            action="{{ route('cart.clear') }}">
+            @csrf
+            <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
+            <button class="w-full h-full p-2" type="submit" name="clear">
+                <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">空にする</span>
+            </button>
+        </form>
+        <a class="flex basis-1/3 my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
             <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
         </a>
-        <div class="flex basis-1/3 my-2 p-4 rounded bg-sky-900 dark:bg-sky-100">
-            <form class="w-full h-full m-auto" method="POST" action="{{ route('cart.checkout') }}">
-                @csrf
-                <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
-                <button class="w-full h-full" type="submit" name="clear">
-                    <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">購入する</span>
-                </button>
-            </form>
-        </div>
+        <form class="flex basis-1/3 my-2 rounded bg-sky-900 dark:bg-sky-100" method="POST"
+            action="{{ route('cart.checkout') }}">
+            @csrf
+            <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
+            <button class="w-full h-full p-2" type="submit" name="clear">
+                <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">購入する</span>
+            </button>
+        </form>
     </div>
 </div>
 @endif

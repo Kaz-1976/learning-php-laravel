@@ -75,7 +75,7 @@
         </div>
     </header>
     <div class="block h-20 bg-sky-100 dark:bg-sky-950"></div>
-    <article class="w-full max-w-screen-xl mx-auto">
+    <main class="w-full max-w-screen-xl mx-auto h-screen">
         <div class="flex flex-col">
             <div class="flex mx-auto p-4">
                 <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50">@yield('pagetitle')</h2>
@@ -89,7 +89,7 @@
                 @yield('content')
             </div>
         </div>
-    </article>
+    </main>
     <div class="block h-20 bg-sky-100 dark:bg-sky-950"></div>
     <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-700/80 dark:bg-sky-300/80">
         @auth

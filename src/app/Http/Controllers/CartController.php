@@ -152,6 +152,8 @@ class CartController extends Controller
                 $ec_cart = EcCart::find($cart_id);
                 $ec_cart->checkout_flg = 1;
                 $ec_cart->save();
+                // セッションIDの再生成無効
+                $request->session()->regenerate(false);
                 // ユーザーに紐付くカートIDを空にする
                 $ec_user = EcUser::find(Auth::id());
                 $ec_user->cart_id = null;
@@ -160,6 +162,8 @@ class CartController extends Controller
                 DB::commit();
                 // ユーザー情報更新
                 Auth::user()->refresh();
+                // セッションID再生成有効
+                $request->session()->regenerate(true);
             });
         } catch (\Exception $e) {
             // ロールバック
