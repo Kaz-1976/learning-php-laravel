@@ -72,7 +72,7 @@ class EcUserController extends Controller
     // ユーザー更新
     public function update(EcUserUpdateRequest $request)
     {
-        // セッションIDの再生成を避ける
+        // セッションIDの再生成無効
         $request->session()->regenerate(false);
         // 検証済みデータ
         $valid_data = $request->safe();
