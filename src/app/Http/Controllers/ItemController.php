@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -89,6 +88,6 @@ class ItemController extends Controller
         }
         // リダイレクト
         return redirect(url()->previous())
-            ->with('message', '商品をカートに登録しました。 商品名： ' . $request->name . ' 数量： ' . $order->order . '点');
+            ->with('message', '商品をカートに登録しました。 商品名： ' . $request->name . '　数量： ' . $order->order . '点');
     }
 }
