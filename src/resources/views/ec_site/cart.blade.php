@@ -35,7 +35,7 @@
             action="{{ route('cart.checkout') }}">
             @csrf
             <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
-            <button class="w-full h-full p-2" type="submit" name="clear">
+            <button class="w-full h-full p-2" type="submit" name="checkout">
                 <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">購入する</span>
             </button>
         </form>
@@ -164,7 +164,7 @@
             action="{{ route('cart.checkout') }}">
             @csrf
             <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
-            <button class="w-full h-full p-2" type="submit" name="clear">
+            <button class="w-full h-full p-2" type="submit" name="checkout">
                 <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">購入する</span>
             </button>
         </form>

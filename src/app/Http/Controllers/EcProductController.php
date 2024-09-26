@@ -6,7 +6,6 @@ use App\Models\EcProduct;
 use App\Http\Requests\EcProductCreateRequest;
 use App\Http\Requests\EcProductUpdateRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 

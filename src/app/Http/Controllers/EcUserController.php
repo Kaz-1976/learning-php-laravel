@@ -6,8 +6,6 @@ use App\Models\EcUser;
 use App\Http\Requests\EcUserCreateRequest;
 use App\Http\Requests\EcUserUpdateRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;

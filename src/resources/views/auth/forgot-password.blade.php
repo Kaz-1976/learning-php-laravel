@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('pagetitle', 'パスワードリクエスト')
+@section('pagetitle', 'パスワード再設定依頼')
 
 @section('content')
 <div class="container w-auto m-auto mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
