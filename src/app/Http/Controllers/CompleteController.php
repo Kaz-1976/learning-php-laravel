@@ -35,6 +35,8 @@ class CompleteController extends Controller
                     ->with('ec_products:id,name,image_data,image_type,price,qty,public_flg')
                     ->where('cart_id', '=', $cart_id)
                     ->paginate(6);
+                //
+                session()->flash('cart_id', $cart_id);
             }
         }
         //
