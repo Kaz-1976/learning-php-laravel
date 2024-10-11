@@ -23,7 +23,7 @@
     <script src="{{ secure_asset('js/common.js') }}"></script>
 
     <!-- CSS -->
-    <link href="{{ secure_asset('/assets/css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('resources/css/app.css') }}" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
