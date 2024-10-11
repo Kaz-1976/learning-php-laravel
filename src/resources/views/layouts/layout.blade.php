@@ -20,11 +20,11 @@
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     <!-- Script -->
-    <script src="{{ secure_asset('resources/js/app.js') }}"></script>
+    <script src="{{ secure_asset('js/app.js') }}"></script>
     <script src="{{ secure_asset('js/common.js') }}"></script>
 
     <!-- CSS -->
-    <link href="{{ secure_asset('resources/css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
