@@ -16,14 +16,11 @@
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
 
-    <!-- Vite -->
-    @vite('resources/js/app.js', 'vendor/courier/build')
-
     <!-- Script -->
-    {{-- <script src="{{ secure_asset('js/app.js') }}"></script> --}}
+    <script src="{{ secure_asset('js/app.js') }}"></script>
 
     <!-- CSS -->
-    {{-- <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
