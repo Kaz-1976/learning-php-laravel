@@ -17,7 +17,7 @@
     <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
 
     <!-- Script -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <!-- Script -->
     <script src="{{ asset('js/common.js') }}"></script>
