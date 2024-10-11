@@ -17,13 +17,13 @@
     <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
 
     <!-- Vite -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     <!-- Script -->
-    <script src="{{ secure_asset('js/common.js') }}"></script>
+    <script src="{{ secure_asset('resources/js/app.js') }}"></script>
 
     <!-- CSS -->
-    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('resources/css/app.css') }}" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
