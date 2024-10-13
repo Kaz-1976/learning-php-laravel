@@ -19,7 +19,7 @@
     <!-- Vite -->
 	@if (app()->environment('local'))
         <!-- 開発環境用 -->
-        @vite(['resources/css/app.module.css', 'resources/js/app.jsx'])
+        @vite(['resources/js/app.js', 'resources/css/app.css'])
 	@else
         <!-- 本番環境用 -->
         @php
