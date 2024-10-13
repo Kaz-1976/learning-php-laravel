@@ -16,16 +16,9 @@
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
 
-    <!-- Script -->
-    <script src="{{ secure_asset('js/app.js') }}"></script>
+    <!-- Vite -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <!-- CSS -->
-    <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-    </style>
 </head>
 
 <body class="block w-full bg-sky-50 dark:bg-sky-950">
