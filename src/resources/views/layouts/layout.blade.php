@@ -17,8 +17,28 @@
     <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
 
     <!-- Vite -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+	@if (app()->environment('local'))
+        <!-- 開発環境用 -->
+        @vite(['resources/css/app.module.css', 'resources/js/app.jsx'])
+	@else
+        <!-- 本番環境用 -->
+        @php
+        	$manifestPath = public_path('build/manifest.json');
+            if (file_exists($manifestPath)) {
+                $manifest = json_decode(file_get_contents($manifestPath), true);
+            } else {
+                throw new Exception('The Vite manifest file does not exist.');
+            }
+            $jsFile = $manifest['resources/js/app.js']['file'] ?? null;
+            $cssFiles = $manifest['resources/js/app.js']['css'] ?? [];
+        @endphp
+        @foreach ($cssFiles as $cssFile)
+            <link rel="stylesheet" href="{{ secure_asset('build/' . $cssFile) }}">
+        @endforeach
+        @if ($jsFile)
+            <script src="{{ secure_asset('build/' . $jsFile) }}" defer></script>
+        @endif
+    @endif
 </head>
 
 <body class="block w-full bg-sky-50 dark:bg-sky-950">
