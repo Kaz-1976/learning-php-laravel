@@ -58,7 +58,7 @@ class EcProductController extends Controller
             $message = '商品情報の登録に失敗しました。';
         }
         // リターン
-        return redirect(url()->previous())
+        return redirect(url(null, null, app()->isProduction())->previous())
             ->with('message', $message);
     }
 
@@ -130,7 +130,7 @@ class EcProductController extends Controller
                 break;
         }
         //
-        return redirect(url()->previous())
+        return redirect(url(null, null, app()->isProduction())->previous())
             ->with('message', $message);
     }
 }
