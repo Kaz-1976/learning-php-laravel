@@ -63,7 +63,7 @@ class CartController extends Controller
         $ec_cart_detail->qty = $valid_data->qty;
         $ec_cart_detail->save();
         //
-        return redirect(url()->previous())
+        return redirect(url(null, null, app()->isProduction())->previous())
             ->with('message', '商品名： ' . $request->name . ' の注文数量を更新しました。');
     }
 
@@ -75,7 +75,7 @@ class CartController extends Controller
         EcCartDetail::find($id)
             ->delete();
         //
-        return redirect(url()->previous())
+        return redirect(url(null, null, app()->isProduction())->previous())
             ->with('message', '商品名： ' . $request->name . ' をカートから削除しました。');
     }
 
@@ -88,8 +88,7 @@ class CartController extends Controller
             ->where('cart_id', $id)
             ->delete();
         //
-        return redirect()
-            ->route('cart.index')
+        return redirect(url('ec_site/cart', null, app()->isProduction()))
             ->with('message', 'ショッピングカートを空にしました。');
     }
 
@@ -110,7 +109,7 @@ class CartController extends Controller
                     Log::error('そのカートは決済済みです。');
                     Log::error('カートID： ' . $cart_id);
                     // リターン
-                    return redirect(url()->previous())
+                    return redirect(url(null, null, app()->isProduction())->previous())
                         ->with('message', '購入処理に失敗しました。');
                 }
                 // カート明細取得
@@ -127,7 +126,7 @@ class CartController extends Controller
                         // ロールバック
                         DB::rollBack();
                         //
-                        return redirect(url()->previous())
+                        return redirect(url(null, null, app()->isProduction())->previous())
                             ->with('message', '商品が存在しません。 商品名： ' . (empty($ec_cart_detail->ec_products) ? 'NULL' : $ec_cart_detail->ec_products->name));
                     }
                     // 商品在庫チェック
@@ -135,7 +134,7 @@ class CartController extends Controller
                         // ロールバック
                         DB::rollBack();
                         //
-                        return redirect(url()->previous())
+                        return redirect(url(null, null, app()->isProduction())->previous())
                             ->with('message', '注文数量に対して在庫が不足しています。 商品名： ' . $ec_cart_detail->ec_products->name . ' 在庫数： ' . $ec_cart_detail->ec_products->qty);
                     }
                     // 商品レコード取得
@@ -179,8 +178,7 @@ class CartController extends Controller
         // セッション変数にカートIDを保存
         session()->flash('cart_id', $cart_id);
         // リダイレクト
-        return redirect()
-            ->route('complete.index')
+        return redirect(url('ec_site/complete', null, app()->isProduction()))
             ->with('message', 'ご利用ありがとうございました。');
     }
 }

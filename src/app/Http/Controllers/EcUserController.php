@@ -63,7 +63,7 @@ class EcUserController extends Controller
             $message = 'ユーザーの登録に失敗しました。';
         }
         // リターン
-        return redirect(url()->previous())
+        return redirect(url(null, null, app()->isProduction())->previous())
             ->with('message', $message);
     }
 
@@ -176,7 +176,7 @@ class EcUserController extends Controller
         // セッションID再生成有効
         $request->session()->regenerate(true);
         // リターン
-        return redirect(url()->previous())
+        return redirect(url(null, null, app()->isProduction())->previous())
             ->with('message', $message);
     }
 }
