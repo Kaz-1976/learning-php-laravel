@@ -20,7 +20,9 @@
     @if (app()->environment('local'))
     <!-- 開発環境用 -->
     @vite(['resources/js/app.js', 'resources/css/app.css'])
-    @else
+    <!-- Common -->
+    <script src="{{ asset('js/common.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/common.css') }}"> @else
     <!-- 本番環境用 -->
     @php
     $manifestPath = public_path('build/manifest.json');
@@ -38,6 +40,9 @@
     @if ($jsFile)
     <script src="{{ secure_asset('build/' . $jsFile) }}" defer></script>
     @endif
+    <!-- Common -->
+    <script src="{{ secure_asset('js/common.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ secure_asset('css/common.css') }}">
     @endif
 </head>
 
