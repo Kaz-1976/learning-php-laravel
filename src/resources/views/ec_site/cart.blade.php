@@ -21,18 +21,19 @@
 <div>
     <div class="flex flex-row gap-2">
         <form class="flex basis-1/3 my-2 rounded bg-sky-900 dark:bg-sky-100" method="POST"
-            action="{{ url('ec_site/cart/clear', null, $is_production) }}">
+            action="{{ url('ec_site/cart/clear', null, app()->isProduction()) }}">
             @csrf
             <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
             <button class="w-full h-full p-2" type="submit" name="clear">
                 <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">空にする</span>
             </button>
         </form>
-        <a class="flex basis-1/3 my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ url('ec_site/items', null, $is_production) }}">
+        <a class="flex basis-1/3 my-2 p-2 rounded bg-sky-900 dark:bg-sky-100"
+            href="{{ url('ec_site/items', null, app()->isProduction()) }}">
             <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
         </a>
         <form class="flex basis-1/3 my-2 rounded bg-sky-900 dark:bg-sky-100" method="POST"
-            action="{{ url('ec_site/cart/checkout', null, $is_production) }}">
+            action="{{ url('ec_site/cart/checkout', null, app()->isProduction()) }}">
             @csrf
             <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
             <button class="w-full h-full p-2" type="submit" name="checkout">
@@ -48,7 +49,8 @@
         <div
             class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_cart_detail->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
             <form class="flex flex-col md:flex-row basis-full w-full gap-2 px-1" id="update-{{ $ec_cart_detail->id }}"
-                action="{{ url('ec_site/cart/update', null, $is_production) }}" method="POST" enctype="multipart/form-data">
+                action="{{ url('ec_site/cart/update', null, app()->isProduction()) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{ $ec_cart_detail->id }}" />
                 <input type="hidden" name="product_id" value="{{ $ec_cart_detail->product_id }}" />
@@ -120,7 +122,7 @@
                         </div>
                         <div class="flex basis-full">
                             <x-secondary-button class="w-full" type="submit" name="delete" :value="$ec_cart_detail->id"
-                                formaction="{{ url('ec_site/cart/delete', null, $is_production) }}">
+                                formaction="{{ url('ec_site/cart/delete', null, app()->isProduction()) }}">
                                 <span class="flex m-auto text-lg md:text-xl text-center font-bold">{{ __('削除') }}</span>
                             </x-secondary-button>
                         </div>
@@ -150,18 +152,19 @@
     </div>
     <div class="flex flex-row gap-2">
         <form class="flex basis-1/3 my-2 rounded bg-sky-900 dark:bg-sky-100" method="POST"
-            action="{{ url('ec_site/cart/clear', null, $is_production) }}">
+            action="{{ url('ec_site/cart/clear', null, app()->isProduction()) }}">
             @csrf
             <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
             <button class="w-full h-full p-2" type="submit" name="clear">
                 <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">空にする</span>
             </button>
         </form>
-        <a class="flex basis-1/3 my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ url('ec_site/items', null, $is_production) }}">
+        <a class="flex basis-1/3 my-2 p-2 rounded bg-sky-900 dark:bg-sky-100"
+            href="{{ url('ec_site/items', null, app()->isProduction()) }}">
             <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
         </a>
         <form class="flex basis-1/3 my-2 rounded bg-sky-900 dark:bg-sky-100" method="POST"
-            action="{{ url('ec_site/cart/checkout', null, $is_production) }}">
+            action="{{ url('ec_site/cart/checkout', null, app()->isProduction()) }}">
             @csrf
             <input type="hidden" name="cart_id" value="{{ Auth::user()->cart_id }}">
             <button class="w-full h-full p-2" type="submit" name="checkout">
