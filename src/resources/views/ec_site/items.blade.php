@@ -22,8 +22,8 @@
                     src="data:{{ $ec_product->image_type }};base64,{{ $ec_product->image_data }}">
             </div>
         </div>
-        <form class="flex flex-col gap-2 w-full" id="item-{{ $ec_product->id }}" action="{{ url('ec_site/items/store', null, $is_production) }}"
-            method="POST">
+        <form class="flex flex-col gap-2 w-full" id="item-{{ $ec_product->id }}"
+            action="{{ url('ec_site/items/store', null, app()->isProduction()) }}" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $ec_product->id }}">
             <input type="hidden" name="name" value="{{ $ec_product->name }}">
