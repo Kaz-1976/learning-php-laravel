@@ -58,12 +58,12 @@
             @auth
             @if (Auth::user()->admin_flg)
             <a class="block text-3xl text-sky-50 dark:text-sky-950"
-                href="{{ url('ec_site/users', null, app()->isProduction()) }}" title="ユーザー管理">
+                href="{{ url('ec_site/admin/users', null, app()->isProduction()) }}" title="ユーザー管理">
                 <i class="fa-solid fa-users fa-fw m-auto object-cover"></i>
             </a>
             @if (Auth::user()->user_id != env('DEFAULT_ADMIN_ID','ec_admin'))
             <a class="block text-3xl text-sky-50 dark:text-sky-950"
-                href="{{ url('ec_site/products', null, app()->isProduction()) }}" title="商品管理">
+                href="{{ url('ec_site/admin/products', null, app()->isProduction()) }}" title="商品管理">
                 <i class="fa-solid fa-boxes-stacked fa-fw m-auto object-cover"></i>
             </a>
             @endif
