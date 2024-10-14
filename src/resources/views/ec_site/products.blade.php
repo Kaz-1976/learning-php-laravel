@@ -8,7 +8,7 @@
 <div class="container flex flex-col gap-4">
     <div class="container p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50">
         <form class="flex flex-row gap-4" id="register"
-            action="{{ url('ec_site/products/store', null, app()->isProduction()) }}" method="POST"
+            action="{{ url('ec_site/admin/products/store', null, app()->isProduction()) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             <div class="flex flex-col grow-0 basis-80 h-80 m-auto">
@@ -102,7 +102,7 @@
         <div
             class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_product->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
             <form class="flex flex-row basis-full gap-2" id="{{ $form[$ec_product->id] }}"
-                action="{{ url('ec_site/products.update', null, app()->isProduction()) }}" method="POST"
+                action="{{ url('ec_site/admin/products.update', null, app()->isProduction()) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{ $ec_product->id }}" />
