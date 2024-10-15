@@ -77,10 +77,10 @@ services:
       - "587:587"
       - "465:465"
     volumes:
-      - dms-mail-data:/var/mail/
-      - dms-mail-state:/var/mail-state/
-      - dms-mail-logs:/var/log/mail/
-      - dms-config:/tmp/docker-mailserver/
+      - dms_mail_data:/var/mail/
+      - dms_mail_state:/var/mail-state/
+      - dms_mail_logs:/var/log/mail/
+      - dms_config:/tmp/docker-mailserver/
       - dms_certs:/opt/dms/certs/
       - /etc/localtime:/etc/localtime:ro
 volumes:
