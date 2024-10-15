@@ -14,5 +14,7 @@
     "html.format.templating": true,
     "tailwindCSS.emmetCompletions": true,
     "tailwindCSS.experimental.configFile": "src/tailwind.config.js",
-    "tailwindCSS.hovers": true
+    "tailwindCSS.hovers": true,
+    "php.suggest.basic": false,
+    "php.validate.enable": false
 }
