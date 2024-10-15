@@ -64,5 +64,30 @@ services:
       - PMA_ARBITRARY=1
     depends_on:
       - db
+  mailserver:
+    container_name: mail
+    env_file:
+      - ./docker/mail/.env
+    image: ghcr.io/docker-mailserver/docker-mailserver:latest
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "25:25"
+      - "587:587"
+      - "465:465"
+    volumes:
+      - dms-mail-data:/var/mail/
+      - dms-mail-state:/var/mail-state/
+      - dms-mail-logs:/var/log/mail/
+      - dms-config:/tmp/docker-mailserver/
+      - dms_certs:/opt/dms/certs/
+      - /etc/localtime:/etc/localtime:ro
 volumes:
   mariadb:
+  dms_mail_data:
+  dms_mail_state:
+  dms_mail_logs:
+  dms_config:
+  dms_certs:
+  
