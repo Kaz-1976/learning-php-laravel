@@ -9,7 +9,7 @@ services:
         source: ./src/
         target: /var/www/html
     ports:
-      - 80:80
+      - 10080:80
     restart: always
   app:
     container_name: app
