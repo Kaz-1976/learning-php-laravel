@@ -94,6 +94,10 @@ return [
                 'postmark',
             ],
         ],
+        // ADD: MailerSend
+        'mailersend' => [
+            'transport' => 'mailersend',
+        ],
 
     ],
 
