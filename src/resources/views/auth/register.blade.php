@@ -3,7 +3,7 @@
 @section('pagetitle', '新規登録')
 
 @section('content')
-<div class="container w-auto m-auto mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+<div class="container w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm">
     <form method="POST" action="{{ url('ec_site/register', null, app()->isProduction()) }}">
         <!-- CSRF -->
         @csrf
