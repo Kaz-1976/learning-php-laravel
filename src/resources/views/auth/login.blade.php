@@ -4,9 +4,9 @@
 
 @section('content')
 <!-- Session Status -->
-<div class="container w-auto m-auto mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+<div class="container w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm">
     <x-auth-session-status class="mb-4" :status="session('status')" />
-    <form class="w-auto m-auto mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-6" method="POST"
+    <form class="w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm space-y-6" method="POST"
         action="{{ url('ec_site/login', null, app()->isProduction()) }}">
         @csrf
 
