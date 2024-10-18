@@ -17,7 +17,7 @@
     <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
 
     <!-- Vite -->
-    @if (app()->environment('local'))
+    @if (app()->isLocal())
     <!-- 開発環境用 -->
     @vite(['resources/js/app.js', 'resources/css/app.css'])
     <!-- Common -->
@@ -87,12 +87,13 @@
         <div class="flex mx-auto p-4">
             <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50">@yield('pagetitle')</h2>
         </div>
+        @if (session('message'))
         <div class="flex flex-col w-full p-4">
-            @if (session('message'))
-            <div class="flex flex-col w-full p-4">
-                <p class="text-xl text-center font-bold text-sky-950 dark:text-sky-50">{{ session('message') }}</p>
-            </div>
-            @endif
+            <p class="text-xl text-center font-bold text-sky-950 dark:text-sky-50">{{ session('message') }}
+            </p>
+        </div>
+        @endif
+        <div class="flex flex-col w-full p-4">
             @yield('content')
         </div>
     </main>

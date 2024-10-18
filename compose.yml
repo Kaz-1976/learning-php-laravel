@@ -25,19 +25,19 @@ services:
     restart: always
     depends_on:
       - db
-  node:
-    container_name: node
-    build:
-      context: .
-      dockerfile: ./docker/node/Dockerfile
-    ports:
-      - 5173:5173
-    tty: true
-    volumes:
-      - type: bind
-        source: ./src/
-        target: /workspace
-    working_dir: /workspace
+  # node:
+  #   container_name: node
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/node/Dockerfile
+  #   ports:
+  #     - 5173:5173
+  #   tty: true
+  #   volumes:
+  #     - type: bind
+  #       source: ./src/
+  #       target: /workspace
+  #   working_dir: /workspace
   db:
     container_name: db
     image: mariadb:latest
