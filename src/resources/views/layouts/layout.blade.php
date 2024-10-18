@@ -89,7 +89,7 @@
         </div>
         <div class="flex flex-col w-full p-4">
             @if (session('message'))
-            <div class="container w-auto m-auto mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <div class="flex flex-col w-full p-4">
                 <p class="text-xl text-center font-bold text-sky-950 dark:text-sky-50">{{ session('message') }}</p>
             </div>
             @endif
