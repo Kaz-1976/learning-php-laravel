@@ -3,7 +3,7 @@
 @section('pagetitle', 'パスワードリセットメール送信')
 
 @section('content')
-<div class="container w-auto m-auto mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+<div class="container w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm">
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
         {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
     </div>
