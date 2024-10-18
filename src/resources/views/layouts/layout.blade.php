@@ -87,12 +87,12 @@
         <div class="flex mx-auto p-4">
             <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50">@yield('pagetitle')</h2>
         </div>
-        @if (session('message'))
         <div class="flex flex-col w-full p-4">
-            <p class="text-xl text-center font-bold text-sky-950 dark:text-sky-50">{{ session('message') }}</p>
-        </div>
-        @endif
-        <div class="flex flex-col w-full p-4">
+            @if (session('message'))
+            <div class="flex flex-col w-full p-4">
+                <p class="text-xl text-center font-bold text-sky-950 dark:text-sky-50">{{ session('message') }}</p>
+            </div>
+            @endif
             @yield('content')
         </div>
     </main>
