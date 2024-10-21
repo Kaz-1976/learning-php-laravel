@@ -13,7 +13,7 @@
         </a>
     </div>
     @if (!empty($ec_cart_details))
-    <div class="w-full py-2">
+    <div class="container w-full">
         {{ $ec_cart_details->render() }}
     </div>
     <div class="flex flex-col">
@@ -73,7 +73,7 @@
         </div>
         @endforeach
     </div>
-    <div class="w-full py-2">
+    <div class="container w-full">
         {{ $ec_cart_details->render() }}
     </div>
     <div class="flex flex-row w-full py-4 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
