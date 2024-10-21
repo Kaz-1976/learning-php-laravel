@@ -84,7 +84,7 @@
             </div>
         </form>
     </div>
-    <div class="container w-full pb-1">
+    <div class="container w-full">
         {{ $ec_products->render() }}
     </div>
     <div class="container">
@@ -184,7 +184,7 @@
         </div>
         @endforeach
     </div>
-    <div class="container w-full pt-1">
+    <div class="container w-full">
         {{ $ec_products->render() }}
     </div>
 </div>
