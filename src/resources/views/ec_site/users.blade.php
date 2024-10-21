@@ -53,7 +53,7 @@
             <div>
                 <x-input-label for="register-password" :value="__('Password')" />
                 <x-text-input class="block mt-1 w-full" type="password" id="register-password" name="password" required
-                    autocomplete="new-password" placeholder="ABCabc0123!@#$%^&*" />
+                    autocomplete="new-password" placeholder="ABCabc0123!@#$%^&*_" />
                 @if (old('register') == '1')
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 @endif
@@ -63,7 +63,7 @@
                 <x-input-label for="register-password-confirm" :value="__('Confirm Password')" />
                 <x-text-input class="block mt-1 w-full" type="password" id="register-password-confirm"
                     name="password_confirmation" required autocomplete="new-password"
-                    placeholder="ABCabc0123!@#$%^&*" />
+                    placeholder="ABCabc0123!@#$%^&*_" />
                 @if (old('register') == '1')
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 @endif
@@ -150,7 +150,7 @@
                     <div class="block">
                         <x-input-label for="update-password-{{ $ec_user->id }}" :value="__('Password')" />
                         <x-text-input class="block mt-1 w-full" type="password" id="update-password-{{ $ec_user->id }}"
-                            name="password" placeholder="ABCabc0123!@#$%^&*" />
+                            name="password" placeholder="ABCabc0123!@#$%^&*_" />
                         @if (old('update') == $ec_user->id)
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         @endif
@@ -160,7 +160,7 @@
                             :value="__('Confirm Password')" />
                         <x-text-input class="block mt-1 w-full" type="password"
                             id="update-password-confirm-{{ $ec_user->id }}" name="password_confirmation"
-                            placeholder="ABCabc0123!@#$%^&*" />
+                            placeholder="ABCabc0123!@#$%^&*_" />
                         @if (old('update') == $ec_user->id)
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                         @endif
