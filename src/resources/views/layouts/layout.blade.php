@@ -2,28 +2,25 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <!-- Common -->
+    {{-- Common --}}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <!-- CSRF Token -->
+    {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- Title -->
+    {{-- Title --}}
     <title>@yield('pagetitle')：{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- FontAwesome -->
+    {{-- FontAwesome --}}
     <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
-
-    <!-- Vite -->
+    {{-- Vite --}}
     @if (app()->isLocal())
-    <!-- 開発環境用 -->
+    {{-- 開発環境用 --}}
     @vite(['resources/js/app.js', 'resources/css/app.css'])
-    <!-- Common -->
+    {{-- Common --}}
     <script src="{{ asset('js/common.js') }}" defer></script>
-    <link rel="stylesheet" href="{{ asset('css/common.css') }}"> @else
-    <!-- 本番環境用 -->
+    <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+    @else
+    {{-- 本番環境用 --}}
     @php
     $manifestPath = public_path('build/manifest.json');
     if (file_exists($manifestPath)) {
@@ -40,7 +37,7 @@
     @if ($jsFile)
     <script src="{{ secure_asset('build/' . $jsFile) }}" defer></script>
     @endif
-    <!-- Common -->
+    {{-- Common --}}
     <script src="{{ secure_asset('js/common.js') }}" defer></script>
     <link rel="stylesheet" href="{{ secure_asset('css/common.css') }}">
     @endif
@@ -57,22 +54,26 @@
         <div class="flex flex-row gap-2 my-auto">
             @auth
             @if (Auth::user()->admin_flg)
+            {{-- ユーザー管理 --}}
             <a class="block text-3xl text-sky-50 dark:text-sky-950"
                 href="{{ url('ec_site/admin/users', null, app()->isProduction()) }}" title="ユーザー管理">
                 <i class="fa-solid fa-users fa-fw m-auto object-cover"></i>
             </a>
             @if (Auth::user()->user_id != env('DEFAULT_ADMIN_ID','ec_admin'))
+            {{-- 商品管理 --}}
             <a class="block text-3xl text-sky-50 dark:text-sky-950"
                 href="{{ url('ec_site/admin/products', null, app()->isProduction()) }}" title="商品管理">
                 <i class="fa-solid fa-boxes-stacked fa-fw m-auto object-cover"></i>
             </a>
             @endif
             @else
+            {{-- ショッピングカート --}}
             <a class="block text-3xl text-sky-50 dark:text-sky-950"
                 href="{{ url('ec_site/cart', null, app()->isProduction()) }}" title="ショッピングカート">
                 <i class="fa-solid fa-cart-shopping fa-fw m-auto object-cover"></i>
             </a>
             @endif
+            {{-- ログアウト --}}
             <form class="block" method="POST" action="{{ url('ec_site/logout', null, app()->isProduction()) }}">
                 @csrf
                 <button class="block text-3xl text-sky-50 dark:text-sky-950" type="submit" title="ログアウト">
@@ -100,6 +101,7 @@
     <div class="block w-full h-20 bg-sky-100 dark:bg-sky-950"></div>
     <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-700/75 dark:bg-sky-300/75">
         @auth
+        {{-- ログインユーザー --}}
         <div class="flex m-auto leading-8">
             <p class="text-lg md:text-xl text-center font-bold text-sky-50 dark:text-sky-950">
                 {{ Auth::user()->user_name }}さんがログイン中
