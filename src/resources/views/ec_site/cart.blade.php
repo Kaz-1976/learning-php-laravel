@@ -41,7 +41,7 @@
             </button>
         </form>
     </div>
-    <div class="container w-full">
+    <div class="w-full pb-2">
         {{ $ec_cart_details->render() }}
     </div>
     <div class="w-full">
@@ -132,7 +132,7 @@
         </div>
         @endforeach
     </div>
-    <div class="container w-full">
+    <div class="w-full pt-2">
         {{ $ec_cart_details->render() }}
     </div>
     <div class="flex flex-row w-full py-4 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
