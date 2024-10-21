@@ -83,7 +83,7 @@
             @endauth
         </div>
     </header>
-    <main class="container flex flex-col py-20">
+    <main class="flex flex-col py-20">
         <div class="flex mx-auto p-4">
             <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50">@yield('pagetitle')</h2>
         </div>
