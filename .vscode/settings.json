@@ -16,5 +16,8 @@
     "tailwindCSS.experimental.configFile": "src/tailwind.config.js",
     "tailwindCSS.hovers": true,
     "php.suggest.basic": false,
-    "php.validate.enable": false
+    "php.validate.enable": false,
+    "notebook.defaultFormatter": null,
+    "bladeFormatter.format.indentInnerHtml": true,
+    "bladeFormatter.format.noMultipleEmptyLines": false
 }
