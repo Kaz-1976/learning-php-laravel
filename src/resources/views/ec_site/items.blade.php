@@ -5,7 +5,7 @@
 
 {{-- ページコンテンツ --}}
 @section('content')
-<div class="container w-full">
+<div class="w-full pb-2">
     {{ $ec_products->render() }}
 </div>
 <div class="flex flex-row flex-wrap py-2 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
@@ -75,7 +75,7 @@
     </div>
     @endforeach
 </div>
-<div class="container w-full">
+<div class="w-full pt-2">
     {{ $ec_products->render() }}
 </div>
 @endsection
