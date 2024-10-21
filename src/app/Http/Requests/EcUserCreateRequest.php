@@ -42,8 +42,7 @@ class EcUserCreateRequest extends FormRequest
             'user_name' => ['required', 'string', 'max:255'],
             'user_kana' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:ec_users,email'],
-            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^[a-zA-Z0-9!@#$%^&*]+$/'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^[a-zA-Z0-9!@#$%^&*_]+$/'],
         ];
     }
 }
-
