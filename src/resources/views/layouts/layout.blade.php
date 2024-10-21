@@ -83,8 +83,7 @@
             @endauth
         </div>
     </header>
-    <div class="block w-full h-20 bg-sky-100 dark:bg-sky-950"></div>
-    <main class="flex flex-col basis-[90%]">
+    <main class="flex flex-col basis-[85%] py-20">
         <div class="flex mx-auto p-4">
             <h2 class="text-3xl text-center font-bold text-sky-950 dark:text-sky-50">@yield('pagetitle')</h2>
         </div>
@@ -98,7 +97,6 @@
             @yield('content')
         </div>
     </main>
-    <div class="block w-full h-20 bg-sky-100 dark:bg-sky-950"></div>
     <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-700/75 dark:bg-sky-300/75">
         @auth
         {{-- ログインユーザー --}}
