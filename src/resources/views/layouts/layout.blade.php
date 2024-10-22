@@ -94,7 +94,7 @@
             </p>
         </div>
         @endif
-        <div class="flex flex-col w-full">
+        <div class="flex flex-col w-full pb-2">
             @yield('content')
         </div>
     </main>
