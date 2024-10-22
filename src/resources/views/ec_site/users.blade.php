@@ -6,7 +6,7 @@
 {{-- ページコンテンツ --}}
 @section('content')
 <div class="flex flex-col gap-4">
-    <form class="flex flex-col gap-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
+    <form class="flex flex-col gap-1 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
         id="register" action="{{ url('ec_site/admin/users/store', null, app()->isProduction()) }}" method="POST">
         @csrf
         {{-- ユーザーID --}}
