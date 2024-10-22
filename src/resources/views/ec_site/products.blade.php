@@ -6,12 +6,12 @@
 {{-- ページコンテンツ --}}
 @section('content')
 <div class="flex flex-col gap-4">
-    <form class="flex flex-row gap-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
+    <form class="flex flex-col md:flex-row gap-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
         id="register" action="{{ url('ec_site/admin/products/store', null, app()->isProduction()) }}" method="POST"
         enctype="multipart/form-data">
         @csrf
-        <div class="flex flex-col grow-0 basis-80 h-80 m-auto">
-            <div class="flex w-80 h-80 border-solid border-2 border-sky-50">
+        <div class="flex flex-col grow-0 basis-64 md:basis-80 h-64 md:h-80 m-auto">
+            <div class="flex w-64 md:w-80 h-64 md:h-80 border-solid border-2 border-sky-50">
                 <img id="register-image-preview">
             </div>
         </div>
@@ -70,12 +70,13 @@
                 <div class="flex flex-row-reverse basis-4/5 gap-2">
                     <div class="my-auto flex flex-row basis-1/2">
                         <x-primary-button class="flex basis-full" name="register" :value="1">
-                            <span class="flex m-auto text-2xl text-center font-bold">{{ __('Register') }}</span>
+                            <span
+                                class="flex m-auto text-xs md:text-xl text-center font-bold">{{ __('Register') }}</span>
                         </x-primary-button>
                     </div>
                     <div class="my-auto flex flex-row basis-1/2">
                         <x-secondary-button class="flex basis-full" type='reset' name="reset" :value="1">
-                            <span class="flex m-auto text-2xl text-center font-bold">{{ __('リセット') }}</span>
+                            <span class="flex m-auto text-xs md:text-xl text-center font-bold">{{ __('リセット') }}</span>
                         </x-secondary-button>
                     </div>
                 </div>
@@ -99,7 +100,7 @@
         @endphp
         <div
             class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_product->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
-            <form class="flex flex-row basis-full gap-2" id="{{ $form[$ec_product->id] }}"
+            <form class="flex flex-col md:flex-row basis-full gap-2" id="{{ $form[$ec_product->id] }}"
                 action="{{ url('ec_site/admin/products/update', null, app()->isProduction()) }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
@@ -111,7 +112,7 @@
                             id="{{ $form[$ec_product->id] }}-image-preview" src="{{ $image[$ec_product->id] }}">
                     </div>
                 </div>
-                <div class="flex flex-row grow gap-2">
+                <div class="flex flex-col md:flex-row grow gap-2">
                     <div class="flex flex-col basis-4/5 gap-1">
                         <div class="block">
                             <x-input-label for="{{ $form[$ec_product->id] }}-name" :value="__('名称')" />
@@ -156,24 +157,25 @@
                             @endif
                         </div>
                     </div>
-                    <div class="flex flex-col-reverse basis-1/5 gap-2">
+                    <div class="flex flex-row-reverse md:flex-col-reverse basis-1/5 gap-2">
                         <div class="flex basis-full">
                             <x-primary-button class="w-full" id="{{ $form[$ec_product->id] }}-btn-submit"
                                 form="{{ $form[$ec_product->id] }}" name="update" :value="$ec_product->id">
-                                <span class="flex m-auto text-xl text-center font-bold">{{ __('更新') }}</span>
+                                <span class="flex m-auto text-xs md:text-xl text-center font-bold">{{ __('更新') }}</span>
                             </x-primary-button>
                         </div>
                         <div class="flex basis-full">
                             <x-secondary-button class="w-full" id="{{ $form[$ec_product->id] }}-btn-reset" type="reset"
                                 name="reset">
-                                <span class="flex m-auto text-xl text-center font-bold">{{ __('リセット') }}</span>
+                                <span
+                                    class="flex m-auto text-xs md:text-xl text-center font-bold">{{ __('リセット') }}</span>
                             </x-secondary-button>
                         </div>
                         <div class="flex basis-full">
                             <x-secondary-button class="w-full" id="{{ $form[$ec_product->id] }}-btn-public"
                                 type="submit" name="public" :value="$ec_product->id">
                                 <span
-                                    class="flex m-auto text-xl text-center font-bold">{{ __($ec_product->public_flg ? '非公開' : '公開') }}</span>
+                                    class="flex m-auto text-xs md:text-xl text-center font-bold">{{ __($ec_product->public_flg ? '非公開' : '公開') }}</span>
                             </x-secondary-button>
                         </div>
                     </div>
