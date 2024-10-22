@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row grow gap-4">
-                    <div class="flex flex-col basis-4/5 gap-2">
+                    <div class="flex flex-col basis-4/5 gap-1">
                         <div class="block">
                             <x-input-label for="{{ $form[$ec_product->id] }}-name" :value="__('名称')" />
                             <x-text-input class="block mt-1 w-full" type="text" id="{{ $form[$ec_product->id] }}-name"
