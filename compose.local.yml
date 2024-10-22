@@ -14,7 +14,7 @@ services:
   app:
     container_name: app
     env_file:
-      - ./src/.env
+      - ./src/.env.local
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
@@ -25,22 +25,11 @@ services:
     restart: always
     depends_on:
       - db
-  # node:
-  #   container_name: node
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/node/Dockerfile
-  #   ports:
-  #     - 5173:5173
-  #   tty: true
-  #   volumes:
-  #     - type: bind
-  #       source: ./src/
-  #       target: /workspace
-  #   working_dir: /workspace
   db:
     container_name: db
     image: mariadb:latest
+    env_file:
+      - ./docker/db/.env.local
     restart: always
     volumes:
       - type: bind
@@ -48,12 +37,6 @@ services:
         target: /var/lib/mysql
     ports:
       - 3306:3306
-    environment:
-      - MARIADB_ROOT_PASSWORD=ipenw023
-      - MARIADB_DATABASE=ec_site
-      - MARIADB_USER=ec_admin
-      - MARIADB_PASSWORD=ipenw023
-      - "TZ=Asia/Tokyo"
   admin:
     container_name: admin
     image: phpmyadmin:latest
