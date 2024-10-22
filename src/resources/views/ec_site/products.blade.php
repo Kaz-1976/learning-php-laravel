@@ -112,7 +112,7 @@
                             id="{{ $form[$ec_product->id] }}-image-preview" src="{{ $image[$ec_product->id] }}">
                     </div>
                 </div>
-                <div class="flex flex-col md:flex-row grow gap-4">
+                <div class="flex flex-col md:flex-row grow gap-2">
                     <div class="flex flex-col basis-4/5 gap-1">
                         <div class="block">
                             <x-input-label for="{{ $form[$ec_product->id] }}-name" :value="__('名称')" />
