@@ -83,8 +83,8 @@
             @endauth
         </div>
     </header>
-    <main class="block w-[95%] mx-auto py-20">
-        <div class="flex w-full p-4">
+    <main class="block w-full md:w-[95%] mx-auto py-20">
+        <div class="flex w-full py-12">
             <h2 class="flex mx-auto text-3xl text-center font-bold text-sky-950 dark:text-sky-50">@yield('pagetitle')
             </h2>
         </div>
@@ -94,7 +94,7 @@
             </p>
         </div>
         @endif
-        <div class="flex flex-col w-full p-4">
+        <div class="flex flex-col w-full">
             @yield('content')
         </div>
     </main>
