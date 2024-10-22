@@ -104,7 +104,7 @@
         array_push($array, $ec_user->id);
         @endphp
         <form
-            class="flex flex-col md:flex-row basis-full gap-2 w-full p-4 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-50 {{ $ec_user->enable_flg ? ($ec_user->admin_flg ? 'bg-sky-300 dark:bg-sky-800' : 'bg-sky-400 dark:bg-sky-700') : 'bg-sky-200 dark:bg-sky-900' }}"
+            class="flex flex-col md:flex-row basis-full gap-4 w-full p-4 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-50 {{ $ec_user->enable_flg ? ($ec_user->admin_flg ? 'bg-sky-300 dark:bg-sky-800' : 'bg-sky-400 dark:bg-sky-700') : 'bg-sky-200 dark:bg-sky-900' }}"
             id="update-{{ $ec_user->id }}" action="{{ url('ec_site/admin/users/update', null, app()->isProduction()) }}"
             method="POST">
             @csrf
