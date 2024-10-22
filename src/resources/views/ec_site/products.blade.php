@@ -58,8 +58,8 @@
                 <x-input-error :messages="$errors->get('image')" class="my-2" />
                 @endif
             </div>
-            <div class="pt-4 flex flex-row justify-between gap-2">
-                <div class="my-auto flex flex-row basis-1/5">
+            <div class="flex flex-row justify-between gap-2">
+                <div class="my-auto flex flex-row basis-[30%] md:basis-1/5">
                     <x-text-input class="w-8 h-8" type="checkbox" id="register-public" name="public_flg"
                         :value="old('public_flg')" autofocus />
                     <x-input-label class="my-auto pl-2 flex" for="register-public" :value="__('公開')" />
@@ -67,7 +67,7 @@
                     <x-input-error :messages="$errors->get('public_flg')" class="my-2" />
                     @endif
                 </div>
-                <div class="flex flex-row-reverse basis-4/5 gap-2">
+                <div class="flex flex-row-reverse basis-[70%] md:basis-4/5 gap-2">
                     <div class="my-auto flex flex-row basis-1/2">
                         <x-primary-button class="flex basis-full" name="register" :value="1">
                             <span

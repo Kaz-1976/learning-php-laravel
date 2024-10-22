@@ -167,8 +167,8 @@
                     @endif
                 </div>
             </div>
-            <div class="flex flex-col-reverse md:flex-row-reverse basis-1/5 md gap-2">
-                <div class="flex flex-row-reverse md:flex-col-reverse gap-2 h-12 md:h-auto">
+            <div class="flex flex-col-reverse basis-1/5 gap-2">
+                <div class="flex flex-row-reverse md:flex-col-reverse gap-2 basis-full h-12 md:h-auto">
                     <div class="flex basis-1/2 md:basis-full">
                         <x-primary-button class="w-full" form="update-{{ $ec_user->id }}" name="update"
                             :value="$ec_user->id">
@@ -181,7 +181,7 @@
                         </x-secondary-button>
                     </div>
                 </div>
-                <div class="flex flex-row-reverse md:flex-col-reverse gap-2 h-12 md:h-auto">
+                <div class="flex flex-row-reverse md:flex-col-reverse gap-2 basis-full h-12 md:h-auto">
                     <div class="flex basis-1/2 md:basis-full">
                         @if (Auth::user()->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id !=
                         Auth::user()->user_id)
