@@ -15,7 +15,7 @@
                 <img id="register-image-preview">
             </div>
         </div>
-        <div class="flex flex-col grow">
+        <div class="flex flex-col grow gap-2">
             {{-- 商品名 --}}
             <div>
                 <x-input-label for="register-product-name" :value="__('商品名')" />
