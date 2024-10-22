@@ -14,7 +14,7 @@ services:
   app:
     container_name: app
     env_file:
-      - ./src/.env
+      - ./src/.env.production
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
@@ -41,6 +41,8 @@ services:
   db:
     container_name: db
     image: mariadb:latest
+    env_file:
+      - ./docker/db/.env.production
     restart: always
     volumes:
       - type: volume
@@ -48,12 +50,6 @@ services:
         target: /var/lib/mysql
     ports:
       - 3306:3306
-    environment:
-      - MARIADB_ROOT_PASSWORD=iM6uj8Tu9g8KE9T5
-      - MARIADB_DATABASE=ec_site
-      - MARIADB_USER=ec_admin
-      - MARIADB_PASSWORD=iM6uj8Tu9g8KE9T5
-      - "TZ=Asia/Tokyo"
   admin:
     container_name: admin
     image: phpmyadmin:latest
