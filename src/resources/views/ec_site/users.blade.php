@@ -169,20 +169,20 @@
             </div>
             <div class="flex flex-col-reverse basis-1/5 gap-2">
                 <div class="flex flex-row-reverse md:flex-col-reverse gap-2 basis-full h-12 md:h-auto">
-                    <div class="flex basis-1/2 md:basis-full">
+                    <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
                         <x-primary-button class="w-full" form="update-{{ $ec_user->id }}" name="update"
                             :value="$ec_user->id">
                             <span class="flex m-auto text-base md:text-xl text-center font-bold">{{ __('更新') }}</span>
                         </x-primary-button>
                     </div>
-                    <div class="flex basis-1/2 md:basis-full">
+                    <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
                         <x-secondary-button class="w-full" type="reset" name="reset">
                             <span class="flex m-auto text-base md:text-xl text-center font-bold">{{ __('リセット') }}</span>
                         </x-secondary-button>
                     </div>
                 </div>
                 <div class="flex flex-row-reverse md:flex-col-reverse gap-2 basis-full h-12 md:h-auto">
-                    <div class="flex basis-1/2 md:basis-full">
+                    <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
                         @if (Auth::user()->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id !=
                         Auth::user()->user_id)
                         <x-secondary-button class="w-full" type="submit" name="admin" :value="$ec_user->id">
@@ -191,7 +191,7 @@
                         </x-secondary-button>
                         @endif
                     </div>
-                    <div class="flex basis-1/2 md:basis-full">
+                    <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
                         @if ($ec_user->user_id != env('DEFAULT_ADMIN_ID', 'ec_admin') && $ec_user->user_id !=
                         Auth::user()->user_id)
                         <x-secondary-button class="w-full" type="submit" name="enable" :value="$ec_user->id">
