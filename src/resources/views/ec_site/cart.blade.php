@@ -5,8 +5,8 @@
 
 {{-- ページコンテンツ --}}
 @section('content')
-@if (empty($ec_cart_details))
 <div>
+    @if (empty($ec_cart_details))
     <a class="flex basis-full my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
         <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
     </a>
@@ -16,9 +16,7 @@
     <a class="flex basis-full my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
         <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
     </a>
-</div>
-@else
-<div>
+    @else
     <div class="flex flex-row gap-2">
         <form class="flex basis-1/3 my-2 rounded bg-sky-900 dark:bg-sky-100" method="POST"
             action="{{ url('ec_site/cart/clear', null, app()->isProduction()) }}">
@@ -172,6 +170,6 @@
             </button>
         </form>
     </div>
+    @endif
 </div>
-@endif
 @endsection
