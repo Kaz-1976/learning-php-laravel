@@ -23,8 +23,6 @@ services:
         source: ./src/
         target: /var/www/html
     restart: always
-    depends_on:
-      - db
   node:
     container_name: node
     build:
@@ -38,27 +36,3 @@ services:
         source: ./src/
         target: /workspace
     working_dir: /workspace
-  db:
-    container_name: db
-    image: mariadb:latest
-    env_file:
-      - ./docker/db/.env.production
-    restart: always
-    volumes:
-      - type: volume
-        source: mariadb
-        target: /var/lib/mysql
-    ports:
-      - 3306:3306
-  admin:
-    container_name: admin
-    image: phpmyadmin:latest
-    restart: always
-    ports:
-      - 8080:80
-    environment:
-      - PMA_ARBITRARY=1
-    depends_on:
-      - db
-volumes:
-  mariadb:
