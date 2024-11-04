@@ -29,12 +29,6 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/';
 
-    protected function authenticated(Request $request, $user)
-    {
-        dd($user);
-        return redirect('/ec_site/');
-    }
-
     /**
      * Create a new controller instance.
      *
