@@ -27,6 +27,6 @@ class LoginListener
         $event->user->save();
 
         // リダイレクト
-        redirect('/', 302, [], app()->isProduction())->send();
+        redirect('/ec_site/', 302, [], app()->isProduction())->send();
     }
 }
