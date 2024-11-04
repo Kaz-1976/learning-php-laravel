@@ -7,7 +7,7 @@ services:
     volumes:
       - type: bind
         source: ./src/
-        target: /var/www/html/
+        target: /var/www/html
     ports:
       - 9080:80
     restart: always
@@ -21,7 +21,7 @@ services:
     volumes:
       - type: bind
         source: ./src/
-        target: /var/www/html/
+        target: /var/www/html
     restart: always
   node:
     container_name: node
