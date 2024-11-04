@@ -25,8 +25,5 @@ class LoginListener
         // 最終ログイン日時を更新
         $event->user->last_login_at = now();
         $event->user->save();
-
-        // リダイレクト
-        redirect('/ec_site/', 302, [], app()->isProduction())->send();
     }
 }
