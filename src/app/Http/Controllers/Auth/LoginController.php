@@ -27,17 +27,17 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/';
+    protected $redirectTo = '/';
 
     /**
      * Get the post-login redirect path.
      *
      * @return string
      */
-    protected function redirectTo()
-    {
-        return Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items';
-    }
+    // protected function redirectTo()
+    // {
+    //     return Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items';
+    // }
 
     /**
      * Create a new controller instance.
