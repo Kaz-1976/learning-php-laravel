@@ -9,7 +9,7 @@ use App\Http\Controllers\EcUserController;
 use App\Http\Controllers\EcProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('ec_site')->group(function () {
+// Route::prefix('ec_site')->group(function () {
     // ルートページ
     Route::get('/', [IndexController::class, 'index'])->name('ec_site.index');
 
@@ -48,4 +48,4 @@ Route::prefix('ec_site')->group(function () {
 
     //認証ページ
     require __DIR__ . '/auth.php';
-});
+// });
