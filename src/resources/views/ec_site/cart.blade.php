@@ -7,13 +7,13 @@
 @section('content')
 <div>
     @if (empty($ec_cart_details))
-    <a class="flex basis-full my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
+    <a class="flex basis-full my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ url('ec_site/items/', null, app()->isProduction()) }}">
         <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
     </a>
     <div class="flex my-4 py-8">
         <p class="flex m-auto text-xl font-bold text-sky-950 dark:text-sky-50">ショッピングカートは空です。</p>
     </div>
-    <a class="flex basis-full my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ route('items.index') }}">
+    <a class="flex basis-full my-2 p-2 rounded bg-sky-900 dark:bg-sky-100" href="{{ url('ec_site/items/', null, app()->isProduction()) }}">
         <span class="mx-auto text-xl font-bold text-sky-50 dark:text-sky-950">商品一覧</span>
     </a>
     @else
