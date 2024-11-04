@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'ec_site/';
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -37,5 +37,7 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+        // Redirect
+        $redirectTo = Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items/';
     }
 }
