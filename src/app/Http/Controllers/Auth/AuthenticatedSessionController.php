@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('ec_site.index', absolute: false));
+        return redirect()->intended(url('/ec_site/', null, app()->isProduction()));
     }
 
     /**
