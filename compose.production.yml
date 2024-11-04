@@ -36,13 +36,3 @@ services:
         source: ./src/
         target: /workspace
     working_dir: /workspace
-  admin:
-    container_name: admin
-    image: phpmyadmin:latest
-    restart: always
-    ports:
-      - 8080:80
-    environment:
-      - PMA_ARBITRARY=1
-volumes:
-  mariadb:
