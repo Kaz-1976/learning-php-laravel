@@ -15,6 +15,7 @@ class ResetPassword extends ResetPasswordNotification
      */
     protected function buildMailMessage($url)
     {
+        dd($url);
         return (new MailMessage)
             ->subject('Reset Password Notification')
             ->line('You are receiving this email because we received a password reset request for your account.')
