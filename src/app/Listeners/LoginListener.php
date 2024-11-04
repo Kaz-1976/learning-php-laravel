@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginListener
 {
@@ -22,7 +23,10 @@ class LoginListener
      */
     public function handle(Login $event): void
     {
+        // 最終ログイン日時を更新
         $event->user->last_login_at = now();
         $event->user->save();
+        // リダイレクト
+        return redirect(Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items', 302, [], app()->isProduction());
     }
 }
