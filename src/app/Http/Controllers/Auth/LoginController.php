@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 class LoginController extends Controller
 {
@@ -33,9 +34,8 @@ class LoginController extends Controller
      *
      * @return string
      */
-    public function redirectTo()
+    protected function redirectTo()
     {
-        dd(Auth::user()->admin_flg);
         return Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items';
     }
 
@@ -48,5 +48,10 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect(url(Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items',null,app()->isProduction()));
     }
 }
