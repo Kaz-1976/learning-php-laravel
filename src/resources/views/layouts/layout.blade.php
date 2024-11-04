@@ -32,14 +32,14 @@
     $cssFiles = $manifest['resources/js/app.js']['css'] ?? [];
     @endphp
     @foreach ($cssFiles as $cssFile)
-    <link rel="stylesheet" href="{{ secure_asset('build/' . $cssFile) }}">
+    <link rel="stylesheet" href="{{ secure_asset('/build/' . $cssFile) }}">
     @endforeach
     @if ($jsFile)
-    <script src="{{ secure_asset('build/' . $jsFile) }}" defer></script>
+    <script src="{{ secure_asset('/build/' . $jsFile) }}" defer></script>
     @endif
     {{-- Common --}}
-    <script src="{{ secure_asset('js/common.js') }}" defer></script>
-    <link rel="stylesheet" href="{{ secure_asset('css/common.css') }}">
+    <script src="{{ secure_asset('/js/common.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ secure_asset('/css/common.css') }}">
     @endif
 </head>
 
