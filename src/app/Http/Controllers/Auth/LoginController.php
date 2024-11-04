@@ -27,7 +27,17 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/ec_admin/';
+    // protected $redirectTo = '/';
+
+    /**
+     * Get the post-login redirect path.
+     *
+     * @return string
+     */
+    protected function redirectTo()
+    {
+        return Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items';
+    }
 
     /**
      * Create a new controller instance.
@@ -39,4 +49,5 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
+
 }
