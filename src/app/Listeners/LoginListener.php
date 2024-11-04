@@ -27,7 +27,6 @@ class LoginListener
         $event->user->last_login_at = now();
         $event->user->save();
         // リダイレクト
-        dd(Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items', 302, [], app()->isProduction());
         return redirect(Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items', 302, [], app()->isProduction());
     }
 }
