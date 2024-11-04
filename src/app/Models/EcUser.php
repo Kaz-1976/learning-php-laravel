@@ -55,7 +55,6 @@ class EcUser extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        dd($token);
         $this->notify(new ResetPassword($token));
     }
 }
