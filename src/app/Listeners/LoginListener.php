@@ -28,5 +28,6 @@ class LoginListener
         $event->user->save();
         // リダイレクト
         redirect($event->user->admin_flg ? '/ec_site/admin' : '/ec_site/items', 302, [], app()->isProduction());
+        dd($event->user->admin_flg ? '/ec_site/admin' : '/ec_site/items', 302, [], app()->isProduction());
     }
 }
