@@ -10,7 +10,7 @@ use App\Http\Controllers\EcProductController;
 use Illuminate\Support\Facades\Route;
 
 // ルートページ
-Route::get('', [IndexController::class, 'index'])->name('ec_site.index');
+Route::get('ec_site/', [IndexController::class, 'index'])->name('ec_site.index');
 
 // 管理者
 Route::middleware([\App\Http\Middleware\CheckAdmin::class])->group(function () {
@@ -23,6 +23,7 @@ Route::middleware([\App\Http\Middleware\CheckAdmin::class])->group(function () {
     Route::post('/admin/users/update', [EcUserController::class, 'update'])->name('users.update');
 
     // 商品管理ページ
+
     Route::get('/admin/products', [EcProductController::class, 'index'])->name('products.index');
     Route::post('/admin/products/store', [EcProductController::class, 'store'])->name('products.store');
     Route::post('/admin/products/update', [EcProductController::class, 'update'])->name('products.update');
