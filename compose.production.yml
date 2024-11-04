@@ -11,6 +11,8 @@ services:
     ports:
       - 9080:80
     restart: always
+    depends_on:
+      - app
   app:
     container_name: app
     env_file:
@@ -36,3 +38,5 @@ services:
         source: ./src/
         target: /workspace
     working_dir: /workspace
+    depends_on:
+      - app
