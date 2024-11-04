@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    # Laravelをサブディレクトリに配置
+    RewriteBase /ec_site/
+    RewriteRule ^(.*)$ public/$1 [L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
