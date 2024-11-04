@@ -36,6 +36,7 @@ class LoginController extends Controller
      */
     protected function redirectTo()
     {
+        dd(Auth::user()->admin_flg);
         return Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items';
     }
 
