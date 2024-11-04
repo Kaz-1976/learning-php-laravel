@@ -21,7 +21,7 @@ class LoginListener
     /**
      * Handle the event.
      */
-    public function handle(Login $event): void
+    public function handle(Login $event)
     {
         // 最終ログイン日時を更新
         $event->user->last_login_at = now();
