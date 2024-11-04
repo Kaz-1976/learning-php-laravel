@@ -21,12 +21,12 @@ class LoginListener
     /**
      * Handle the event.
      */
-    public function handle(Login $event)
+    public function handle(Login $event): void
     {
         // 最終ログイン日時を更新
         $event->user->last_login_at = now();
         $event->user->save();
         // リダイレクト
-        return redirect(Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items', 302, [], app()->isProduction());
+        redirect(Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items', 302, [], app()->isProduction());
     }
 }
