@@ -6,7 +6,6 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginListener
 {
@@ -28,6 +27,6 @@ class LoginListener
         $event->user->save();
 
         // リダイレクト
-        return redirect(url($event->user->admin_flg ? '/ec_site/admin' : '/ec_site/items', [], app()->isProduction()));
+        return redirect(url($event->user->admin_flg ? '/ec_site/admin' : '/ec_site/items', [], app()->isProduction()))->send();
     }
 }
