@@ -10,7 +10,9 @@ use App\Http\Controllers\EcProductController;
 use Illuminate\Support\Facades\Route;
 
 // ルートページ
-Route::get('/ec_site/', [IndexController::class, 'index'])->name('ec_site.index');
+Route::prefix('ec_site')->group(function () {
+    Route::get('/', [IndexController::class, 'index'])->name('ec_site.index');
+});
 
 // 管理者
 Route::middleware([\App\Http\Middleware\CheckAdmin::class])->group(function () {
