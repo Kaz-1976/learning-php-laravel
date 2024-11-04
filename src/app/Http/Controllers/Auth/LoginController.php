@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items';
+    protected $redirectTo = '/ec_site';
 
     /**
      * Create a new controller instance.
