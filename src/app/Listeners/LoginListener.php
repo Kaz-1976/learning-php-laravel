@@ -26,6 +26,7 @@ class LoginListener
         // 最終ログイン日時を更新
         $event->user->last_login_at = now();
         $event->user->save();
+
         // リダイレクト
         return redirect(url($event->user->admin_flg ? '/ec_site/admin' : '/ec_site/items', [], app()->isProduction()));
     }
