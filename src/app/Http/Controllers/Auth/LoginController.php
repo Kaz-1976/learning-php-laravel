@@ -26,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = url('ec_site/', null, app()->isProduction());
+    protected $redirectTo = '/ec_site/';
 
     /**
      * Create a new controller instance.
