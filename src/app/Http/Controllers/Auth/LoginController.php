@@ -39,5 +39,6 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
         // Redirect
         $redirectTo = Auth::user()->admin_flg ? '/ec_site/admin' : '/ec_site/items/';
+        dd($redirectTo);
     }
 }
