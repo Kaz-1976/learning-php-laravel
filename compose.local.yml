@@ -16,7 +16,6 @@ services:
     environment:
       VIRTUAL_HOST: "localhost,learning.inaho.space"
       VIRTUAL_PORT: "80"
-      VIRTUAL_PATH: "/ec_site/"
     volumes:
       - type: bind
         source: ./src/
