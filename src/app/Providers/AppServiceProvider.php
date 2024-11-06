@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         // カスタムBladeディレクティブの定義
         Blade::directive('generateUrl', function ($expression) {
-            return "<?php echo UrlHelper::generateUrl($expression); ?>";
+            return "<?php echo \App\Helpers\UrlHelper::generateUrl($expression); ?>";
         });
     }
 }
