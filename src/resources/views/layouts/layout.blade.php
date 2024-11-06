@@ -48,33 +48,31 @@
         class="fixed top-0 z-50 flex flex-row justify-between items-stretch t-0 w-full h-20 px-5 bg-sky-700/75 dark:bg-sky-300/75">
         <div class="flex my-auto">
             <h1 class="flex text-3xl text-sky-50 dark:text-sky-950 font-bold align-middle">
-                <a href="{{ url('ec_site/') }}">{{ config('app.name', 'Laravel') }}</a>
+                <a href="@generateUrl('')">{{ config('app.name', 'Laravel') }}</a>
             </h1>
         </div>
         <div class="flex flex-row gap-2 my-auto">
             @auth
             @if (Auth::user()->admin_flg)
             {{-- ユーザー管理 --}}
-            <a class="block text-3xl text-sky-50 dark:text-sky-950"
-                href="{{ url('ec_site/admin/users', null, app()->isProduction()) }}" title="ユーザー管理">
+            <a class="block text-3xl text-sky-50 dark:text-sky-950" href="@generateUrl('admin/users')" title="ユーザー管理">
                 <i class="fa-solid fa-users fa-fw m-auto object-cover"></i>
             </a>
             @if (Auth::user()->user_id != env('DEFAULT_ADMIN_ID','ec_admin'))
             {{-- 商品管理 --}}
             <a class="block text-3xl text-sky-50 dark:text-sky-950"
-                href="{{ url('ec_site/admin/products', null, app()->isProduction()) }}" title="商品管理">
+                href="@generateUrl('admin/products')" title="商品管理">
                 <i class="fa-solid fa-boxes-stacked fa-fw m-auto object-cover"></i>
             </a>
             @endif
             @else
             {{-- ショッピングカート --}}
-            <a class="block text-3xl text-sky-50 dark:text-sky-950"
-                href="{{ url('ec_site/cart', null, app()->isProduction()) }}" title="ショッピングカート">
+            <a class="block text-3xl text-sky-50 dark:text-sky-950" href="@generateUrl('cart')" title="ショッピングカート">
                 <i class="fa-solid fa-cart-shopping fa-fw m-auto object-cover"></i>
             </a>
             @endif
             {{-- ログアウト --}}
-            <form class="block" method="POST" action="{{ url('ec_site/logout', null, app()->isProduction()) }}">
+            <form class="block" method="POST" action="@generateUrl('logout')">
                 @csrf
                 <button class="block text-3xl text-sky-50 dark:text-sky-950" type="submit" title="ログアウト">
                     <i class="fa-solid fa-right-from-bracket fa-fw m-auto object-cover"></i>

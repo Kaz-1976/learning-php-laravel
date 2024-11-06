@@ -7,7 +7,7 @@
 @section('content')
 <div class="flex flex-col gap-4">
     <form class="flex flex-col gap-1 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
-        id="register" action="{{ url('ec_site/admin/users/store', null, app()->isProduction()) }}" method="POST">
+        id="register" action="@generateUrl('admin/users/store')" method="POST">
         @csrf
         {{-- ユーザーID --}}
         <div>
@@ -105,8 +105,7 @@
         @endphp
         <form
             class="flex flex-col md:flex-row basis-full gap-4 w-full p-4 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-50 {{ $ec_user->enable_flg ? ($ec_user->admin_flg ? 'bg-sky-300 dark:bg-sky-800' : 'bg-sky-400 dark:bg-sky-700') : 'bg-sky-200 dark:bg-sky-900' }}"
-            id="update-{{ $ec_user->id }}" action="{{ url('ec_site/admin/users/update', null, app()->isProduction()) }}"
-            method="POST">
+            id="update-{{ $ec_user->id }}" action="@generateUrl('admin/users/update')" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $ec_user->id }}" />
             <input type="hidden" name="enable_flg" value="{{ $ec_user->enable_flg }}" />

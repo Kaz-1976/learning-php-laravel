@@ -6,8 +6,6 @@ services:
       - 80:80
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    environment:
-      HTTPS_METHOD: nohttps
     restart: always
 
   web:
@@ -16,9 +14,9 @@ services:
       context: .
       dockerfile: ./docker/web/Dockerfile
     environment:
-      VIRTUAL_HOST: "localhost"
+      VIRTUAL_HOST: "localhost,learning.inaho.space"
       VIRTUAL_PORT: "80"
-      VIRTUAL_PROTO: "http"
+      VIRTUAL_PATH: "/ec_site/"
     volumes:
       - type: bind
         source: ./src/

@@ -11,6 +11,7 @@ use App\Models\EcCartDetail;
 use App\Models\EcProduct;
 use App\Models\EcUser;
 use App\Http\Requests\EcCartDetailUpdateRequest;
+use App\Helpers\UrlHelper;
 
 class CartController extends Controller
 {
@@ -88,7 +89,7 @@ class CartController extends Controller
             ->where('cart_id', $id)
             ->delete();
         //
-        return redirect(url('ec_site/cart', null, app()->isProduction()))
+        return redirect(UrlHelper::generateUrl('ec_site/cart'))
             ->with('message', 'ショッピングカートを空にしました。');
     }
 
@@ -178,7 +179,7 @@ class CartController extends Controller
         // セッション変数にカートIDを保存
         session()->flash('cart_id', $cart_id);
         // リダイレクト
-        return redirect(url('ec_site/complete', null, app()->isProduction()))
+        return redirect(UrlHelper::generateUrl('ec_site/complete'))
             ->with('message', 'ご利用ありがとうございました。');
     }
 }

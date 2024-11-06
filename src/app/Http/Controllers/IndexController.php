@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\UrlHelper;
 
 class IndexController extends Controller
 {
@@ -15,13 +16,13 @@ class IndexController extends Controller
             // 管理／一般
             if ($user->admin_flg == 0) {
                 // 一般ユーザーは商品一覧へ
-                return redirect(url('/ec_site/items', null, app()->isProduction()));
+                return redirect(UrlHelper::generateUrl('items'));
             } else {
                 // 管理ユーザーは管理メニューへ
-                return redirect(url('/ec_site/admin', null, app()->isProduction()));
+                return redirect(UrlHelper::generateUrl('admin'));
             }
         }
         // ログインしていない場合はログインページへ
-        return redirect(url('/ec_site/login', null, app()->isProduction()));
+        return redirect(UrlHelper::generateUrl('login'));
     }
 }

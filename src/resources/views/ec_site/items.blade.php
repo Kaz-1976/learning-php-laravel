@@ -23,7 +23,7 @@
             </div>
         </div>
         <form class="flex flex-col gap-2 w-full" id="item-{{ $ec_product->id }}"
-            action="{{ url('ec_site/items/store', null, app()->isProduction()) }}" method="POST">
+            action="@generateUrl('items/store')" method="POST">
             @csrf
             <input type="hidden" name="id" value="{{ $ec_product->id }}">
             <input type="hidden" name="name" value="{{ $ec_product->name }}">

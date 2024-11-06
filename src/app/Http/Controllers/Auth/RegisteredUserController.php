@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\UrlHelper;
 use App\Http\Controllers\Controller;
 use App\Models\EcUser as Authenticatable;
 use Illuminate\Auth\Events\Registered;
@@ -53,6 +54,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('ec_site.index', absolute: false));
+        return redirect(UrlHelper::generateUrl(''));
     }
 }

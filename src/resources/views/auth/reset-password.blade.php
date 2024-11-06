@@ -5,7 +5,7 @@
 @section('content')
 <div class="container w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm">
     <form class="w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm space-y-6" method="POST"
-        action="{{ url('ec_site/reset-password', null, app()->isProduction()) }}">
+        action="@generateUrl('reset-password')">
         @csrf
 
         <!-- Password Reset Token -->
