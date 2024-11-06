@@ -14,10 +14,10 @@ class UrlHelper
         if (filter_var($path, FILTER_VALIDATE_URL)) {
             // サブディレクトリが含まれていない場合のみ追加
             if (strpos($path, $baseUrl) === false) {
-                return $baseUrl . '/' . ltrim($urlPath, '/') . ltrim('?' . $urlQuery, '?');
+                return rtrim($baseUrl . '/' . ltrim($urlPath, '/') . '?' . ltrim($urlQuery, '?'), '?');
             }
             return $path;
         }
-        return $baseUrl . '/' . ltrim($urlPath, '/') . ltrim('?' . $urlQuery, '?');
+        return rtrim($baseUrl . '/' . ltrim($urlPath, '/') . '?' . ltrim($urlQuery, '?'), '?');
     }
 }
