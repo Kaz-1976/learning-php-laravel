@@ -1,0 +1,2 @@
+FROM nginx:stable-bookworm
+COPY ./docker/web/default.local.conf /etc/nginx/conf.d/default.conf

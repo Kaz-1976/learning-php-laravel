@@ -10,11 +10,14 @@ class UrlHelper
 
         // フルURLが含まれているかチェック
         if (filter_var($path, FILTER_VALIDATE_URL)) {
-            $url_path = parse_url($path, PHP_URL_PATH);
-            $url_query = parse_url($path, PHP_URL_QUERY);
-            return $baseUrl . '/' . ltrim($url_path, '/') . '?' . ltrim($url_query, '?');
+            // サブディレクトリが含まれていない場合のみ追加
+            if (strpos($path, $baseUrl) === false) {
+                $url_path = parse_url($path, PHP_URL_PATH);
+                $url_query = parse_url($path, PHP_URL_QUERY);
+                return $baseUrl . '/' . ltrim($url_path, '/') . '?' . ltrim($url_query, '?');
+            }
+            return $path;
         }
-
-        return $baseUrl . '/' . ltrim($path, '/');
+        return $baseUrl . '/' . ltrim($url_path, '/') . '?' . ltrim($url_query, '?');
     }
 }
