@@ -6,8 +6,6 @@ class UrlHelper
 {
     public static function generateUrl($path)
     {
-        return $path;
-
         $baseUrl = rtrim(config('app.url'), '/');
         $urlPath = parse_url($path, PHP_URL_PATH);
         $urlQuery = parse_url($path, PHP_URL_QUERY);
