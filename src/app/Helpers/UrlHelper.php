@@ -6,13 +6,17 @@ class UrlHelper
 {
     public static function generateUrl($path)
     {
-        $baseUrl = config('app.url'); // APP_URL環境変数を取得
+        $baseUrl = rtrim(config('app.url'), '/');
 
-        // フルURLがすでに含まれている場合はそのまま返す
+        // フルURLが含まれているかチェック
         if (filter_var($path, FILTER_VALIDATE_URL)) {
+            // サブディレクトリが含まれていない場合のみ追加
+            if (strpos($path, $baseUrl) === false) {
+                return $baseUrl . '/' . ltrim($path, '/');
+            }
             return $path;
         }
 
-        return rtrim($baseUrl, '/') . '/' . ltrim($path, '/');
+        return $baseUrl . '/' . ltrim($path, '/');
     }
 }
