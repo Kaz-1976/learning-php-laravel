@@ -48,7 +48,7 @@
         class="fixed top-0 z-50 flex flex-row justify-between items-stretch t-0 w-full h-20 px-5 bg-sky-700/75 dark:bg-sky-300/75">
         <div class="flex my-auto">
             <h1 class="flex text-3xl text-sky-50 dark:text-sky-950 font-bold align-middle">
-                <a href="@generateUrl('')">{{ config('app.name', 'Laravel') }}</a>
+                <a href="@generateUrl('/')">{{ config('app.name', 'Laravel') }}</a>
             </h1>
         </div>
         <div class="flex flex-row gap-2 my-auto">
