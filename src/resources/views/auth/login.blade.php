@@ -6,7 +6,7 @@
 <div class="container w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm">
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <form class="w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm space-y-6" method="POST"
-        action="@generateUrl('login')">
+        action="{{ \App\Helpers\UrlHelper::generateUrl('login') }}">
         @csrf
 
         <!-- User ID -->
@@ -41,7 +41,7 @@
 
             @if (Route::has('password.request'))
             <a class="underline text-m text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                href="@generateUrl('forgot-password')">
+                href="{{ \App\Helpers\UrlHelper::generateUrl('forgot-password') }}">
                 {{ __('Forgot your password?') }}
             </a>
             @endif
@@ -54,7 +54,7 @@
         <div class="container my-4 text-center text-gray-600 dark:text-gray-400">
             <span>アカウントをお持ちでない方は</span>
             <a class="underline font-bold text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                href="@generateUrl('register')">
+                href="{{ \App\Helpers\UrlHelper::generateUrl('register') }}">
                 {{ __('Register') }}
             </a>
         </div>
