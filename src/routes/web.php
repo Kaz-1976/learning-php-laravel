@@ -7,6 +7,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CompleteController;
 use App\Http\Controllers\EcUserController;
 use App\Http\Controllers\EcProductController;
+use App\Http\Controllers\MyPageController;
+use App\Http\Controllers\MyProfileController;
+use App\Http\Controllers\MyHistoryController;
 use Illuminate\Support\Facades\Route;
 
 // ルートページ
@@ -30,6 +33,18 @@ Route::middleware([\App\Http\Middleware\CheckAdmin::class])->group(function () {
 
 // 利用者
 Route::middleware([\App\Http\Middleware\CheckNormal::class])->group(function () {
+    // マイページ
+    Route::get('/mypage', [MyPageController::class, 'index'])->name('mypage.index');
+
+    // 個人情報ページ
+    Route::get('/mypage/profile', [MyProfileController::class, 'index'])->name('profile.index');
+
+    // 配送先情報ページ
+    Route::get('/mypage/address', [MyAddressController::class, 'index'])->name('address.index');
+
+    // 購入履歴ページ
+    Route::get('/mypage/history', [MyHistoryController::class, 'index'])->name('history.index');
+
     // 商品一覧ページ
     Route::get('/items', [ItemController::class, 'index'])->name('items.index');
     Route::post('/items/store', [ItemController::class, 'store'])->name('items.store');

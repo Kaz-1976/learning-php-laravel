@@ -60,12 +60,15 @@
             </a>
             @if (Auth::user()->user_id != env('DEFAULT_ADMIN_ID','ec_admin'))
             {{-- 商品管理 --}}
-            <a class="block text-3xl text-sky-50 dark:text-sky-950"
-                href="@generateUrl('admin/products')" title="商品管理">
+            <a class="block text-3xl text-sky-50 dark:text-sky-950" href="@generateUrl('admin/products')" title="商品管理">
                 <i class="fa-solid fa-boxes-stacked fa-fw m-auto object-cover"></i>
             </a>
             @endif
             @else
+            {{-- マイページ --}}
+            <a class="block text-3xl text-sky-50 dark:text-sky-950" href="@generateUrl('mypage')" title="マイページ">
+                <i class="fa-solid fa-user fa-fw m-auto object-cover"></i>
+            </a>
             {{-- ショッピングカート --}}
             <a class="block text-3xl text-sky-50 dark:text-sky-950" href="@generateUrl('cart')" title="ショッピングカート">
                 <i class="fa-solid fa-cart-shopping fa-fw m-auto object-cover"></i>
