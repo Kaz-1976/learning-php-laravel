@@ -10,6 +10,7 @@ use App\Http\Controllers\EcProductController;
 use App\Http\Controllers\MyPageController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\MyHistoryController;
+use App\Http\Controllers\MyAddressController;
 use Illuminate\Support\Facades\Route;
 
 // ルートページ
