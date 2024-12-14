@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('ec_carts', function (Blueprint $table) {
             $table->id()->primary()->comment('カートID');
             $table->foreignId('user_id')->comment('ユーザーID')->constrained('ec_users');
-            $table->boolean('checkout_flg')->comment('決済フラグ');
+            $table->boolean('checkout_flg')->default(false)->comment('決済フラグ');
+            $table->dateTime('checkout_date')->nullable()->comment('決済日時');
+            $table->integer('checkout_qty')->nullable()->comment('決済数量');
+            $table->integer('checkout_total')->nullable()->comment('決済金額');
+            $table->foreignId('address_id')->nullable()->comment('配送先ID')->constrained('ec_address');
             $table->foreignId('created_by')->comment('作成ユーザー')->constrained('ec_users');
             $table->dateTime('created_at')->comment('作成日時');
             $table->foreignId('updated_by')->comment('最終更新ユーザー')->constrained('ec_users');

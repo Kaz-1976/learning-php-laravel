@@ -9,6 +9,8 @@ class EcCartDetail extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['cart_id'];
+
     public function ec_carts()
     {
         return $this->belongsTo(EcCart::class, 'cart_id', 'id');

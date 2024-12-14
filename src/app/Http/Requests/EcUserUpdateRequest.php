@@ -27,6 +27,7 @@ class EcUserUpdateRequest extends FormRequest
             'user_kana' => '氏名（かな）',
             'email' => 'メールアドレス',
             'password' => 'パスワード',
+            'cart_id' => 'カートID'
         ];
     }
 

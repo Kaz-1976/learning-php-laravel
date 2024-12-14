@@ -7,8 +7,7 @@
 @section('content')
 <div class="flex flex-col gap-4">
     <form class="flex flex-col md:flex-row gap-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
-        id="register" action="@generateUrl('admin/products/store')" method="POST"
-        enctype="multipart/form-data">
+        id="register" action="@generateUrl('admin/products/store')" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="flex flex-col grow-0 basis-64 md:basis-80 h-64 md:h-80 m-auto">
             <div class="flex w-64 md:w-80 h-64 md:h-80 border-solid border-2 border-sky-50">
@@ -84,7 +83,7 @@
         </div>
     </form>
     <div class="w-full">
-        {{ $ec_products->render() }}
+        {{ $ecProducts->render() }}
     </div>
     <div class="block">
         @php
@@ -92,90 +91,88 @@
         $form = [];
         $image = [];
         @endphp
-        @foreach ($ec_products as $ec_product)
+        @foreach ($ecProducts as $ecProduct)
         @php
-        $id[] = $ec_product->id;
-        $form[$ec_product->id] = 'update-' . (string) $ec_product->id;
-        $image[$ec_product->id] = 'data:' . $ec_product->image_type . ';base64,' . $ec_product->image_data;
+        $id[] = $ecProduct->id;
+        $form[$ecProduct->id] = 'update-' . (string) $ecProduct->id;
+        $image[$ecProduct->id] = 'data:' . $ecProduct->image_type . ';base64,' . $ecProduct->image_data;
         @endphp
         <div
-            class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_product->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
-            <form class="flex flex-col md:flex-row basis-full gap-2" id="{{ $form[$ec_product->id] }}"
-                action="@generateUrl('admin/products/update')" method="POST"
-                enctype="multipart/form-data">
+            class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ecProduct->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
+            <form class="flex flex-col md:flex-row basis-full gap-2" id="{{ $form[$ecProduct->id] }}"
+                action="@generateUrl('admin/products/update')" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="id" value="{{ $ec_product->id }}" />
-                <input type="hidden" name="public_flg" value="{{ $ec_product->public_flg }}" />
+                <input type="hidden" name="id" value="{{ $ecProduct->id }}" />
+                <input type="hidden" name="public_flg" value="{{ $ecProduct->public_flg }}" />
                 <div class="flex flex-col grow-0 basis-64 h-64 m-auto">
                     <div class="block w-64 h-64 border-solid border-2 border-sky-50">
                         <img class="block w-full h-hull object-cover overflow-hidden"
-                            id="{{ $form[$ec_product->id] }}-image-preview" src="{{ $image[$ec_product->id] }}">
+                            id="{{ $form[$ecProduct->id] }}-image-preview" src="{{ $image[$ecProduct->id] }}">
                     </div>
                 </div>
                 <div class="flex flex-col md:flex-row grow gap-4">
                     <div class="flex flex-col basis-4/5 gap-1">
                         <div class="block">
-                            <x-input-label for="{{ $form[$ec_product->id] }}-name" :value="__('名称')" />
-                            <x-text-input class="block mt-1 w-full" type="text" id="{{ $form[$ec_product->id] }}-name"
-                                name="name" :value="$ec_product->name" required autofocus autocomplete="name" />
-                            @if (old('update') == $ec_product->id)
+                            <x-input-label for="{{ $form[$ecProduct->id] }}-name" :value="__('名称')" />
+                            <x-text-input class="block mt-1 w-full" type="text" id="{{ $form[$ecProduct->id] }}-name"
+                                name="name" :value="$ecProduct->name" required autofocus autocomplete="name" />
+                            @if (old('update') == $ecProduct->id)
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                             @endif
                         </div>
                         <div class="block">
-                            <x-input-label for="{{ $form[$ec_product->id] }}-qty" :value="__('数量')" />
+                            <x-input-label for="{{ $form[$ecProduct->id] }}-qty" :value="__('数量')" />
                             <div class="flex flex-row content-stretch gap-2">
                                 <x-text-input class="block mt-1 w-full text-right" type="number"
-                                    id="{{ $form[$ec_product->id] }}-qty" name="qty" :value="$ec_product->qty" required
+                                    id="{{ $form[$ecProduct->id] }}-qty" name="qty" :value="$ecProduct->qty" required
                                     autofocus />
-                                <x-input-label class="mt-auto" for="{{ $form[$ec_product->id] }}-qty"
-                                    :value="__('点')" />
+                                <x-input-label class="mt-auto" for="{{ $form[$ecProduct->id] }}-qty" :value="__('点')" />
                             </div>
-                            @if (old('update') == $ec_product->id)
+                            @if (old('update') == $ecProduct->id)
                             <x-input-error :messages="$errors->get('qty')" class="mt-2" />
                             @endif
                         </div>
                         <div class="block">
-                            <x-input-label for="{{ $form[$ec_product->id] }}-price" :value="__('価格')" />
+                            <x-input-label for="{{ $form[$ecProduct->id] }}-price" :value="__('価格')" />
                             <div class="flex flex-row content-stretch gap-2">
                                 <x-text-input class="block mt-1 w-full text-right" type="number"
-                                    id="{{ $form[$ec_product->id] }}-price" name="price" :value="$ec_product->price"
+                                    id="{{ $form[$ecProduct->id] }}-price" name="price" :value="$ecProduct->price"
                                     required autofocus />
-                                <x-input-label class="mt-auto" for="{{ $form[$ec_product->id] }}-price"
+                                <x-input-label class="mt-auto" for="{{ $form[$ecProduct->id] }}-price"
                                     :value="__('円')" />
                             </div>
-                            @if (old('update') == $ec_product->id)
+                            @if (old('update') == $ecProduct->id)
                             <x-input-error :messages="$errors->get('price')" class="mt-2" />
                             @endif
                         </div>
                         <div>
-                            <x-input-label for="{{ $form[$ec_product->id] }}-image" :value="__('画像')" />
-                            <x-text-input class="block mt-1 w-full" type="file" id="{{ $form[$ec_product->id] }}-image"
+                            <x-input-label for="{{ $form[$ecProduct->id] }}-image" :value="__('画像')" />
+                            <x-text-input class="block mt-1 w-full" type="file" id="{{ $form[$ecProduct->id] }}-image"
                                 name="image" accept="image/*" />
-                            @if (old('update') == $ec_product->id)
+                            @if (old('update') == $ecProduct->id)
                             <x-input-error :messages="$errors->get('image')" class="mt-2" />
                             @endif
                         </div>
                     </div>
                     <div class="flex flex-row-reverse md:flex-col-reverse basis-1/5 gap-2">
                         <div class="flex basis-full">
-                            <x-primary-button class="w-full" id="{{ $form[$ec_product->id] }}-btn-submit"
-                                form="{{ $form[$ec_product->id] }}" name="update" :value="$ec_product->id">
+                            <x-primary-button class="w-full" id="{{ $form[$ecProduct->id] }}-btn-submit"
+                                form="{{ $form[$ecProduct->id] }}" name="update" :value="$ecProduct->id">
                                 <span class="flex m-auto text-xs md:text-xl text-center font-bold">{{ __('更新') }}</span>
                             </x-primary-button>
                         </div>
                         <div class="flex basis-full">
-                            <x-secondary-button class="w-full" id="{{ $form[$ec_product->id] }}-btn-reset" type="reset"
+                            <x-secondary-button class="w-full" id="{{ $form[$ecProduct->id] }}-btn-reset" type="reset"
                                 name="reset">
                                 <span
                                     class="flex m-auto text-xs md:text-xl text-center font-bold">{{ __('リセット') }}</span>
                             </x-secondary-button>
                         </div>
                         <div class="flex basis-full">
-                            <x-secondary-button class="w-full" id="{{ $form[$ec_product->id] }}-btn-public"
-                                type="submit" name="public" :value="$ec_product->id">
+                            <x-secondary-button class="w-full" id="{{ $form[$ecProduct->id] }}-btn-public" type="submit"
+                                name="public" :value="$ecProduct->id">
                                 <span
-                                    class="flex m-auto text-xs md:text-xl text-center font-bold">{{ __($ec_product->public_flg ? '非公開' : '公開') }}</span>
+                                    class="flex m-auto text-xs md:text-xl text-center font-bold">{{ __($ecProduct->public_flg ? '非公開' : '公開') }}</span>
                             </x-secondary-button>
                         </div>
                     </div>
@@ -185,7 +182,7 @@
         @endforeach
     </div>
     <div class="w-full">
-        {{ $ec_products->render() }}
+        {{ $ecProducts->render() }}
     </div>
 </div>
 <script>

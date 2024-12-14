@@ -29,9 +29,9 @@ class EcUserController extends Controller
     public function index()
     {
         //
-        $ec_users = EcUser::orderBy('id', 'asc')->paginate(6);
+        $ecUsers = EcUser::orderBy('id', 'asc')->paginate(6);
         //
-        return view('ec_site.users', ['ec_users' => $ec_users]);
+        return view('ec_site.users', ['ecUsers' => $ecUsers]);
     }
 
     // ユーザー登録
@@ -42,17 +42,17 @@ class EcUserController extends Controller
 
         try {
             // ユーザー生成
-            $ec_user = new EcUser();
+            $ecUser = new EcUser();
             // ユーザー設定
-            $ec_user->user_id = $valid_data->user_id;
-            $ec_user->user_name = $valid_data->user_name;
-            $ec_user->user_kana = $valid_data->user_kana;
-            $ec_user->email = $valid_data->email;
-            $ec_user->password = Hash::make($valid_data->password);
-            $ec_user->enable_flg = $request->enable_flg == 'on' ? true : false;
-            $ec_user->admin_flg = $request->admin_flg == 'on' ? true : false;
+            $ecUser->user_id = $valid_data->user_id;
+            $ecUser->user_name = $valid_data->user_name;
+            $ecUser->user_kana = $valid_data->user_kana;
+            $ecUser->email = $valid_data->email;
+            $ecUser->password = Hash::make($valid_data->password);
+            $ecUser->enable_flg = $request->enable_flg == 'on' ? true : false;
+            $ecUser->admin_flg = $request->admin_flg == 'on' ? true : false;
             // ユーザー登録
-            $ec_user->save();
+            $ecUser->save();
             // メッセージ設定
             $message = 'ユーザーの登録を完了しました。';
         } catch (\Exception $e) {
@@ -80,11 +80,11 @@ class EcUserController extends Controller
                 $message = DB::transaction(function () use ($request, $valid_data) {
                     try {
                         // ユーザーレコード取得
-                        $ec_user = EcUser::find($request->id);
+                        $ecUser = EcUser::find($request->id);
                         // 有効フラグ更新
-                        $ec_user->enable_flg = $request->enable_flg == 1 ? 0 : 1;
+                        $ecUser->enable_flg = $request->enable_flg == 1 ? 0 : 1;
                         // 保存
-                        $ec_user->save();
+                        $ecUser->save();
                         // コミット
                         DB::commit();
                     } catch (\Exception $e) {
@@ -95,11 +95,11 @@ class EcUserController extends Controller
                         Log::error('ユーザーID： ' . $request->user_id);
                         Log::error($e);
                         // メッセージ設定
-                        $message = 'ユーザーの' . ($request->enable_flg == 1 ? '無効' : '有効') . '化に失敗しました。ユーザーID： ' . $ec_user->user_id;
+                        $message = 'ユーザーの' . ($request->enable_flg == 1 ? '無効' : '有効') . '化に失敗しました。ユーザーID： ' . $ecUser->user_id;
                         return;
                     }
                     // メッセージ設定
-                    $message = 'ユーザーを' . ($request->enable_flg == 1 ? '無効' : '有効') . '化しました。ユーザーID： ' . $ec_user->user_id;
+                    $message = 'ユーザーを' . ($request->enable_flg == 1 ? '無効' : '有効') . '化しました。ユーザーID： ' . $ecUser->user_id;
                     // リターン
                     return $message;
                 });
@@ -108,11 +108,11 @@ class EcUserController extends Controller
                 $message = DB::transaction(function () use ($request, $valid_data) {
                     try {
                         // ユーザーレコード取得
-                        $ec_user = EcUser::find($request->id);
+                        $ecUser = EcUser::find($request->id);
                         // 管理者フラグ更新
-                        $ec_user->admin_flg = $request->admin_flg == 1 ? 0 : 1;
+                        $ecUser->admin_flg = $request->admin_flg == 1 ? 0 : 1;
                         // 保存
-                        $ec_user->save();
+                        $ecUser->save();
                         // コミット
                         DB::commit();
                     } catch (\Exception $e) {
@@ -123,11 +123,11 @@ class EcUserController extends Controller
                         Log::error('ユーザーID： ' . $request->user_id);
                         Log::error($e);
                         // メッセージ設定
-                        $message = 'ユーザーの' . ($request->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'への変更に失敗しました。ユーザーID： ' . $ec_user->user_id;
+                        $message = 'ユーザーの' . ($request->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'への変更に失敗しました。ユーザーID： ' . $ecUser->user_id;
                         return;
                     }
                     // メッセージ設定
-                    $message = 'ユーザーを' . ($request->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'へ変更しました。ユーザーID： ' . $ec_user->user_id;
+                    $message = 'ユーザーを' . ($request->admin_flg == 1 ? '一般ユーザー' : '管理者') . 'へ変更しました。ユーザーID： ' . $ecUser->user_id;
                     // リターン
                     return $message;
                 });
@@ -136,24 +136,24 @@ class EcUserController extends Controller
                 $message = DB::transaction(function () use ($request, $valid_data) {
                     try {
                         // ユーザーレコード取得
-                        $ec_user = EcUser::find($request->id);
+                        $ecUser = EcUser::find($request->id);
                         // ユーザーID設定
-                        if ($ec_user->user_id != $valid_data->user_id) {
-                            $ec_user->user_id = $valid_data->user_id;
+                        if ($ecUser->user_id != $valid_data->user_id) {
+                            $ecUser->user_id = $valid_data->user_id;
                         }
                         // パスワード設定
                         if (!empty($request->safe()->only(['password']))) {
-                            $ec_user->password = Hash::make($valid_data->password);
+                            $ecUser->password = Hash::make($valid_data->password);
                         }
                         // ユーザーレコード設定
-                        $ec_user->user_name = $valid_data->user_name;
-                        $ec_user->user_kana = $valid_data->user_kana;
-                        $ec_user->email = $valid_data->email;
+                        $ecUser->user_name = $valid_data->user_name;
+                        $ecUser->user_kana = $valid_data->user_kana;
+                        $ecUser->email = $valid_data->email;
                         // フラグ設定
-                        $ec_user->enable_flg = $request->enable_flg;
-                        $ec_user->admin_flg = $request->admin_flg;
+                        $ecUser->enable_flg = $request->enable_flg;
+                        $ecUser->admin_flg = $request->admin_flg;
                         // 保存
-                        $ec_user->save();
+                        $ecUser->save();
                         // コミット
                         DB::commit();
                     } catch (\Exception $e) {
@@ -161,13 +161,13 @@ class EcUserController extends Controller
                         DB::rollBack();
                         // ログ出力
                         Log::error('ユーザー情報の更新に失敗しました。');
-                        Log::error('ユーザーID： ' . $ec_user->user_id);
+                        Log::error('ユーザーID： ' . $ecUser->user_id);
                         Log::error($e);
                         // メッセージ設定
-                        $message = 'ユーザー情報の更新に失敗しました。ユーザーID： ' . $ec_user->user_id;
+                        $message = 'ユーザー情報の更新に失敗しました。ユーザーID： ' . $ecUser->user_id;
                     }
                     // メッセージ設定
-                    $message = 'ユーザー情報を更新しました。ユーザーID： ' . $ec_user->user_id;
+                    $message = 'ユーザー情報を更新しました。ユーザーID： ' . $ecUser->user_id;
                     // リターン
                     return $message;
                 });

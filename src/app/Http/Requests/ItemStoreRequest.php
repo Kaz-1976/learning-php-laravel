@@ -23,7 +23,7 @@ class ItemStoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'order' => '注文数量',
+            'order_qty' => '注文数量',
         ];
     }
 
@@ -38,7 +38,7 @@ class ItemStoreRequest extends FormRequest
         $ec_product = EcProduct::find($this->id);
 
         return [
-            'order' => ['required', 'integer', 'min:1', 'max:' . $ec_product->qty],
+            'order_qty' => ['required', 'integer', 'min:1', 'max:' . $ec_product->qty],
         ];
     }
 }

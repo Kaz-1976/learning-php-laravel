@@ -1,9 +1,37 @@
 services:
+  db:
+    container_name: db
+    image: mariadb:latest
+    ports:
+      - "3306:3306"
+    env_file:
+      - ./container/db/.env.local
+    volumes:
+      - type: bind
+        source: ./volume/MariaDB/
+        target: /var/lib/mysql
+    restart: always
+
+  app:
+    container_name: app
+    env_file:
+      - ./src/.env.local
+    build:
+      context: .
+      dockerfile: ./container/app/Dockerfile
+    volumes:
+      - type: bind
+        source: ./src/
+        target: /var/www/html
+    restart: always
+    depends_on:
+      - db
+
   web:
     container_name: web
     build:
       context: .
-      dockerfile: ./docker/web/Dockerfile.local
+      dockerfile: ./container/web/Dockerfile.local
     ports:
       - "80:80"
     volumes:
@@ -13,34 +41,6 @@ services:
     restart: always
     depends_on:
       - app
-
-  app:
-    container_name: app
-    env_file:
-      - ./src/.env.local
-    build:
-      context: .
-      dockerfile: ./docker/php/Dockerfile
-    volumes:
-      - type: bind
-        source: ./src/
-        target: /var/www/html
-    restart: always
-    depends_on:
-      - db
-
-  db:
-    container_name: db
-    image: mariadb:latest
-    ports:
-      - "3306:3306"
-    env_file:
-      - ./docker/db/.env.local
-    volumes:
-      - type: bind
-        source: C:/Docker/Volume/learning-php-laravel/MariaDB/
-        target: /var/lib/mysql
-    restart: always
 
   admin:
     container_name: admin
@@ -52,4 +52,3 @@ services:
     restart: always
     depends_on:
       - db
-

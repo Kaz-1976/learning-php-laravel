@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('email', 255)->comment('メールアドレス');
             $table->unique(['email']);
             $table->string('password', 255)->comment('パスワード');
+            $table->unsignedBigInteger('cart_id')->nullable()->comment('カートID');
             $table->boolean('admin_flg')->comment('管理フラグ');
             $table->boolean('enable_flg')->comment('有効フラグ');
             $table->dateTime('last_login_at')->nullable()->comment('最終ログイン日時');

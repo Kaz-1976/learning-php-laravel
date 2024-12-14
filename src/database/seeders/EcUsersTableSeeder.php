@@ -29,11 +29,11 @@ class EcUsersTableSeeder extends Seeder
                 'user_kana' => env('DEFAULT_ADMIN_KANA', 'すーぱーゆーざー'),
                 'email' => env('DEFAULT_ADMIN_EMAIL', 'ec_admin@example.local'),
                 'password' => Hash::make(env('DEFAULT_ADMIN_PASSWORD', 'ec_admin')),
+                'cart_id' => null,
                 'admin_flg' => true,
                 'enable_flg' => true,
                 'last_login_at' => null,
                 'email_verified_at' => null,
-                'cart_id' => null,
                 'created_by' => 1,
                 'updated_by' => 1
             ]

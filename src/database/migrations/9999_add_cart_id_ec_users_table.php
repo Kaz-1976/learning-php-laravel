@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // ユーザーテーブルにカートIDを追加（外部キー：カートテーブルのID）
+        // ユーザーテーブルのカートIDに外部キー（カートテーブルのID）を追加
         Schema::table('ec_users', function (Blueprint $table) {
-            $table->foreignId('cart_id')->nullable()->comment('カートID')->constrained('ec_carts');
+            $table->foreign('cart_id')->references('id')->on('ec_carts');
         });
     }
 

@@ -11,18 +11,19 @@ use App\Models\EcCart;
 use App\Models\EcCartDetail;
 use App\Http\Requests\ItemStoreRequest;
 
+use function PHPUnit\Framework\isNull;
+
 class ItemController extends Controller
 {
     public function index()
     {
         // 商品情報（公開されているもの）
-        $ec_products = EcProduct::query()
+        $ecProducts = EcProduct::query()
             ->where('public_flg', '=', 1)
             ->orderBy('id', 'asc')
             ->paginate(12);
-
         //
-        return view('ec_site.items', ['ec_products' => $ec_products]);
+        return view('ec_site.items', ['ecProducts' => $ecProducts]);
     }
 
     public function store(ItemStoreRequest $request)
@@ -35,46 +36,42 @@ class ItemController extends Controller
                 // カートID取得
                 if (empty(Auth::user()->cart_id)) {
                     // カートを生成する
-                    $cart = new EcCart();
-                    $cart->user_id = Auth::id();
-                    $cart->checkout_flg = 0;
-                    $cart->save();
+                    $ecCart = new EcCart();
+                    $ecCart->user_id = Auth::id();
+                    $ecCart->checkout_flg = 0;
+                    $ecCart->checkout_qty = 0;
+                    $ecCart->checkout_total = 0;
+                    $ecCart->save();
                     // カートIDをEcUserモデルに保存
-                    $ec_user = EcUser::find(Auth::id());
-                    $ec_user->cart_id = $cart->id;
-                    $ec_user->save();
+                    $ecUser = EcUser::find(Auth::id());
+                    $ecUser->cart_id = $ecCart->id;
+                    $ecUser->save();
                     // カートID
                     Auth::user()->refresh();
-                    $cart_id = $cart->id;
+                    $ecCartId = $ecCart->id;
                 } else {
                     // カートレコード取得
-                    $cart = EcCart::query()
+                    $ecCart = EcCart::query()
                         ->where('id', '=', Auth::user()->cart_id)
                         ->get();
                     // カートID
-                    $cart_id = Auth::user()->cart_id;
+                    $ecCartId = Auth::user()->cart_id;
                 }
-                // カート明細存在チェック
-                $ecCartDetail = EcCartDetail::query()
-                    ->where('cart_id', '=', $cart_id)
-                    ->where('product_id', '=', $request->id)
-                    ->get();
+                // カート明細
+                $ecCartDetail = EcCartDetail::createOrFirst(
+                    [
+                        'price' => $request->order_price,
+                        'qty' => $order->order_qty
+                    ],
+                    [
+                        'cart_id' => $ecCartId,
+                        'product_id' => $request->id,
+                    ]
+                );
                 // カート明細の登録・更新
-                if (count($ecCartDetail) == 0) {
-                    // カート明細登録
-                    $ecCartDetail = new EcCartDetail();
-                    $ecCartDetail->cart_id = $cart_id;
-                    $ecCartDetail->product_id = $request->id;
-                    $ecCartDetail->price = $request->price;
-                    $ecCartDetail->qty = $order->order;
-                    $ecCartDetail->save();
-                } else {
-                    // 数量を更新
-                    EcCartDetail::query()
-                        ->where('cart_id', '=', $cart_id)
-                        ->where('product_id', '=', $request->id)
-                        ->increment('qty', $order->order);
-                }
+                $ecCartDetail->price = $request->order_price;
+                $ecCartDetail->increment('qty', $order->order_qty);
+                $ecCartDetail->save();
             });
         } catch (\Exception $e) {
             // ロールバック
@@ -88,6 +85,6 @@ class ItemController extends Controller
         }
         // リダイレクト
         return redirect(url(null, null, app()->isProduction())->previous())
-            ->with('message', '商品をカートに登録しました。 商品名： ' . $request->name . '　数量： ' . $order->order . '点');
+            ->with('message', '商品をカートに登録しました。 商品名： ' . $request->name . '　数量： ' . $order->order_qty . '点');
     }
 }

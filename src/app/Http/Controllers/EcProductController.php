@@ -24,9 +24,9 @@ class EcProductController extends Controller
     public function index()
     {
         //
-        $ec_products = EcProduct::orderBy('id', 'asc')->paginate(6);
+        $ecProducts = EcProduct::orderBy('id', 'asc')->paginate(6);
         //
-        return view('ec_site.products', ['ec_products' => $ec_products]);
+        return view('ec_site.products', ['ecProducts' => $ecProducts]);
     }
 
     // 商品登録
@@ -37,17 +37,17 @@ class EcProductController extends Controller
         // 商品登録処理
         try {
             // 商品レコード生成
-            $ec_product = new EcProduct();
+            $ecProduct = new EcProduct();
             // 商品設定
-            $ec_product->name = $valid_data->name;
-            $ec_product->qty = $valid_data->qty;
-            $ec_product->price = $valid_data->price;
-            $ec_product->public_flg = $request->public_flg == 'on' ? true : false;
+            $ecProduct->name = $valid_data->name;
+            $ecProduct->qty = $valid_data->qty;
+            $ecProduct->price = $valid_data->price;
+            $ecProduct->public_flg = $request->public_flg == 'on' ? true : false;
             // 画像設定
-            $ec_product->image_data = base64_encode(file_get_contents($request->image->getRealPath()));
-            $ec_product->image_type = mime_content_type($request->image->getRealPath());
+            $ecProduct->image_data = base64_encode(file_get_contents($request->image->getRealPath()));
+            $ecProduct->image_type = mime_content_type($request->image->getRealPath());
             // 登録
-            $ec_product->save();
+            $ecProduct->save();
             // メッセージ設定
             $message = '商品情報を登録しました。';
         } catch (\Exception $e) {
@@ -74,11 +74,11 @@ class EcProductController extends Controller
                 $message = DB::transaction(function () use ($request, $valid_data) {
                     try {
                         // 商品レコード取得
-                        $ec_product = EcProduct::find($request->id);
+                        $ecProduct = EcProduct::find($request->id);
                         // 公開フラグ更新
-                        $ec_product->public_flg = $ec_product->public_flg == 1 ? 0 : 1;
+                        $ecProduct->public_flg = $ecProduct->public_flg == 1 ? 0 : 1;
                         // 保存
-                        $ec_product->save();
+                        $ecProduct->save();
                     } catch (\Exception $e) {
                         // ログ出力
                         Log::error('商品の' . ($request->public_flg == 1 ? '非公開' : '公開') . '設定に失敗しました。');
@@ -100,18 +100,18 @@ class EcProductController extends Controller
                 $message = DB::transaction(function () use ($request, $valid_data) {
                     try {
                         // 商品レコード取得
-                        $ec_product = EcProduct::find($request->id);
+                        $ecProduct = EcProduct::find($request->id);
                         // 商品設定
-                        $ec_product->name = $valid_data->name;
-                        $ec_product->qty = $valid_data->qty;
-                        $ec_product->price = $valid_data->price;
+                        $ecProduct->name = $valid_data->name;
+                        $ecProduct->qty = $valid_data->qty;
+                        $ecProduct->price = $valid_data->price;
                         // 画像設定
                         if (!empty($request->image)) {
-                            $ec_product->image_data = base64_encode(file_get_contents($request->image->getRealPath()));
-                            $ec_product->image_type = mime_content_type($request->image->getRealPath());
+                            $ecProduct->image_data = base64_encode(file_get_contents($request->image->getRealPath()));
+                            $ecProduct->image_type = mime_content_type($request->image->getRealPath());
                         }
                         // 保存
-                        $ec_product->save();
+                        $ecProduct->save();
                     } catch (\Exception $e) {
                         // ログ出力
                         Log::error('商品情報の更新に失敗しました。');
