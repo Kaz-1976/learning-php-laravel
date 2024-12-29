@@ -29,7 +29,7 @@ class CartController extends Controller
                 $ecCartTotal = null;
             } else {
                 // カート内合計の数量・価格を取得
-                $ecCartTotal = DB::table('ecCartDetails')
+                $ecCartTotal = DB::table('ec_cart_details')
                     ->selectRaw('SUM(qty) as total_qty')
                     ->selectRaw('SUM(price * qty) as total_price')
                     ->where('cart_id', '=', Auth::user()->cart_id)
@@ -149,7 +149,7 @@ class CartController extends Controller
                 // TODO: 実際の決済処理
 
                 // カート内合計取得
-                $ecCartTotal = DB::table('ecCartDetails')
+                $ecCartTotal = DB::table('ec_cart_details')
                     ->selectRaw('SUM(qty) as total_qty')
                     ->selectRaw('SUM(price * qty) as total_price')
                     ->where('cart_id', '=', Auth::user()->cart_id)
@@ -158,7 +158,7 @@ class CartController extends Controller
                 $ecCart = EcCart::find($cart_id);
                 $ecCart->checkout_flg = 1;
                 $ecCart->checkout_qty = $ecCartTotal->total_qty;
-                $ecCart->checkout_price = $ecCartTotal->total_price;
+                $ecCart->checkout_total = $ecCartTotal->total_price;
                 $ecCart->save();
                 // セッションIDの再生成無効
                 $request->session()->regenerate(false);
@@ -187,7 +187,7 @@ class CartController extends Controller
         // セッション変数にカートIDを保存
         session()->flash('cart_id', $cart_id);
         // リダイレクト
-        return redirect(UrlHelper::generateUrl('ec_site/complete'))
+        return redirect(url('/complete', null, app()->isProduction()))
             ->with('message', 'ご利用ありがとうございました。');
     }
 }

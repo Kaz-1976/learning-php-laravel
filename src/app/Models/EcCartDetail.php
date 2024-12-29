@@ -9,7 +9,12 @@ class EcCartDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cart_id'];
+    protected $fillable = [
+        'cart_id',
+        'product_id',
+        'qty',
+        'price'
+    ];
 
     public function ec_carts()
     {

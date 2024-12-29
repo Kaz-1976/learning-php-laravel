@@ -34,7 +34,7 @@ class EcCartDetailUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'qty' => ['required', 'integer', 'min:1', 'max:' . $this->stock_qty]
+            'qty' => ['required', 'integer', 'min:1', 'max:' . $this->stock]
         ];
     }
 }

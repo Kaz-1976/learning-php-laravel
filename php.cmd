@@ -1,2 +1,2 @@
-rem Docker Compose
+@rem Podman Compose
 @podman compose exec app php %*

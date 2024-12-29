@@ -4,7 +4,8 @@
         @if ($paginator->onFirstPage())
             <li class="disabled" aria-disabled="true"><span>@lang('pagination.previous')</span></li>
         @else
-            <li><a href="{{ \App\Helpers\UrlHelper::generateUrl($paginator->previousPageUrl()) }}" rel="prev">@lang('pagination.previous')</a></li>
+            <li><a href="{{ \App\Helpers\UrlHelper::generateUrl($paginator->previousPageUrl()) }}"
+                    rel="prev">@lang('pagination.previous')</a></li>
         @endif
 
         {{-- Pagination Elements --}}
@@ -28,7 +29,8 @@
 
         {{-- Next Page Link --}}
         @if ($paginator->hasMorePages())
-            <li><a href="{{ \App\Helpers\UrlHelper::generateUrl($paginator->nextPageUrl()) }}" rel="next">@lang('pagination.next')</a></li>
+            <li><a href="{{ \App\Helpers\UrlHelper::generateUrl($paginator->nextPageUrl()) }}"
+                    rel="next">@lang('pagination.next')</a></li>
         @else
             <li class="disabled" aria-disabled="true"><span>@lang('pagination.next')</span></li>
         @endif

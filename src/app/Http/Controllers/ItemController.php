@@ -68,9 +68,6 @@ class ItemController extends Controller
                         'product_id' => $request->id,
                     ]
                 );
-                // カート明細の登録・更新
-                $ecCartDetail->price = $request->order_price;
-                $ecCartDetail->increment('qty', $order->order_qty);
                 $ecCartDetail->save();
             });
         } catch (\Exception $e) {

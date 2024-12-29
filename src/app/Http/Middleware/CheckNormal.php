@@ -21,11 +21,11 @@ class CheckNormal
             $user = Auth::user();
             if ($user->admin_flg) {
                 // チェック不通過
-                return redirect(route('ec_site.admin'));
+                return redirect(url('/admin', null, app()->isProduction()));
             }
         } else {
             // チェック不通過
-            return redirect(route('login'));
+            return redirect(url('/login', null, app()->isProduction()));
         }
         // チェック通過
         return $next($request);
