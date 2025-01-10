@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = UrlHelper::generateUrl('');
+    protected $redirectTo = url('/', null, app()->isProduction());
 
     /**
      * Create a new controller instance.

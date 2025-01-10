@@ -89,7 +89,7 @@ class CartController extends Controller
             ->where('cart_id', $id)
             ->delete();
         //
-        return redirect(UrlHelper::generateUrl('cart'))
+        return redirect(url('/cart', null, app()->isProduction()))
             ->with('message', 'ショッピングカートを空にしました。');
     }
 

@@ -7,7 +7,8 @@
 @section('content')
     <div class="flex flex-col gap-4">
         <form class="flex flex-col md:flex-row gap-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
-            id="register" action="@generateUrl('admin/products/store')" method="POST" enctype="multipart/form-data">
+            id="register" action="{{ url('/admin/products/store', null, app()->isProduction()) }}" method="POST"
+            enctype="multipart/form-data">
             @csrf
             <x-image-box class="w-64 md:w-80 h-64 md:h-80 basis-64 md:basis-80" image-id="register-image-preview"
                 :border="true"></x-image-box>
@@ -98,7 +99,8 @@
                 <div
                     class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ecProduct->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
                     <form class="flex flex-col md:flex-row basis-full gap-2" id="{{ $form[$ecProduct->id] }}"
-                        action="@generateUrl('admin/products/update')" method="POST" enctype="multipart/form-data">
+                        action="{{ url('/admin/products/update', null, app()->isProduction()) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $ecProduct->id }}" />
                         <input type="hidden" name="public_flg" value="{{ $ecProduct->public_flg }}" />

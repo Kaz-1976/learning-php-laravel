@@ -7,7 +7,7 @@
 @section('content')
     <div class="flex flex-col gap-4">
         <form class="flex flex-col gap-1 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
-            id="register" action="@generateUrl('mypage/profile/update')" method="POST">
+            id="register" action="{{ url('/mypage/profile/update', null, app()->isProduction()) }}" method="POST">
             @csrf
             {{-- ユーザーID --}}
             <div>

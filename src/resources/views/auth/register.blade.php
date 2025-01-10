@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm">
-        <form method="POST" action="@generateUrl('register')">
+        <form method="POST" action="{{ url('/register', null, app()->isProduction()) }}">
             <!-- CSRF -->
             @csrf
 
@@ -66,7 +66,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 <a class="underline text-l text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    href="@generateUrl('login')">
+                    href="{{ url('/login', null, app()->isProduction()) }}">
                     {{ __('Already registered?') }}
                 </a>
 

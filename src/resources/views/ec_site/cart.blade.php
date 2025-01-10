@@ -34,7 +34,8 @@
                 <div
                     class="w-full p-4 flex flex-row basis-full gap-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ecCartDetail->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
                     <form class="flex flex-col md:flex-row basis-full w-full gap-2 px-1" id="update-{{ $ecCartDetail->id }}"
-                        action="@generateUrl('cart/update')" method="POST" enctype="multipart/form-data">
+                        action="{{ url('/cart/update', null, app()->isProduction()) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $ecCartDetail->id }}" />
                         <input type="hidden" name="product_id" value="{{ $ecCartDetail->product_id }}" />
@@ -105,7 +106,7 @@
                                 </div>
                                 <div class="flex basis-full">
                                     <x-secondary-button class="w-full" type="submit" name="delete" :value="$ecCartDetail->id"
-                                        formaction="@generateUrl('cart/delete')">
+                                        formaction="{{ url('/cart/delete', null, app()->isProduction()) }}">
                                         <span
                                             class="flex m-auto text-lg md:text-xl text-center font-bold">{{ __('削除') }}</span>
                                     </x-secondary-button>

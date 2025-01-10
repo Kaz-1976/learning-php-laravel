@@ -25,7 +25,7 @@ class ConfirmPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = url('/home', null, app()->isProduction());
 
     /**
      * Create a new controller instance.

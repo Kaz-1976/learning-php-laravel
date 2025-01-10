@@ -54,6 +54,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(UrlHelper::generateUrl(''));
+        return redirect(url('/', null, app()->isProduction()));
     }
 }

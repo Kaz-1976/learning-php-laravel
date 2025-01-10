@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(UrlHelper::generateUrl(''));
+        return redirect()->intended(url('', null, app()->isProduction()));
     }
 
     /**
@@ -43,6 +43,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->intended(UrlHelper::generateUrl('login'));
+        return redirect()->intended(url('/login', null, app()->isProduction()));
     }
 }
