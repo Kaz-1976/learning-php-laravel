@@ -33,7 +33,7 @@ services:
       context: .
       dockerfile: ./container/web/Dockerfile
     ports:
-      - "80:80"
+      - "1080:80"
     volumes:
       - type: bind
         source: ./src/

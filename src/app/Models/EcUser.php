@@ -57,4 +57,14 @@ class EcUser extends Authenticatable
     {
         $this->notify(new ResetPassword($token));
     }
+
+    public function ec_addresses()
+    {
+        return $this->hasMany(EcAddress::class, 'user_id', 'id');
+    }
+
+    public function ec_carts()
+    {
+        return $this->hasMany(EcCart::class, 'user_id', 'id');
+    }
 }

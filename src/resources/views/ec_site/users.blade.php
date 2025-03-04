@@ -88,123 +88,131 @@
                 </div>
             </div>
         </form>
-        <div class="w-full">
-            {{ $ecUsers->render() }}
-        </div>
-        <div class="w-full">
-            @php
-                $array = [];
-            @endphp
-            @foreach ($ecUsers as $ecUser)
+        @if ($ecUsers->isEmpty())
+            <div class="flex flex-row flex-wrap py-2 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
+                <x-empty-string-box>ユーザーが登録されていません。</x-empty-string-box>
+            </div>
+        @else
+            <div class="w-full">
+                {{ $ecUsers->render() }}
+            </div>
+            <div class="w-full">
                 @php
-                    array_push($array, $ecUser->id);
+                    $array = [];
                 @endphp
-                <form
-                    class="flex flex-col md:flex-row basis-full gap-4 w-full p-4 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-50 {{ $ecUser->enable_flg ? ($ecUser->admin_flg ? 'bg-sky-300 dark:bg-sky-800' : 'bg-sky-400 dark:bg-sky-700') : 'bg-sky-200 dark:bg-sky-900' }}"
-                    id="update-{{ $ecUser->id }}" action="{{ url('admin/users/update', null, app()->isProduction()) }}"
-                    method="POST">
-                    @csrf
-                    <input type="hidden" name="id" value="{{ $ecUser->id }}" />
-                    <input type="hidden" name="enable_flg" value="{{ $ecUser->enable_flg }}" />
-                    <input type="hidden" name="admin_flg" value="{{ $ecUser->admin_flg }}" />
-                    <div class="flex flex-col basis-4/5 gap-1">
-                        <div class="block">
-                            <x-input-label for="update-user-id-{{ $ecUser->id }}" :value="__('ID')" />
-                            <x-text-input class="block mt-1 w-full" type="text" id="update-user-id-{{ $ecUser->id }}"
-                                name="user_id" :value="$ecUser->user_id" required :readonly="$ecUser->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') ||
-                                    $ecUser->user_id == Auth::user()->user_id" autofocus
-                                autocomplete="user_id" placeholder="EcTaro" />
-                            @if (old('update') == $ecUser->id)
-                                <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
-                            @endif
-                        </div>
-                        <div class="block">
-                            <x-input-label for="update-user-name-{{ $ecUser->id }}" :value="__('氏名（漢字）')" />
-                            <x-text-input class="block mt-1 w-full" type="text"
-                                id="update-user-name-{{ $ecUser->id }}" name="user_name" :value="$ecUser->user_name" required
-                                autofocus autocomplete="user_name" placeholder="イーシー太郎" />
-                            @if (old('update') == $ecUser->id)
-                                <x-input-error :messages="$errors->get('user_name')" class="mt-2" />
-                            @endif
-                        </div>
-                        <div class="block">
-                            <x-input-label for="update-user-kana-{{ $ecUser->id }}" :value="__('氏名（かな）')" />
-                            <x-text-input class="block mt-1 w-full" type="text"
-                                id="update-user-kana-{{ $ecUser->id }}" name="user_kana" :value="$ecUser->user_kana" required
-                                autofocus autocomplete="user_kana" placeholder="いーしーたろう" />
-                            @if (old('update') == $ecUser->id)
-                                <x-input-error :messages="$errors->get('user_kana')" class="mt-2" />
-                            @endif
-                        </div>
-                        <div class="block">
-                            <x-input-label for="update-email-{{ $ecUser->id }}" :value="__('Email')" />
-                            <x-text-input class="block mt-1 w-full" type="text" id="update-email-{{ $ecUser->id }}"
-                                name="email" :value="$ecUser->email" required autofocus autocomplete="email"
-                                placeholder="ec-taro@example.local" />
-                            @if (old('update') == $ecUser->id)
-                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
-                            @endif
-                        </div>
-                        <div class="block">
-                            <x-input-label for="update-password-{{ $ecUser->id }}" :value="__('Password')" />
-                            <x-text-input class="block mt-1 w-full" type="password"
-                                id="update-password-{{ $ecUser->id }}" name="password"
-                                placeholder="ABCabc0123!@#$%^&*_" />
-                            @if (old('update') == $ecUser->id)
-                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                            @endif
-                        </div>
-                        <div class="block">
-                            <x-input-label for="update-password-confirm-{{ $ecUser->id }}" :value="__('Confirm Password')" />
-                            <x-text-input class="block mt-1 w-full" type="password"
-                                id="update-password-confirm-{{ $ecUser->id }}" name="password_confirmation"
-                                placeholder="ABCabc0123!@#$%^&*_" />
-                            @if (old('update') == $ecUser->id)
-                                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-                            @endif
-                        </div>
-                    </div>
-                    <div class="flex flex-col-reverse basis-1/5 gap-2">
-                        <div class="flex flex-row-reverse md:flex-col-reverse gap-2 basis-full h-12 md:h-auto">
-                            <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
-                                <x-primary-button class="w-full" form="update-{{ $ecUser->id }}" name="update"
-                                    :value="$ecUser->id">
-                                    <span
-                                        class="flex m-auto text-base md:text-xl text-center font-bold">{{ __('更新') }}</span>
-                                </x-primary-button>
-                            </div>
-                            <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
-                                <x-secondary-button class="w-full" type="reset" name="reset">
-                                    <span
-                                        class="flex m-auto text-base md:text-xl text-center font-bold">{{ __('リセット') }}</span>
-                                </x-secondary-button>
-                            </div>
-                        </div>
-                        <div class="flex flex-row-reverse md:flex-col-reverse gap-2 basis-full h-12 md:h-auto">
-                            <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
-                                @if (Auth::user()->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') && $ecUser->user_id != Auth::user()->user_id)
-                                    <x-secondary-button class="w-full" type="submit" name="admin" :value="$ecUser->id">
-                                        <span
-                                            class="flex m-auto text-base md:text-xl text-center font-bold">{{ __($ecUser->admin_flg ? '一般' : '管理者') }}</span>
-                                    </x-secondary-button>
+                @foreach ($ecUsers as $ecUser)
+                    @php
+                        array_push($array, $ecUser->id);
+                    @endphp
+                    <form
+                        class="flex flex-col md:flex-row basis-full gap-4 w-full p-4 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-50 {{ $ecUser->enable_flg ? ($ecUser->admin_flg ? 'bg-sky-300 dark:bg-sky-800' : 'bg-sky-400 dark:bg-sky-700') : 'bg-sky-200 dark:bg-sky-900' }}"
+                        id="update-{{ $ecUser->id }}"
+                        action="{{ url('admin/users/update', null, app()->isProduction()) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $ecUser->id }}" />
+                        <input type="hidden" name="enable_flg" value="{{ $ecUser->enable_flg }}" />
+                        <input type="hidden" name="admin_flg" value="{{ $ecUser->admin_flg }}" />
+                        <div class="flex flex-col basis-4/5 gap-1">
+                            <div class="block">
+                                <x-input-label for="update-user-id-{{ $ecUser->id }}" :value="__('ID')" />
+                                <x-text-input class="block mt-1 w-full" type="text"
+                                    id="update-user-id-{{ $ecUser->id }}" name="user_id" :value="$ecUser->user_id" required
+                                    :readonly="$ecUser->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') ||
+                                        $ecUser->user_id == Auth::user()->user_id" autofocus autocomplete="user_id" placeholder="EcTaro" />
+                                @if (old('update') == $ecUser->id)
+                                    <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
                                 @endif
                             </div>
-                            <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
-                                @if ($ecUser->user_id != env('DEFAULT_ADMIN_ID', 'ec_admin') && $ecUser->user_id != Auth::user()->user_id)
-                                    <x-secondary-button class="w-full" type="submit" name="enable" :value="$ecUser->id">
-                                        <span
-                                            class="flex m-auto text-base md:text-xl text-center font-bold">{{ __($ecUser->enable_flg ? '無効' : '有効') }}</span>
-                                    </x-secondary-button>
+                            <div class="block">
+                                <x-input-label for="update-user-name-{{ $ecUser->id }}" :value="__('氏名（漢字）')" />
+                                <x-text-input class="block mt-1 w-full" type="text"
+                                    id="update-user-name-{{ $ecUser->id }}" name="user_name" :value="$ecUser->user_name"
+                                    required autofocus autocomplete="user_name" placeholder="イーシー太郎" />
+                                @if (old('update') == $ecUser->id)
+                                    <x-input-error :messages="$errors->get('user_name')" class="mt-2" />
+                                @endif
+                            </div>
+                            <div class="block">
+                                <x-input-label for="update-user-kana-{{ $ecUser->id }}" :value="__('氏名（かな）')" />
+                                <x-text-input class="block mt-1 w-full" type="text"
+                                    id="update-user-kana-{{ $ecUser->id }}" name="user_kana" :value="$ecUser->user_kana"
+                                    required autofocus autocomplete="user_kana" placeholder="いーしーたろう" />
+                                @if (old('update') == $ecUser->id)
+                                    <x-input-error :messages="$errors->get('user_kana')" class="mt-2" />
+                                @endif
+                            </div>
+                            <div class="block">
+                                <x-input-label for="update-email-{{ $ecUser->id }}" :value="__('Email')" />
+                                <x-text-input class="block mt-1 w-full" type="text"
+                                    id="update-email-{{ $ecUser->id }}" name="email" :value="$ecUser->email" required
+                                    autofocus autocomplete="email" placeholder="ec-taro@example.local" />
+                                @if (old('update') == $ecUser->id)
+                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                @endif
+                            </div>
+                            <div class="block">
+                                <x-input-label for="update-password-{{ $ecUser->id }}" :value="__('Password')" />
+                                <x-text-input class="block mt-1 w-full" type="password"
+                                    id="update-password-{{ $ecUser->id }}" name="password"
+                                    placeholder="ABCabc0123!@#$%^&*_" />
+                                @if (old('update') == $ecUser->id)
+                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                @endif
+                            </div>
+                            <div class="block">
+                                <x-input-label for="update-password-confirm-{{ $ecUser->id }}" :value="__('Confirm Password')" />
+                                <x-text-input class="block mt-1 w-full" type="password"
+                                    id="update-password-confirm-{{ $ecUser->id }}" name="password_confirmation"
+                                    placeholder="ABCabc0123!@#$%^&*_" />
+                                @if (old('update') == $ecUser->id)
+                                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                 @endif
                             </div>
                         </div>
-                    </div>
-                </form>
-            @endforeach
-        </div>
-        <div class="w-full">
-            {{ $ecUsers->render() }}
-        </div>
+                        <div class="flex flex-col-reverse basis-1/5 gap-2">
+                            <div class="flex flex-row-reverse md:flex-col-reverse gap-2 basis-full h-12 md:h-auto">
+                                <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
+                                    <x-primary-button class="w-full" form="update-{{ $ecUser->id }}" name="update"
+                                        :value="$ecUser->id">
+                                        <span
+                                            class="flex m-auto text-base md:text-xl text-center font-bold">{{ __('更新') }}</span>
+                                    </x-primary-button>
+                                </div>
+                                <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
+                                    <x-secondary-button class="w-full" type="reset" name="reset">
+                                        <span
+                                            class="flex m-auto text-base md:text-xl text-center font-bold">{{ __('リセット') }}</span>
+                                    </x-secondary-button>
+                                </div>
+                            </div>
+                            <div class="flex flex-row-reverse md:flex-col-reverse gap-2 basis-full h-12 md:h-auto">
+                                <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
+                                    @if (Auth::user()->user_id == env('DEFAULT_ADMIN_ID', 'ec_admin') && $ecUser->user_id != Auth::user()->user_id)
+                                        <x-secondary-button class="w-full" type="submit" name="admin"
+                                            :value="$ecUser->id">
+                                            <span
+                                                class="flex m-auto text-base md:text-xl text-center font-bold">{{ __($ecUser->admin_flg ? '一般' : '管理者') }}</span>
+                                        </x-secondary-button>
+                                    @endif
+                                </div>
+                                <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
+                                    @if ($ecUser->user_id != env('DEFAULT_ADMIN_ID', 'ec_admin') && $ecUser->user_id != Auth::user()->user_id)
+                                        <x-secondary-button class="w-full" type="submit" name="enable"
+                                            :value="$ecUser->id">
+                                            <span
+                                                class="flex m-auto text-base md:text-xl text-center font-bold">{{ __($ecUser->enable_flg ? '無効' : '有効') }}</span>
+                                        </x-secondary-button>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                @endforeach
+            </div>
+            <div class="w-full">
+                {{ $ecUsers->render() }}
+            </div>
+        @endif
     </div>
 @endsection
 

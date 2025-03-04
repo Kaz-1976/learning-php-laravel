@@ -23,7 +23,7 @@ const loadImage = (idFile, idImage) => {
 // ------------------------------------------------------------
 // 商品管理フォームリセット処理
 // ------------------------------------------------------------
-const productFormReset = (idForm, image) => {
+const resetProductForm = (idForm, image) => {
     const form = document.forms[idForm];
     form.addEventListener(
         "reset",
@@ -37,4 +37,22 @@ const productFormReset = (idForm, image) => {
         },
         false
     );
+};
+// ------------------------------------------------------------
+// 住所検索処理
+// ------------------------------------------------------------
+const getAddress = (event) => {
+    // フォームの値を取得
+    const form = event.target.closest("form");
+    const code = form.querySelector('input[name="zip"]').value;
+    //fetchでAPIからJSON文字列を取得する
+    fetch("/api/address/" + code)
+        .then((data) => data.json())
+        .then((obj) => {
+            // 取得したデータをフォームにセット
+            form.querySelector('select[name="pref"]')
+                .querySelector('option[value="' + obj.pref_code + '"]')
+                .setAttribute("selected", true);
+            form.querySelector('input[name="address1"]').value = obj.area_name;
+        });
 };

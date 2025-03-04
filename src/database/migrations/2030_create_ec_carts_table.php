@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ec_products', function (Blueprint $table) {
-            $table->id()->primary()->comment('商品ID');
-            $table->string('name', 255)->comment('商品名');
-            $table->longText('image_data')->comment('商品画像データ');
-            $table->string('image_type', 64)->comment('商品画像タイプ');
-            $table->integer('qty')->comment('在庫');
-            $table->integer('price')->comment('価格');
-            $table->boolean('public_flg')->comment('公開フラグ');
+        Schema::create('ec_carts', function (Blueprint $table) {
+            $table->id()->primary()->comment('カートID');
+            $table->foreignId('user_id')->comment('ユーザーID')->constrained('ec_users');
+            $table->foreignId('address_id')->comment('配送先ID')->constrained('ec_addresses');
             $table->foreignId('created_by')->comment('作成ユーザー')->constrained('ec_users');
             $table->dateTime('created_at')->comment('作成日時');
             $table->foreignId('updated_by')->comment('最終更新ユーザー')->constrained('ec_users');
@@ -31,10 +27,12 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ec_products', function (Blueprint $table) {
+        Schema::dropIfExists('ec_carts', function (Blueprint $table) {
             // 外部キー制約の削除
-            $table->dropForeign('ec_products_created_by_foreign');
-            $table->dropForeign('ec_products_updated_by_foreign');
+            $table->dropForeign('ec_carts_user_id_foreign');
+            $table->dropForeign('ec_carts_address_id_foreign');
+            $table->dropForeign('ec_carts_created_by_foreign');
+            $table->dropForeign('ec_carts_updated_by_foreign');
         });
     }
 };

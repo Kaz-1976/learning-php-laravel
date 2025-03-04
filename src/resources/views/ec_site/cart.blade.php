@@ -22,8 +22,7 @@
             <x-link-button class="basis-1/3" link-type="form" link-to="/cart/clear" link-button-name="clear"
                 link-input-name="cart_id" :link-input-value="Auth::user()->cart_id">空にする</x-link-button>
             <x-link-button class="basis-1/3" link-type="link" link-to="/items">商品一覧</x-link-button>
-            <x-link-button class="basis-1/3" link-type="form" link-to="/cart/checkout" link-button-name="checkout"
-                link-input-name="cart_id" :link-input-value="Auth::user()->cart_id">購入する</x-link-button>
+            <x-link-button class="basis-1/3" link-type="link" link-to="/shipping">購入する</x-link-button>
         </x-link-button-box>
         {{-- 本体 --}}
         <div class="w-full pb-2">
@@ -40,10 +39,12 @@
                         <input type="hidden" name="id" value="{{ $ecCartDetail->id }}" />
                         <input type="hidden" name="product_id" value="{{ $ecCartDetail->product_id }}" />
                         <input type="hidden" name="stock" value="{{ $ecCartDetail->ec_products->qty }}" />
-                        <x-image-box class="w-88 md:w-64 h-88 md:h-64 basis-88 md:basis-64" :border="true"
+                        <x-image-box class="w-88 md:w-64 h-88 md:h-64 basis-88 md:basis-64" :border="false"
                             image-id="update-{{ $ecCartDetail->id }}-image-preview"
                             image-type="{{ $ecCartDetail->ec_products->image_type }}"
-                            image-data="{{ $ecCartDetail->ec_products->image_data }}">
+                            image-data="{{ $ecCartDetail->ec_products->image_data }}"
+                            image-alt="{{ $ecCartDetail->ec_products->name }}"
+                            image-title="{{ $ecCartDetail->ec_products->name }}">
                         </x-image-box>
                         <div class="flex flex-col md:flex-row grow gap-2">
                             <div class="flex flex-col basis-4/5 gap-1">
@@ -127,8 +128,7 @@
             <x-link-button class="basis-1/3" link-type="form" link-to="/cart/clear" link-button-name="clear"
                 link-input-name="cart_id" :link-input-value="Auth::user()->cart_id">空にする</x-link-button>
             <x-link-button class="basis-1/3" link-type="link" link-to="/items">商品一覧</x-link-button>
-            <x-link-button class="basis-1/3" link-type="form" link-to="/cart/checkout" link-button-name="checkout"
-                link-input-name="cart_id" :link-input-value="Auth::user()->cart_id">購入する</x-link-button>
+            <x-link-button class="basis-1/3" link-type="link" link-to="/shipping">購入する</x-link-button>
         </x-link-button-box>
     @endif
 @endsection

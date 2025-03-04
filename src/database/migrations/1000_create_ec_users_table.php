@@ -40,6 +40,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('ec_users', function (Blueprint $table) {
+            // インデックス削除
+            $table->dropIndex('ec_users_user_id_unique');
+            $table->dropIndex('ec_users_email_unique');
             // 外部キー制約の削除
             $table->dropForeign('ec_users_created_by_foreign');
             $table->dropForeign('ec_users_updated_by_foreign');

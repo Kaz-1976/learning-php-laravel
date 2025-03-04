@@ -12,9 +12,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //外部キー制約解除
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        //
         Schema::create('ec_cart_details', function (Blueprint $table) {
             //
             $table->foreignId('cart_id')->comment('カートID')->constrained('ec_carts');
@@ -29,8 +26,6 @@ return new class extends Migration
             //
             $table->unique(['cart_id', 'product_id'], 'ec_cart_details_cart_id_product_id_unique');
         });
-        //外部キー制約設定
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 
     /**
@@ -39,13 +34,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('ec_cart_details', function (Blueprint $table) {
+            // ユニークキー削除
+            $table->dropUnique('ec_cart_details_cart_id_product_id_unique');
             // 外部キー制約の削除
             $table->dropForeign('ec_cart_detail_cart_id_foreign');
             $table->dropForeign('ec_cart_detail_product_id_foreign');
             $table->dropForeign('ec_cart_detail_created_by_foreign');
             $table->dropForeign('ec_cart_detail_updated_by_foreign');
-            // ユニークキー削除
-            $table->dropUnique('ec_cart_details_cart_id_product_id_unique');
         });
     }
 };

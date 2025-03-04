@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Helpers\UrlHelper;
 use App\Http\Controllers\Controller;
-use App\Models\EcUser as Authenticatable;
+use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,29 +30,21 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'user_id' => ['required', 'string', 'max:255', 'unique:' . Authenticatable::class],
-            'user_name' => ['required', 'string', 'max:255'],
-            'user_kana' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . Authenticatable::class],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'enable_flg' => ['required'],
-            'admin_flg' => ['required']
         ]);
 
-        $user = Authenticatable::create([
-            'user_id' => $request->user_id,
-            'user_name' => $request->user_name,
-            'user_kana' => $request->user_kana,
+        $user = User::create([
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'enable_flg' => $request->enable_flg,
-            'admin_flg' => $request->admin_flg
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(url('/', null, app()->isProduction()));
+        return redirect(route('dashboard', absolute: false));
     }
 }

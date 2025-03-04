@@ -40,7 +40,7 @@ class ItemController extends Controller
                     $ecCart->user_id = Auth::id();
                     $ecCart->checkout_flg = 0;
                     $ecCart->checkout_qty = 0;
-                    $ecCart->checkout_total = 0;
+                    $ecCart->checkout_amount = 0;
                     $ecCart->save();
                     // カートIDをEcUserモデルに保存
                     $ecUser = EcUser::find(Auth::id());

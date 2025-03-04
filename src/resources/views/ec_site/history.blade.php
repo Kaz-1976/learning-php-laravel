@@ -5,86 +5,44 @@
 
 {{-- ページコンテンツ --}}
 @section('content')
-    @if (empty($ec_carts))
+    @if ($ecReceipts->isEmpty())
         {{-- ヘッダー --}}
         <x-link-button-box>
-            <x-link-button class="basis-full" href="{{ url('/mypage', null, app()->isProduction()) }}">マイページ</x-link-button>
+            <x-link-button class="basis-full" link-type="link" link-to="{{ url('/mypage', null, app()->isProduction()) }}">
+                マイページ
+            </x-link-button>
         </x-link-button-box>
         {{-- 本体 --}}
-        <x-empty-string-box>購入履歴は空です。</x-empty-string-box>
+        <x-empty-string-box>購入履歴がありません。</x-empty-string-box>
         {{-- フッター --}}
         <x-link-button-box>
-            <x-link-button class="basis-full" href="{{ url('/mypage', null, app()->isProduction()) }}">マイページ</x-link-button>
+            <x-link-button class="basis-full" link-type="link" link-to="{{ url('/mypage', null, app()->isProduction()) }}">
+                マイページ
+            </x-link-button>
         </x-link-button-box>
     @else
         {{-- ヘッダー --}}
         <x-link-button-box>
-            <x-link-button class="basis-full" href="{{ url('/mypage', null, app()->isProduction()) }}">マイページ</x-link-button>
+            <x-link-button class="basis-full" link-type="link" link-to="{{ url('/mypage', null, app()->isProduction()) }}">
+                マイページ
+            </x-link-button>
         </x-link-button-box>
         {{-- 本体 --}}
         <div class="w-full pb-2">
-            {{ $ec_carts->render() }}
+            {{ $ecReceipts->render() }}
         </div>
         <div class="flex flex-col">
-            @foreach ($ec_carts as $ec_cart)
-                <div
-                    class="flex flex-row basis-full gap-2 py-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50 {{ $ec_cart->public_flg ? 'bg-sky-400 dark:bg-sky-700' : 'bg-sky-200 dark:bg-sky-900' }}">
-                    <div class="flex flex-col md:flex-row basis-full w-full gap-2 px-1">
-                        <div class="flex flex-col grow-0 shrink-0 basis-88 md:basis-64 h-88 md:h-64 m-auto">
-                            <div
-                                class="block w-88 md:w-64 h-88 md:h-64 border-solid border-2 border-sky-950 dark:border-sky-50  overflow-hidden">
-                                <img class="block w-full h-hull object-cover" id="update-{{ $ec_cart->id }}-image-preview"
-                                    src="data:{{ $ec_cart->ec_products->image_type }};base64,{{ $ec_cart->ec_products->image_data }}">
-                            </div>
-                        </div>
-                        <div class="flex flex-col md:flex-row grow gap-2">
-                            <div class="flex flex-col basis-full gap-1">
-                                <div class="block">
-                                    <x-input-label for="update-{{ $ec_cart->id }}-name" :value="__('名称')" />
-                                    <x-text-input class="block mt-1 w-full" type="text"
-                                        id="update-{{ $ec_cart->id }}-name" :disabled="true" :value="$ec_cart->ec_products->name" />
-                                </div>
-                                <div class="block">
-                                    <x-input-label for="update-{{ $ec_cart->id }}-price" :value="__('価格')" />
-                                    <div class="flex flex-row content-stretch gap-2">
-                                        <x-text-input class="block mt-1 w-full text-right" type="number"
-                                            id="update-{{ $ec_cart->id }}-price" :disabled="true" :value="$ec_cart->price" />
-                                        <x-input-label class="mt-auto" for="update-{{ $ec_cart->id }}-price"
-                                            :value="__('円')" />
-                                    </div>
-                                </div>
-                                <div class="block">
-                                    <x-input-label for="update-{{ $ec_cart->id }}-qty" :value="__('数量')" />
-                                    <div class="flex flex-row content-stretch gap-2">
-                                        <x-text-input class="block mt-1 w-full text-right" type="number"
-                                            id="update-{{ $ec_cart->id }}-qty" :value="$ec_cart->qty" :disabled="true" />
-                                        <x-input-label class="mt-auto" for="update-{{ $ec_cart->id }}-qty"
-                                            :value="__('点')" />
-                                    </div>
-                                </div>
-                                <div class="block">
-                                    <x-input-label for="update-{{ $ec_cart->id }}-sub-total" :value="__('小計')" />
-                                    <div class="flex flex-row content-stretch gap-2">
-                                        <x-text-input class="block mt-1 w-full text-right" type="number"
-                                            id="update-{{ $ec_cart->id }}-sub-total" :disabled="true"
-                                            :value="$ec_cart->price * $ec_cart->qty" />
-                                        <x-input-label class="mt-auto" for="update-{{ $ec_cart->id }}-sub-total"
-                                            :value="__('円')" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            @foreach ($ecReceipts as $ecReceipt)
             @endforeach
         </div>
         <div class="w-full pt-2">
-            {{ $ec_carts->render() }}
+            {{ $ecReceipts->render() }}
         </div>
         {{-- フッター --}}
         <x-link-button-box>
-            <x-link-button class="basis-full"
-                href="{{ url('/mypage', null, app()->isProduction()) }}">マイページ</x-link-button>
+            <x-link-button class="basis-full" link-type="link" link-to="{{ url('/mypage', null, app()->isProduction()) }}">
+                マイページ
+            </x-link-button>
         </x-link-button-box>
     @endif
 @endsection

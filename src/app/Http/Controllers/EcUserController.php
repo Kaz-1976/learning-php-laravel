@@ -63,8 +63,7 @@ class EcUserController extends Controller
             $message = 'ユーザーの登録に失敗しました。';
         }
         // リターン
-        return redirect(url(null, null, app()->isProduction())->previous())
-            ->with('message', $message);
+        return redirect(url(null, null, app()->isProduction())->previous())->with('message', $message);
     }
 
     // ユーザー更新

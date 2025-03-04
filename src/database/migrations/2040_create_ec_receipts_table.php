@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ec_address', function (Blueprint $table) {
-            $table->id()->primary()->comment('ID');
+        Schema::create('ec_receipts', function (Blueprint $table) {
+            $table->id()->primary()->comment('レシートID');
             $table->foreignId('user_id')->comment('ユーザーID')->constrained('ec_users');
-            $table->string('zip')->comment('郵便番号');
-            $table->string('pref')->comment('都道府県');
-            $table->string('city')->comment('市区町村');
-            $table->string('address1')->comment('住所１');
-            $table->string('address2')->comment('住所２');
+            $table->string('no')->comment('注文番号');
+            $table->dateTime('date')->comment('注文日時');
+            $table->integer('qty')->comment('合計数量');
+            $table->integer('amount')->comment('合計金額');
+            $table->string('zip')->comment('配送先郵便番号');
+            $table->string('address1')->comment('配送先住所１');
+            $table->string('address2')->comment('配送先住所２');
             $table->foreignId('created_by')->comment('作成ユーザー')->constrained('ec_users');
             $table->dateTime('created_at')->comment('作成日時');
             $table->foreignId('updated_by')->comment('最終更新ユーザー')->constrained('ec_users');
@@ -31,11 +33,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ec_address', function (Blueprint $table) {
+        Schema::dropIfExists('ec_receipts', function (Blueprint $table) {
             // 外部キー制約の削除
-            $table->dropForeign('ec_address_user_id_foreign');
-            $table->dropForeign('ec_address_created_by_foreign');
-            $table->dropForeign('ec_address_updated_by_foreign');
+            $table->dropForeign('ec_receipts_user_id_foreign');
+            $table->dropForeign('ec_receipts_created_by_foreign');
+            $table->dropForeign('ec_receipts_updated_by_foreign');
         });
     }
 };

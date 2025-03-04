@@ -13,4 +13,9 @@ class EcCart extends Model
     {
         return $this->hasMany(EcCartDetail::class, 'cart_id', 'id');
     }
+
+    public function ec_user()
+    {
+        return $this->belongsTo(EcUser::class, 'user_id', 'id');
+    }
 }

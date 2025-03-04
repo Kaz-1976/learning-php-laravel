@@ -8,21 +8,23 @@ use Illuminate\View\Component;
 
 class ImageBox extends Component
 {
-    public bool $border;
     public string $imageId;
     public string $imageType;
     public string $imageData;
+    public string $imageAlt;
+    public string $imageTitle;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $imageId, string $imageType = '', string $imageData = '', bool $border = false)
+    public function __construct(string $imageId, string $imageType = '', string $imageData = '', string $imageAlt = '', string $imageTitle = '')
     {
         //
-        $this->border = $border;
         $this->imageId = $imageId;
         $this->imageType = $imageType;
         $this->imageData = $imageData;
+        $this->imageAlt = $imageAlt;
+        $this->imageTitle = $imageTitle;
     }
 
     /**

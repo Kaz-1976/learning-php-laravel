@@ -34,8 +34,6 @@ class EcUsersTableSeeder extends Seeder
                 'enable_flg' => true,
                 'last_login_at' => null,
                 'email_verified_at' => null,
-                'created_by' => 1,
-                'updated_by' => 1
             ]
         ];
         // ユーザー登録：データー登録

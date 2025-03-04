@@ -10,14 +10,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         {{-- Title --}}
         <title>@yield('pagetitle')：{{ config('app.name', 'Laravel') }}</title>
-        {{-- FontAwesome --}}
-        <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
-        {{-- Vite --}}
+        {{-- CSS/JavaScript --}}
         @if (app()->isLocal())
             {{-- 開発環境用 --}}
             @vite(['resources/js/app.js', 'resources/css/app.css'])
-            <script src="{{ asset('js/common.js') }}" defer></script>
-            <link rel="stylesheet" href="{{ asset('css/common.css') }}">
         @else
             {{-- 本番環境用 --}}
             @php
@@ -35,13 +31,13 @@
             @foreach ($cssFiles as $cssFile)
                 <link rel="stylesheet" href="{{ secure_asset('build/' . $cssFile) }}">
             @endforeach
-            <link rel="stylesheet" href="{{ secure_asset('css/common.css') }}">
-            {{-- Script --}}
+            {{-- JavaScript --}}
             @if ($jsFile)
                 <script src="{{ secure_asset('build/' . $jsFile) }}" defer></script>
             @endif
-            <script src="{{ secure_asset('js/common.js') }}" defer></script>
         @endif
+        {{-- FontAwesome --}}
+        <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
     </head>
 
     <body class="block w-full bg-sky-50 dark:bg-sky-950">
@@ -115,5 +111,8 @@
             @endauth
         </footer>
     </body>
+
+    {{-- Script --}}
+    @yield('script')
 
 </html>

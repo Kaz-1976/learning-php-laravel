@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\EcUser;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // EcUsersTableSeeder
+        // マスターテーブル
+        $this->call(EcMasterTableSeeder::class);
+        // ユーザーテーブル
         $this->call(EcUsersTableSeeder::class);
     }
 }
