@@ -30,7 +30,7 @@ services:
     container_name: web
     build:
       context: .
-      dockerfile: ./container/web/Dockerfile
+      dockerfile: ./container/web/Dockerfile.production
     volumes:
       - type: bind
         source: ./src/
