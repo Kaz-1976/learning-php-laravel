@@ -19,7 +19,7 @@ services:
       - ./src/.env.production
     build:
       context: .
-      dockerfile: ./docker/php/Dockerfile
+      dockerfile: ./docker/app/Dockerfile
     volumes:
       - type: bind
         source: ./src/
