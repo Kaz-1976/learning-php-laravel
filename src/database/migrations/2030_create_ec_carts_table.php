@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('ec_carts', function (Blueprint $table) {
             $table->id()->primary()->comment('カートID');
             $table->foreignId('user_id')->comment('ユーザーID')->constrained('ec_users');
-            $table->foreignId('address_id')->comment('配送先ID')->constrained('ec_addresses');
+            $table->foreignId('address_id')->nullable()->comment('宛先ID')->constrained('ec_addresses');
             $table->foreignId('created_by')->comment('作成ユーザー')->constrained('ec_users');
             $table->dateTime('created_at')->comment('作成日時');
             $table->foreignId('updated_by')->comment('最終更新ユーザー')->constrained('ec_users');

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use App\Helpers\UrlHelper;
 
 class IndexController extends Controller
 {
@@ -11,10 +10,8 @@ class IndexController extends Controller
     {
         // インデックスページ
         if (Auth::check()) {
-            // ユーザー情報取得
-            $user = Auth::user();
             // 管理／一般
-            if ($user->admin_flg == 0) {
+            if (Auth::user()->admin_flg == 0) {
                 // 一般ユーザーは商品一覧へ
                 return redirect(url('/items', null, app()->isProduction()));
             } else {

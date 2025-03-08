@@ -10,16 +10,16 @@ class TotalDisplay extends Component
 {
 
     public string $totalQty;
-    public string $totalPrice;
+    public string $totalAmount;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $totalQty = '0', string $totalPrice = '0')
+    public function __construct(string $totalQty = '0', string $totalAmount = '0')
     {
         //
         $this->totalQty = (int) $totalQty;
-        $this->totalPrice = (int) $totalPrice;
+        $this->totalAmount = (int) $totalAmount;
     }
 
     /**

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         // ユーザーテーブルのカートIDに外部キー（カートテーブルのID）を追加
         Schema::table('ec_users', function (Blueprint $table) {
-            $table->foreign('cart_id')->references('id')->on('ec_carts');
+            $table->foreign('cart_id')->references('id')->on('ec_carts')->nullOnDelete();
         });
     }
 

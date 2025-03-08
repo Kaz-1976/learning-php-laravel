@@ -34,7 +34,35 @@ class EcUsersTableSeeder extends Seeder
                 'enable_flg' => true,
                 'last_login_at' => null,
                 'email_verified_at' => null,
-            ]
+            ],
+            // テスト管理者ユーザー
+            [
+                'remember_token' => null,
+                'user_id' => 'TestAdmin01',
+                'user_name' => 'テスト管理者０１',
+                'user_kana' => 'てすとかんりしゃ０１',
+                'email' => 'test-admin+01@inaho.space',
+                'password' => Hash::make('TestAdmin01'),
+                'cart_id' => null,
+                'admin_flg' => true,
+                'enable_flg' => true,
+                'last_login_at' => null,
+                'email_verified_at' => null,
+            ],
+            // テスト利用者ユーザー
+            [
+                'remember_token' => null,
+                'user_id' => 'TestUser01',
+                'user_name' => 'テスト利用者０１',
+                'user_kana' => 'てすとりようしゃ０１',
+                'email' => 'test-user+01@inaho.space',
+                'password' => Hash::make('TestUser01'),
+                'cart_id' => null,
+                'admin_flg' => false,
+                'enable_flg' => true,
+                'last_login_at' => null,
+                'email_verified_at' => null,
+            ],
         ];
         // ユーザー登録：データー登録
         foreach ($ec_users as $ec_user) {

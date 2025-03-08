@@ -28,4 +28,9 @@ class EcAddress extends Model
     {
         return $this->belongsTo(EcPref::class, 'pref', 'code');
     }
+
+    public function ec_carts()
+    {
+        return $this->hasMany(EcCart::class, 'address_id', 'id');
+    }
 }

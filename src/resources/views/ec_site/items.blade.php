@@ -10,7 +10,7 @@
             <x-empty-string-box>商品がありません。</x-empty-string-box>
         </div>
     @else
-        <div class="w-full pb-2">
+        <div class="w-full py-2">
             {{ $ecProducts->render() }}
         </div>
         <div class="flex flex-row flex-wrap py-2 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
@@ -23,11 +23,11 @@
                     </div>
                     <div class="flex flex-row basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 h- mx-auto">
                         <x-image-box class="w-56 h-56" image-id="item-{{ $ecProduct->id }}-image-preview"
-                            image-type="{{ $ecProduct->image_type }}" image-data="{{ $ecProduct->image_data }}"
+                            image-url="{{ url('/api/product-image/' . $ecProduct->id, null, app()->isProduction()) }}"
                             image-alt="{{ $ecProduct->name }}" image-title="{{ $ecProduct->name }}" />
                     </div>
                     <form class="flex flex-col gap-2 w-full" id="item-{{ $ecProduct->id }}"
-                        action="{{ url('/items/store', null, app()->isProduction()) }}" method="POST">
+                        action="{{ url('/cart/store', null, app()->isProduction()) }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $ecProduct->id }}">
                         <input type="hidden" name="name" value="{{ $ecProduct->name }}">
@@ -81,7 +81,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="w-full pt-2">
+        <div class="w-full py-2">
             {{ $ecProducts->render() }}
         </div>
     @endif

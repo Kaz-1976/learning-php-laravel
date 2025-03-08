@@ -3,8 +3,10 @@
 @section('pagetitle', '新規登録')
 
 @section('content')
-    <div class="container w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm">
-        <form method="POST" action="{{ url('/register', null, app()->isProduction()) }}">
+    <div class="w-[90%] m-auto sm:mx-auto sm:w-full sm:max-w-sm">
+        <x-auth-session-status class="mb-4" :status="session('status')" />
+        <form class="w-full m-auto sm:mx-auto sm:w-full sm:max-w-sm space-y-6" method="POST"
+            action="{{ url('/register', null, app()->isProduction()) }}">
             <!-- CSRF -->
             @csrf
 

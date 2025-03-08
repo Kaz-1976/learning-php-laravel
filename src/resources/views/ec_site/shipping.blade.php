@@ -5,20 +5,9 @@
 
 {{-- ページコンテンツ --}}
 @section('content')
-    @foreach ($ecAddresses as $ecAddress)
-        @php
-            $addresses[$ecAddress->id] = [
-                'name' => $ecAddress->name,
-                'zip' => $ecAddress->zip,
-                'pref' => $ecAddress->ec_prefs->name,
-                'address1' => $ecAddress->address1,
-                'address2' => $ecAddress->address2,
-            ];
-        @endphp
-    @endforeach
     <div class="flex flex-col gap-4">
         <form class="flex flex-col gap-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
-            id="register" action="{{ url('/complete/store', null, app()->isProduction()) }}" method="POST">
+            id="register" action="{{ url('/shipping/store', null, app()->isProduction()) }}" method="POST">
             @csrf
             {{-- 宛先名 --}}
             <div class="flex flex-row basis-full gap-2">
@@ -78,20 +67,12 @@
         // 画面ロード時実行関数
         // ------------------------------------------------------------
         window.addEventListener('DOMContentLoaded', () => {
-            // 定数設定
-            const addresses = @json($addresses);
-            // 配送先選択時の処理
-            document.getElementById('id').addEventListener('change', (event) => {
-                // 選択された配送先情報を取得
-                const address = event.target.value ? addresses[event.target.value] : null;
-                // 郵便番号を設定
-                document.getElementById('zip').value = event.target.value ? address.zip : '';
-                // 都道府県を設定
-                document.getElementById('pref').value = event.target.value ? address.pref : '';
-                // 住所１を設定
-                document.getElementById('address1').value = event.target.value ? address.address1 : '';
-                // 住所２を設定
-                document.getElementById('address2').value = event.target.value ? address.address2 : '';
+            // 画像選択時の処理
+            const selects = document.querySelectorAll('select[name="id"]');
+            selects.forEach((select) => {
+                select.addEventListener('change', (event) => {
+                    getAddressInfo(event);
+                });
             });
         }, false);
     </script>

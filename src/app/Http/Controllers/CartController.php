@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Models\EcUser;
 use App\Models\EcCart;
 use App\Models\EcCartDetail;
 use App\Http\Requests\EcCartDetailUpdateRequest;
+use App\Http\Requests\EcCartStoreRequest;
 
 class CartController extends Controller
 {
@@ -27,7 +30,7 @@ class CartController extends Controller
                 // カート内合計の数量・価格を取得
                 $ecCartTotal = DB::table('ec_cart_details')
                     ->selectRaw('SUM(qty) as total_qty')
-                    ->selectRaw('SUM(price * qty) as total_price')
+                    ->selectRaw('SUM(price * qty) as total_amount')
                     ->where('cart_id', '=', Auth::user()->cart_id)
                     ->first();
                 // カート明細レコード取得
@@ -47,6 +50,62 @@ class CartController extends Controller
         return view('ec_site.cart', ['ecCartDetails' => $ecCartDetails, 'ecCartTotal' => $ecCartTotal]);
     }
 
+    public function store(EcCartStoreRequest $request)
+    {
+        // ポストデータ取得
+        $order = $request->safe();
+        // トランザクション
+        try {
+            DB::transaction(function () use ($order, $request) {
+                // カートID取得
+                if (empty(Auth::user()->cart_id)) {
+                    // カートを生成する
+                    $ecCart = new EcCart();
+                    $ecCart->user_id = Auth::id();
+                    $ecCart->save();
+                    // カートIDをユーザーテーブルに保存
+                    $ecUser = EcUser::find(Auth::id());
+                    $ecUser->cart_id = $ecCart->id;
+                    $ecUser->save();
+                    // ユーザー情報更新
+                    Auth::setUser($ecUser);
+                    $ecCartId = $ecCart->id;
+                } else {
+                    // カートレコード取得
+                    $ecCart = EcCart::query()
+                        ->where('id', '=', Auth::user()->cart_id)
+                        ->get();
+                    // カートID
+                    $ecCartId = Auth::user()->cart_id;
+                }
+                // カート明細
+                $ecCartDetail = EcCartDetail::createOrFirst(
+                    [
+                        'price' => $request->order_price,
+                        'qty' => $order->order_qty
+                    ],
+                    [
+                        'cart_id' => $ecCartId,
+                        'product_id' => $request->id,
+                    ]
+                );
+                $ecCartDetail->save();
+            });
+        } catch (\Exception $e) {
+            // ロールバック
+            DB::rollBack();
+            // ログ出力
+            Log::error("商品のカートへの登録に失敗しました。");
+            Log::error($e);
+            //
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->with('message', '商品のカートへの登録に失敗しました。');
+        }
+        // リダイレクト
+        return redirect(url(null, null, app()->isProduction())->previous())
+            ->with('message', '商品をカートに登録しました。 商品名： ' . $request->name . '　数量： ' . $order->order_qty . '点');
+    }
+
     public function update(EcCartDetailUpdateRequest $request)
     {
         // 検証済みデータ
@@ -60,7 +119,7 @@ class CartController extends Controller
         $ecCartDetail->qty = $valid_data->qty;
         $ecCartDetail->save();
         //
-        return redirect(url(null, null, app()->isProduction())->previous())
+        return redirect(url('/cart', null, app()->isProduction()))
             ->with('message', '商品名： ' . $request->name . ' の注文数量を更新しました。');
     }
 
@@ -72,7 +131,7 @@ class CartController extends Controller
         EcCartDetail::find($id)
             ->delete();
         //
-        return redirect(url(null, null, app()->isProduction())->previous())
+        return redirect(url('/cart', null, app()->isProduction()))
             ->with('message', '商品名： ' . $request->name . ' をカートから削除しました。');
     }
 

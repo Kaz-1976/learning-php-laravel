@@ -5,7 +5,7 @@
 
 {{-- ページコンテンツ --}}
 @section('content')
-    @if (empty($ecCartDetails))
+    @if ($ecCartDetails->isEmpty())
         {{-- ヘッダー --}}
         <x-link-button-box>
             <x-link-button class="basis-full" link-type="link" link-to="/items">商品一覧</x-link-button>
@@ -19,13 +19,15 @@
     @else
         {{-- ヘッダー --}}
         <x-link-button-box>
-            <x-link-button class="basis-1/3" link-type="form" link-to="/cart/clear" link-button-name="clear"
-                link-input-name="cart_id" :link-input-value="Auth::user()->cart_id">空にする</x-link-button>
-            <x-link-button class="basis-1/3" link-type="link" link-to="/items">商品一覧</x-link-button>
-            <x-link-button class="basis-1/3" link-type="link" link-to="/shipping">購入する</x-link-button>
+            <x-link-button class="basis-1/3" link-type="form"
+                link-to="{{ url('/cart/clear', null, app()->isProduction()) }}">空にする</x-link-button>
+            <x-link-button class="basis-1/3" link-type="link"
+                link-to="{{ url('/items', null, app()->isProduction()) }}">商品一覧</x-link-button>
+            <x-link-button class="basis-1/3" link-type="link"
+                link-to="{{ url('/shipping', null, app()->isProduction()) }}">購入する</x-link-button>
         </x-link-button-box>
         {{-- 本体 --}}
-        <div class="w-full pb-2">
+        <div class="w-full py-2">
             {{ $ecCartDetails->render() }}
         </div>
         <div class="w-full">
@@ -41,8 +43,7 @@
                         <input type="hidden" name="stock" value="{{ $ecCartDetail->ec_products->qty }}" />
                         <x-image-box class="w-88 md:w-64 h-88 md:h-64 basis-88 md:basis-64" :border="false"
                             image-id="update-{{ $ecCartDetail->id }}-image-preview"
-                            image-type="{{ $ecCartDetail->ec_products->image_type }}"
-                            image-data="{{ $ecCartDetail->ec_products->image_data }}"
+                            image-url="{{ url('/api/product-image/' . $ecCartDetail->ec_products->id, null, app()->isProduction()) }}"
                             image-alt="{{ $ecCartDetail->ec_products->name }}"
                             image-title="{{ $ecCartDetail->ec_products->name }}">
                         </x-image-box>
@@ -118,17 +119,19 @@
                 </div>
             @endforeach
         </div>
-        <div class="w-full pt-2">
+        <div class="w-full py-2">
             {{ $ecCartDetails->render() }}
         </div>
         {{-- トータル --}}
-        <x-total-display :total-qty="$ecCartTotal->total_qty" :total-price="$ecCartTotal->total_price"></x-total-display>
+        <x-total-display :total-qty="$ecCartTotal->total_qty" :total-amount="$ecCartTotal->total_amount"></x-total-display>
         {{-- フッター --}}
         <x-link-button-box>
-            <x-link-button class="basis-1/3" link-type="form" link-to="/cart/clear" link-button-name="clear"
-                link-input-name="cart_id" :link-input-value="Auth::user()->cart_id">空にする</x-link-button>
-            <x-link-button class="basis-1/3" link-type="link" link-to="/items">商品一覧</x-link-button>
-            <x-link-button class="basis-1/3" link-type="link" link-to="/shipping">購入する</x-link-button>
+            <x-link-button class="basis-1/3" link-type="form"
+                link-to="{{ url('/cart/clear', null, app()->isProduction()) }}">空にする</x-link-button>
+            <x-link-button class="basis-1/3" link-type="link"
+                link-to="{{ url('/items', null, app()->isProduction()) }}">商品一覧</x-link-button>
+            <x-link-button class="basis-1/3" link-type="link"
+                link-to="{{ url('/shipping', null, app()->isProduction()) }}">購入する</x-link-button>
         </x-link-button-box>
     @endif
 @endsection

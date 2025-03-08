@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\EcAddress;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Models\EcZip;
 
-class AddressController extends Controller
+class ZipController extends Controller
 {
-    public function address($id)
+    public function zip($code)
     {
-        // 配送先情報を取得
-        $address = EcAddress::query()
-            ->with('ec_prefs')
-            ->where('id', '=', $id)
+        // 郵便番号から住所を取得
+        $zip = EcZip::query()
+            ->where('code', '=', $code)
             ->first();
         // 検索結果を返す
-        if (empty($address)) {
+        if (empty($zip)) {
             return response()->json(
                 ['message' => 'Not Found'],
                 404,
@@ -25,7 +24,7 @@ class AddressController extends Controller
             );
         } else {
             return response()->json(
-                $address,
+                $zip,
                 200,
                 [],
                 JSON_UNESCAPED_UNICODE

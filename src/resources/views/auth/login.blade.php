@@ -3,9 +3,9 @@
 @section('pagetitle', 'ログイン')
 
 @section('content')
-    <div class="container w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm">
+    <div class="w-[90%] m-auto sm:mx-auto sm:w-full sm:max-w-sm">
         <x-auth-session-status class="mb-4" :status="session('status')" />
-        <form class="w-auto m-auto sm:mx-auto sm:w-full sm:max-w-sm space-y-6" method="POST"
+        <form class="w-full m-auto sm:mx-auto sm:w-full sm:max-w-sm space-y-6" method="POST"
             action="{{ url('/login', null, app()->isProduction()) }}">
             @csrf
 

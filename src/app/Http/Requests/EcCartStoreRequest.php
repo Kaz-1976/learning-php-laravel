@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Models\EcProduct;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\EcProduct;
 
-class ItemStoreRequest extends FormRequest
+class EcCartStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

@@ -9,20 +9,18 @@ use Illuminate\View\Component;
 class ImageBox extends Component
 {
     public string $imageId;
-    public string $imageType;
-    public string $imageData;
+    public string $imageUrl;
     public string $imageAlt;
     public string $imageTitle;
 
     /**
      * Create a new component instance.
      */
-    public function __construct(string $imageId, string $imageType = '', string $imageData = '', string $imageAlt = '', string $imageTitle = '')
+    public function __construct(string $imageId, string $imageUrl = '', string $imageAlt = '', string $imageTitle = '')
     {
         //
         $this->imageId = $imageId;
-        $this->imageType = $imageType;
-        $this->imageData = $imageData;
+        $this->imageUrl = $imageUrl;
         $this->imageAlt = $imageAlt;
         $this->imageTitle = $imageTitle;
     }

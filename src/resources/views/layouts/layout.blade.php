@@ -40,7 +40,7 @@
         <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
     </head>
 
-    <body class="block w-full bg-sky-50 dark:bg-sky-950">
+    <body class="block w-full m-0 p-0 bg-sky-50 dark:bg-sky-950">
         <header
             class="fixed top-0 z-50 flex flex-row justify-between items-stretch t-0 w-full h-20 px-5 bg-sky-700/75 dark:bg-sky-300/75">
             <div class="flex my-auto">
@@ -87,7 +87,8 @@
         </header>
         <main class="block w-full md:w-[95%] mx-auto py-24">
             <div class="flex w-full py-12">
-                <h2 class="flex mx-auto text-3xl text-center font-bold text-sky-950 dark:text-sky-50">@yield('pagetitle')
+                <h2 class="flex mx-auto text-3xl text-center font-bold text-sky-950 dark:text-sky-50">
+                    @yield('pagetitle')
                 </h2>
             </div>
             @if (session('message'))
