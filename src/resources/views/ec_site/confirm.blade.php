@@ -8,7 +8,7 @@
     @if ($ecCartDetails->isEmpty())
         {{-- ヘッダー --}}
         <x-link-button-box>
-            <x-link-button class="basis-full" link-type="link" link-to="{{ url('/items', null, app()->isProduction()) }}">
+            <x-link-button class="basis-full" link-type="link" link-to="{{ url('items', null, app()->isProduction()) }}">
                 商品一覧
             </x-link-button>
         </x-link-button-box>
@@ -16,21 +16,21 @@
         <x-empty-string-box>商品がありません。</x-empty-string-box>
         {{-- フッター --}}
         <x-link-button-box>
-            <x-link-button class="basis-full" link-type="link" link-to="{{ url('/items', null, app()->isProduction()) }}">
+            <x-link-button class="basis-full" link-type="link" link-to="{{ url('items', null, app()->isProduction()) }}">
                 商品一覧
             </x-link-button>
         </x-link-button-box>
     @else
         {{-- ヘッダー --}}
         <x-link-button-box>
-            <x-link-button class="basis-1/3" link-type="link" link-to="{{ url('/items', null, app()->isProduction()) }}">
+            <x-link-button class="basis-1/3" link-type="link" link-to="{{ url('items', null, app()->isProduction()) }}">
                 商品一覧
             </x-link-button>
-            <x-link-button class="basis-1/3" link-type="link" link-to="{{ url('/cart', null, app()->isProduction()) }}">
+            <x-link-button class="basis-1/3" link-type="link" link-to="{{ url('cart', null, app()->isProduction()) }}">
                 カートに戻る
             </x-link-button>
             <x-link-button class="basis-1/3" link-type="form"
-                link-to="{{ url('/confirm/store', null, app()->isProduction()) }}">
+                link-to="{{ url('confirm/store', null, app()->isProduction()) }}">
                 購入する
             </x-link-button>
         </x-link-button-box>
@@ -70,7 +70,7 @@
                     <div class="flex flex-col md:flex-row basis-full w-full gap-2 px-1">
                         <x-image-box class="w-88 md:w-64 h-88 md:h-64 basis-88 md:basis-64" :border="false"
                             image-id="detail-image-{{ $ecCartDetail->id }}"
-                            image-url="{{ url('/api/product-image/' . $ecCartDetail->product_id, null, app()->isProduction()) }}"
+                            image-url="{{ url('api/product-image/' . $ecCartDetail->product_id, null, app()->isProduction()) }}"
                             image-alt="{{ $ecCartDetail->ec_products->name }}"
                             image-title="{{ $ecCartDetail->ec_products->name }}">
                         </x-image-box>
@@ -124,14 +124,14 @@
         <x-total-display :total-qty="$ecCartTotal->total_qty" :total-amount="$ecCartTotal->total_amount"></x-total-display>
         {{-- フッター --}}
         <x-link-button-box>
-            <x-link-button class="basis-1/3" link-type="link" link-to="{{ url('/items', null, app()->isProduction()) }}">
+            <x-link-button class="basis-1/3" link-type="link" link-to="{{ url('items', null, app()->isProduction()) }}">
                 商品一覧
             </x-link-button>
-            <x-link-button class="basis-1/3" link-type="link" link-to="{{ url('/cart', null, app()->isProduction()) }}">
+            <x-link-button class="basis-1/3" link-type="link" link-to="{{ url('cart', null, app()->isProduction()) }}">
                 カートに戻る
             </x-link-button>
             <x-link-button class="basis-1/3" link-type="form"
-                link-to="{{ url('/confirm/store', null, app()->isProduction()) }}">
+                link-to="{{ url('confirm/store', null, app()->isProduction()) }}">
                 購入する
             </x-link-button>
         </x-link-button-box>

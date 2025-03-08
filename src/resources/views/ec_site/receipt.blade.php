@@ -7,7 +7,7 @@
 @section('content')
     {{-- ヘッダー --}}
     <x-link-button-box>
-        <x-link-button class="basis-full" link-type="link" link-to="{{ url('/mypage', null, app()->isProduction()) }}">
+        <x-link-button class="basis-full" link-type="link" link-to="{{ url('mypage', null, app()->isProduction()) }}">
             マイページ
         </x-link-button>
     </x-link-button-box>
@@ -56,7 +56,7 @@
                     </div>
                     <x-link-button-box class="basis-1/6 w-full">
                         <x-link-button class="basis-full w-full" link-type="link"
-                            link-to="{{ url('/mypage/receipt/' . $ecReceipt->id, null, app()->isProduction()) }}">
+                            link-to="{{ url('mypage/receipt/' . $ecReceipt->id, null, app()->isProduction()) }}">
                             詳細
                         </x-link-button>
                     </x-link-button-box>
@@ -69,7 +69,7 @@
     @endif
     {{-- フッター --}}
     <x-link-button-box>
-        <x-link-button class="basis-full" link-type="link" link-to="{{ url('/mypage', null, app()->isProduction()) }}">
+        <x-link-button class="basis-full" link-type="link" link-to="{{ url('mypage', null, app()->isProduction()) }}">
             マイページ
         </x-link-button>
     </x-link-button-box>

@@ -84,7 +84,7 @@
                         <div class="flex flex-col md:flex-row basis-full w-full gap-2 px-1">
                             <x-image-box class="w-88 md:w-64 h-88 md:h-64 basis-88 md:basis-64" :border="false"
                                 image-id="detail-{{ $ecReceiptDetail->id }}-image-preview"
-                                image-url="{{ url('/api/receipt-image/' . $ecReceipt->id . '/' . $ecReceiptDetail->id, null, app()->isProduction()) }}"
+                                image-url="{{ url('api/receipt-image/' . $ecReceipt->id . '/' . $ecReceiptDetail->id, null, app()->isProduction()) }}"
                                 image-alt="{{ $ecReceiptDetail->name }}" image-title="{{ $ecReceiptDetail->name }}">
                             </x-image-box>
                             <div class="flex flex-col md:flex-row grow gap-2">

@@ -15,7 +15,7 @@
     @endphp
     <div class="flex flex-col gap-4">
         <form class="flex flex-col gap-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
-            id="register" action="{{ url('/mypage/address/store', null, app()->isProduction()) }}" method="POST">
+            id="register" action="{{ url('mypage/address/store', null, app()->isProduction()) }}" method="POST">
             @csrf
             {{-- 隠し項目 --}}
             <input type="hidden" name="id" value="0" />
@@ -109,7 +109,7 @@
                         <form
                             class="flex flex-col md:flex-row basis-full gap-4 w-full p-4 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-50 {{ $ecAddress->enable_flg ? ($ecAddress->admin_flg ? 'bg-sky-300 dark:bg-sky-800' : 'bg-sky-400 dark:bg-sky-700') : 'bg-sky-200 dark:bg-sky-900' }}"
                             id="update-{{ $ecAddress->id }}"
-                            action="{{ url('/mypage/address/update', null, app()->isProduction()) }}" method="POST">
+                            action="{{ url('mypage/address/update', null, app()->isProduction()) }}" method="POST">
                             @csrf
                             {{-- 隠し項目 --}}
                             <input type="hidden" name="id" value="{{ $ecAddress->id }}" />

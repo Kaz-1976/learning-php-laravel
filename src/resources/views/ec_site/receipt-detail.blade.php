@@ -7,7 +7,7 @@
 @section('content')
     {{-- ヘッダー --}}
     <x-link-button-box>
-        <x-link-button class="basis-full" link-type="link" link-to="{{ url('/mypage/receipt', null, app()->isProduction()) }}">
+        <x-link-button class="basis-full" link-type="link" link-to="{{ url('mypage/receipt', null, app()->isProduction()) }}">
             購入履歴
         </x-link-button>
     </x-link-button-box>
@@ -86,7 +86,7 @@
                     <div class="flex flex-col md:flex-row basis-full w-full gap-2 px-1">
                         <x-image-box class="w-88 md:w-64 h-88 md:h-64 basis-88 md:basis-64" :border="false"
                             image-id="detail-image-{{ $ecReceiptDetail->id }}"
-                            image-url="{{ url('/api/receipt-image/' . $ecReceiptDetail->receipt_id . '/' . $ecReceiptDetail->id, null, app()->isProduction()) }}"
+                            image-url="{{ url('api/receipt-image/' . $ecReceiptDetail->receipt_id . '/' . $ecReceiptDetail->id, null, app()->isProduction()) }}"
                             image-alt="{{ $ecReceiptDetail->name }}" image-title="{{ $ecReceiptDetail->name }}">
                         </x-image-box>
                         <div class="flex flex-col md:flex-row grow gap-2">
@@ -141,7 +141,7 @@
     {{-- フッター --}}
     <x-link-button-box>
         <x-link-button class="basis-full" link-type="link"
-            link-to="{{ url('/mypage/receipt', null, app()->isProduction()) }}">
+            link-to="{{ url('mypage/receipt', null, app()->isProduction()) }}">
             購入履歴
         </x-link-button>
     </x-link-button-box>

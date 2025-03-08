@@ -25,5 +25,5 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = url('/', null, app()->isProduction());
+    protected $redirectTo = url('', null, app()->isProduction());
 }

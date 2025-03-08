@@ -7,7 +7,7 @@
 @section('content')
     <div class="flex flex-col gap-4">
         <form class="flex flex-col gap-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
-            id="register" action="{{ url('/shipping/store', null, app()->isProduction()) }}" method="POST">
+            id="register" action="{{ url('shipping/store', null, app()->isProduction()) }}" method="POST">
             @csrf
             {{-- 宛先名 --}}
             <div class="flex flex-row basis-full gap-2">
