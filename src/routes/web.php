@@ -15,7 +15,6 @@ use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\ConfirmController;
 use Illuminate\Support\Facades\Route;
 
-// Route::prefix('ec_site')->group(function () {
 // ルートページ
 Route::get('/', [IndexController::class, 'index'])->name('ec_site.index');
 
@@ -77,4 +76,3 @@ Route::middleware([\App\Http\Middleware\CheckNormal::class])->group(function () 
 
 //認証ページ
 require __DIR__ . '/auth.php';
-// });
