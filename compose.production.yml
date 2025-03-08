@@ -1,18 +1,4 @@
 services:
-  web:
-    container_name: web
-    build:
-      context: .
-      dockerfile: ./container/web/Dockerfile
-    volumes:
-      - type: bind
-        source: ./src/
-        target: /var/www/html
-    ports:
-      - 1080:80
-    restart: always
-    depends_on:
-      - app
   app:
     container_name: app
     env_file:
@@ -40,3 +26,18 @@ services:
     working_dir: /workspace
     depends_on:
       - app
+  web:
+    container_name: web
+    build:
+      context: .
+      dockerfile: ./container/web/Dockerfile
+    volumes:
+      - type: bind
+        source: ./src/
+        target: /var/www/html
+    ports:
+      - 1080:80
+    restart: always
+    depends_on:
+      - app
+      
