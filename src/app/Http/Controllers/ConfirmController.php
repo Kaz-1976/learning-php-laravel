@@ -69,7 +69,7 @@ class ConfirmController extends Controller
                         // ロールバック
                         DB::rollBack();
                         //
-                        return redirect(url('/confirm', null, app()->isProduction()))
+                        return redirect(url('confirm', null, app()->isProduction()))
                             ->with('message', '商品が存在しません。 商品名： ' . (empty($ecCartDetail->ec_products) ? 'NULL' : $ecCartDetail->ec_products->name));
                     }
                     // 商品在庫チェック
@@ -77,7 +77,7 @@ class ConfirmController extends Controller
                         // ロールバック
                         DB::rollBack();
                         //
-                        return redirect(url('/confirm', null, app()->isProduction()))
+                        return redirect(url('confirm', null, app()->isProduction()))
                             ->with('message', '注文数量に対して在庫が不足しています。 商品名： ' . $ecCartDetail->ec_products->name . ' 在庫数： ' . $ecCartDetail->ec_products->qty);
                     }
                     // 商品レコード取得
@@ -143,11 +143,11 @@ class ConfirmController extends Controller
             Log::error('カートID： ' . $cart_id);
             Log::error($e);
             // リダイレクト
-            return redirect(url('/confirm', null, app()->isProduction()))
+            return redirect(url('confirm', null, app()->isProduction()))
                 ->with('message', '購入処理でエラーが発生しました。');
         }
         // リダイレクト
-        return redirect(url('/complete', null, app()->isProduction()))
+        return redirect(url('complete', null, app()->isProduction()))
             ->with('receipt_id', session()->get('receipt_id'))
             ->with('message', 'ご利用ありがとうございました。');
     }

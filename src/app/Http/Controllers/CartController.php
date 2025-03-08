@@ -119,7 +119,7 @@ class CartController extends Controller
         $ecCartDetail->qty = $valid_data->qty;
         $ecCartDetail->save();
         //
-        return redirect(url('/cart', null, app()->isProduction()))
+        return redirect(url('cart', null, app()->isProduction()))
             ->with('message', '商品名： ' . $request->name . ' の注文数量を更新しました。');
     }
 
@@ -131,7 +131,7 @@ class CartController extends Controller
         EcCartDetail::find($id)
             ->delete();
         //
-        return redirect(url('/cart', null, app()->isProduction()))
+        return redirect(url('cart', null, app()->isProduction()))
             ->with('message', '商品名： ' . $request->name . ' をカートから削除しました。');
     }
 
@@ -144,7 +144,7 @@ class CartController extends Controller
             ->where('cart_id', $id)
             ->delete();
         //
-        return redirect(url('/cart', null, app()->isProduction()))
+        return redirect(url('cart', null, app()->isProduction()))
             ->with('message', 'ショッピングカートを空にしました。');
     }
 }

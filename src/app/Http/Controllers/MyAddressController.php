@@ -55,7 +55,7 @@ class MyAddressController extends Controller
             'address2' => $request->address2,
         ];
         // レスポンス
-        return redirect(url('/mypage/address', null, app()->isProduction()))
+        return redirect(url('mypage/address', null, app()->isProduction()))
             ->with('form', $form)
             ->with('search', $id);
     }

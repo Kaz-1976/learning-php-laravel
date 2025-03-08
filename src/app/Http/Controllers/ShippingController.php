@@ -36,6 +36,6 @@ class ShippingController extends Controller
         $cart->address_id = $request->id;
         $cart->save();
         // リダイレクト
-        return redirect(url('/confirm', null, app()->isProduction()));
+        return redirect(url('confirm', null, app()->isProduction()));
     }
 }
