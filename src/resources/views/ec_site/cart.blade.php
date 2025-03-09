@@ -5,7 +5,7 @@
 
 {{-- ページコンテンツ --}}
 @section('content')
-    @if ($ecCartDetails->isEmpty())
+    @if (empty($ecCartDetails))
         {{-- ヘッダー --}}
         <x-link-button-box>
             <x-link-button class="basis-full" link-type="link" link-to="/items">商品一覧</x-link-button>
