@@ -8,7 +8,7 @@ services:
       dockerfile: ./container/app/Dockerfile
     volumes:
       - type: bind
-        source: ./src/
+        source: ./src
         target: /var/www/html
     restart: always
   node:
@@ -21,7 +21,7 @@ services:
     tty: true
     volumes:
       - type: bind
-        source: ./src/
+        source: ./src
         target: /workspace
     working_dir: /workspace
     depends_on:
@@ -33,7 +33,7 @@ services:
       dockerfile: ./container/web/Dockerfile.production
     volumes:
       - type: bind
-        source: ./src/
+        source: ./src
         target: /var/www/html
     ports:
       - 1080:80

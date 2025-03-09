@@ -8,7 +8,7 @@ services:
       - ./container/db/.env.local
     volumes:
       - type: bind
-        source: ./volume/MariaDB/
+        source: ./volume/MariaDB
         target: /var/lib/mysql
     restart: always
 
@@ -21,7 +21,7 @@ services:
       dockerfile: ./container/app/Dockerfile
     volumes:
       - type: bind
-        source: ./src/
+        source: ./src
         target: /var/www/html
     restart: always
     depends_on:
@@ -36,7 +36,7 @@ services:
       - "1080:80"
     volumes:
       - type: bind
-        source: ./src/
+        source: ./src
         target: /var/www/html
     restart: always
     depends_on:
