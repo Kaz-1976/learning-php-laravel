@@ -76,7 +76,7 @@ Route::prefix('ec_site')->group(function () {
         // 購入完了ページ
         Route::get('complete', [CompleteController::class, 'index'])->name('complete.index');
     });
-
-    //認証ページ
-    require __DIR__ . '/auth.php';
 });
+
+//認証ページ
+require __DIR__ . '/auth.php';
