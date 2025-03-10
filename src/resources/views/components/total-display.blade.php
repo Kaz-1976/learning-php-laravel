@@ -1,4 +1,4 @@
-<div class="flex flex-row w-full py-4 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
+<div class="flex flex-row w-full py-4 my-4 border-t-2 border-b-2 border-sky-950 dark:border-sky-50">
     <div class="flex flex-row basis-1/5 justify-center">
         <span class="flex text-center font-bold text-2xl md:text-4xl text-sky-950 dark:text-sky-50">合計</span>
     </div>

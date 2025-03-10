@@ -18,7 +18,7 @@
         <div class="w-full py-2">
             {{ $ecReceipts->render() }}
         </div>
-        <div class="flex flex-col basis-full gap-4">
+        <div class="flex flex-col basis-full">
             @foreach ($ecReceipts as $ecReceipt)
                 <div
                     class="flex flex-col sm:flex-row basis-full gap-2 py-2 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-950 dark:border-sky-50">

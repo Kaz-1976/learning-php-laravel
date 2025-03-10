@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Models\EcUser;
 use App\Models\EcProduct;
 use App\Models\EcCart;
 use App\Models\EcCartDetail;
