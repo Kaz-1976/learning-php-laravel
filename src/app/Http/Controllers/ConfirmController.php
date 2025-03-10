@@ -129,10 +129,10 @@ class ConfirmController extends Controller
                 EcCart::destroy($cart_id);
                 // ユーザー情報更新
                 Auth::user()->refresh();
-                // レシートIDをセッションに保存
-                session()->put('receipt_id', $ecReceipt->id);
                 // コミット
                 DB::commit();
+                // レシートIDをセッションに保存
+                session()->put('receipt_id', $ecReceipt->id);
             });
         } catch (\Exception $e) {
             // ロールバック
@@ -147,7 +147,6 @@ class ConfirmController extends Controller
         }
         // リダイレクト
         return redirect(url('complete', null, app()->isProduction()))
-            ->with('receipt_id', session()->get('receipt_id'))
             ->with('message', 'ご利用ありがとうございました。');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\EcReceipt;
 use App\Models\EcReceiptDetail;
+use Illuminate\Support\Facades\Log;
 
 class CompleteController extends Controller
 {
@@ -12,6 +13,7 @@ class CompleteController extends Controller
     {
         // レシートID取得
         $receipt_id = session()->get('receipt_id');
+        Log::info("レシートID：" . $receipt_id);
         // レシート情報取得
         $ecReceipt = EcReceipt::find($receipt_id);
         if (empty($ecReceipt)) {
@@ -22,7 +24,11 @@ class CompleteController extends Controller
                 ->where('receipt_id', '=', $receipt_id)
                 ->paginate(6);
         }
-        //
-        return view('ec_site.complete', ['ecReceipt' => $ecReceipt, 'ecReceiptDetails' => $ecReceiptDetails]);
+        // リターン
+        return view('ec_site.complete')
+            ->with([
+                'ecReceipt' => $ecReceipt,
+                'ecReceiptDetails' => $ecReceiptDetails
+            ]);
     }
 }
