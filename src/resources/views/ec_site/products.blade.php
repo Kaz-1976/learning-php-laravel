@@ -181,24 +181,3 @@
         @endif
     </div>
 @endsection
-
-@section('script')
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            // 画像選択時の処理
-            const inputs = document.querySelectorAll('input[type="file"]');
-            inputs.forEach((input) => {
-                input.addEventListener('change', (event) => {
-                    loadProductImage(event);
-                });
-            });
-            // フォームリセット時画像消去
-            const buttons = document.querySelectorAll('button[type="reset"]');
-            buttons.forEach((button) => {
-                button.addEventListener('click', (event) => {
-                    resetProductImage(event);
-                });
-            });
-        });
-    </script>
-@endsection

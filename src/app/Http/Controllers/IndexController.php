@@ -22,4 +22,13 @@ class IndexController extends Controller
         // ログインしていない場合はログインページへ
         return redirect(url('login', null, app()->isProduction()));
     }
+
+    public function wait()
+    {
+        // セッションからトークンを取得
+        $token = session('token');
+
+        // ログイン待ちページ
+        return view('ec_site.wait')->with('token', $token);
+    }
 }

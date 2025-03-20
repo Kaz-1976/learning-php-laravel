@@ -71,7 +71,7 @@
             const selects = document.querySelectorAll('select[name="id"]');
             selects.forEach((select) => {
                 select.addEventListener('change', (event) => {
-                    getAddressInfo(event);
+                    common.getAddressInfo(event);
                 });
             });
         }, false);

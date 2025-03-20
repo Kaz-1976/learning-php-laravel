@@ -9,7 +9,6 @@
             action="{{ url('login', null, app()->isProduction()) }}">
             @csrf
 
-            <!-- User ID -->
             <div>
                 <x-input-label for="user_id" :value="__('ID')" />
                 <x-text-input id="user_id" class="block mt-1 w-full" type="text" name="user_id" :value="old('user_id')" required
@@ -17,7 +16,6 @@
                 <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
             </div>
 
-            <!-- Password -->
             <div class="mt-4">
                 <x-input-label for="password" :value="__('Password')" />
 
@@ -27,7 +25,6 @@
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
-            <!-- Remember Me -->
             <div class="block mt-4">
                 <label for="remember_me" class="inline-flex items-center">
                     <input id="remember_me" type="checkbox"
@@ -61,4 +58,10 @@
             @endif
         </form>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        localStorage.removeItem('apiAccessToken');
+    </script>
 @endsection

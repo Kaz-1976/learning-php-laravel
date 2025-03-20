@@ -14,19 +14,18 @@ return new class extends Migration
     {
         Schema::create('ec_users', function (Blueprint $table) {
             $table->id()->primary()->comment('ID');
-            $table->rememberToken()->comment('Remenber Token');
-            $table->string('user_id', 255)->comment('ユーザーID');
-            $table->unique(['user_id']);
+            $table->string('user_id', 255)->unique()->comment('ユーザーID');
             $table->string('user_name', 255)->comment('ユーザー氏名（漢字）');
             $table->string('user_kana', 255)->comment('ユーザー氏名（かな）');
-            $table->string('email', 255)->comment('メールアドレス');
-            $table->unique(['email']);
+            $table->string('email', 255)->unique()->comment('メールアドレス');
             $table->string('password', 255)->comment('パスワード');
             $table->unsignedBigInteger('cart_id')->nullable()->comment('カートID');
             $table->boolean('admin_flg')->comment('管理フラグ');
             $table->boolean('enable_flg')->comment('有効フラグ');
             $table->dateTime('last_login_at')->nullable()->comment('最終ログイン日時');
             $table->dateTime('email_verified_at')->nullable()->comment('メールアドレス確認日時');
+            $table->rememberToken()->comment('Remenber Token');
+            $table->string('api_token', 60)->unique()->nullable()->comment('API Token');
             $table->foreignId('created_by')->comment('作成ユーザー')->constrained('ec_users');
             $table->dateTime('created_at')->comment('作成日時');
             $table->foreignId('updated_by')->comment('最終更新ユーザー')->constrained('ec_users');

@@ -21,12 +21,12 @@
                 <h3 class="flex mx-auto text-2xl text-center font-bold text-sky-950 dark:text-sky-50">注文情報</h3>
             </div>
             <div class="flex flex-col sm:flex-row gap-2">
-                <div class="flex flex-col basis-full gap-1">
+                <div class="flex flex-col basis-full sm:basis-2/3 gap-1">
                     <x-input-label for="receipt-no" :value="__('注文番号')" />
                     <x-text-input class="block mt-1 w-full" type="text" id="receipt-no" :disabled="true"
                         :value="$ecReceipt->no" />
                 </div>
-                <div class="flex flex-col basis-full gap-1">
+                <div class="flex flex-col basis-full sm:basis-1/3 gap-1">
                     <x-input-label for="receipt-date" :value="__('注文日時')" />
                     <x-text-input class="block mt-1 w-full" type="text" id="receipt-date" :disabled="true"
                         :value="date_format(date_create($ecReceipt->date), 'Y年m月d日 H時i分s秒')" />

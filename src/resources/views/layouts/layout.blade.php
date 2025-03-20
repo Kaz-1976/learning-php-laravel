@@ -76,7 +76,8 @@
                         </a>
                     @endif
                     {{-- ログアウト --}}
-                    <form class="block" method="POST" action="{{ url('logout', null, app()->isProduction()) }}">
+                    <form class="block" method="POST" action="{{ url('logout', null, app()->isProduction()) }}"
+                        onsubmit="return common.logout();">
                         @csrf
                         <button class="block text-3xl text-sky-50 dark:text-sky-950" type="submit" title="ログアウト">
                             <i class="fa-solid fa-right-from-bracket fa-fw m-auto object-cover"></i>

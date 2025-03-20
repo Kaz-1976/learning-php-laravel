@@ -13,47 +13,57 @@ use App\Http\Controllers\MyReceiptController;
 use App\Http\Controllers\MyAddressController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\ConfirmController;
+use App\Http\Controllers\WaitingController;
 use Illuminate\Support\Facades\Route;
 
-
-// Route::prefix('ec_site')->group(function () {
 
 // ルートページ
 Route::get('/', [IndexController::class, 'index'])->name('ec_site.index');
 
+// 待機ページ
+Route::middleware('auth')->group(function () {
+    Route::get('/wait', [IndexController::class, 'wait'])->name('ec_site.wait');
+});
+
 // 管理者
 Route::middleware([\App\Http\Middleware\CheckAdmin::class])->group(function () {
-    // 管理メニューページ
-    Route::get('admin', [AdminController::class, 'index'])->name('ec_site.admin');
+    // 管理ページ
+    Route::prefix('admin')->group(function () {
+        // 管理メニュー
+        Route::get('/', [AdminController::class, 'index'])->name('ec_site.admin');
 
-    // ユーザー管理ページ
-    Route::get('admin/users', [EcUserController::class, 'index'])->name('users.index');
-    Route::post('admin/users/store', [EcUserController::class, 'store'])->name('users.store');
-    Route::post('admin/users/update', [EcUserController::class, 'update'])->name('users.update');
+        // ユーザー管理ページ
+        Route::get('users', [EcUserController::class, 'index'])->name('users.index');
+        Route::post('users/store', [EcUserController::class, 'store'])->name('users.store');
+        Route::post('users/update', [EcUserController::class, 'update'])->name('users.update');
 
-    // 商品管理ページ
-    Route::get('admin/products', [EcProductController::class, 'index'])->name('products.index');
-    Route::post('admin/products/store', [EcProductController::class, 'store'])->name('products.store');
-    Route::post('admin/products/update', [EcProductController::class, 'update'])->name('products.update');
+        // 商品管理ページ
+        Route::get('products', [EcProductController::class, 'index'])->name('products.index');
+        Route::post('products/store', [EcProductController::class, 'store'])->name('products.store');
+        Route::post('products/update', [EcProductController::class, 'update'])->name('products.update');
+    });
 });
 
 // 利用者
 Route::middleware([\App\Http\Middleware\CheckNormal::class])->group(function () {
     // マイページ
-    Route::get('mypage', [MyPageController::class, 'index'])->name('mypage.index');
+    Route::prefix('mypage')->group(function () {
+        // マイページメニュー
+        Route::get('/', [MyPageController::class, 'index'])->name('mypage.index');
 
-    // 個人情報ページ
-    Route::get('mypage/profile', [MyProfileController::class, 'index'])->name('profile.index');
+        // 個人情報ページ
+        Route::get('profile', [MyProfileController::class, 'index'])->name('profile.index');
 
-    // 宛先情報ページ
-    Route::get('mypage/address', [MyAddressController::class, 'index'])->name('address.index');
-    Route::post('mypage/address/search', [MyAddressController::class, 'search'])->name('address.search');
-    Route::post('mypage/address/store', [MyAddressController::class, 'store'])->name('address.store');
-    Route::post('mypage/address/update', [MyAddressController::class, 'update'])->name('address.update');
+        // 宛先情報ページ
+        Route::get('address', [MyAddressController::class, 'index'])->name('address.index');
+        Route::post('address/search', [MyAddressController::class, 'search'])->name('address.search');
+        Route::post('address/store', [MyAddressController::class, 'store'])->name('address.store');
+        Route::post('address/update', [MyAddressController::class, 'update'])->name('address.update');
 
-    // 購入履歴ページ
-    Route::get('mypage/receipt', [MyReceiptController::class, 'index'])->name('receipt.index');
-    Route::get('mypage/receipt/{id}', [MyReceiptController::class, 'show'])->name('receipt.show');
+        // 購入履歴ページ
+        Route::get('receipt', [MyReceiptController::class, 'index'])->name('receipt.index');
+        Route::get('receipt/{id}', [MyReceiptController::class, 'show'])->name('receipt.show');
+    });
 
     // 商品一覧ページ
     Route::get('items', [ItemController::class, 'index'])->name('items.index');
@@ -76,7 +86,6 @@ Route::middleware([\App\Http\Middleware\CheckNormal::class])->group(function () 
     // 購入完了ページ
     Route::get('complete', [CompleteController::class, 'index'])->name('complete.index');
 });
-// });
 
 //認証ページ
 require __DIR__ . '/auth.php';

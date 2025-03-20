@@ -28,7 +28,14 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(url('', null, app()->isProduction()));
+        // API トークンを生成
+        $token = $request->user()->createToken('api-token')->plainTextToken;
+
+        return redirect()
+            ->intended(url('wait', null, app()->isProduction()))
+            ->with([
+                'apiAccessToken' => $token
+            ]);
     }
 
     /**
