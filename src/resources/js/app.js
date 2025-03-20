@@ -1,9 +1,7 @@
 // Import Common.js Common.css
 import * as common from "../js/common";
-import * as commonCss from "../css/common.css";
 
 window.common = common;
-window.commonCss = commonCss;
 
 // Import App.css
 import "../css/app.css";
