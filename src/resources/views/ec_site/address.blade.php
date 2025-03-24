@@ -247,11 +247,9 @@
             // フォームリセットボタン
             Array.prototype.forEach.call(document.forms, (form) => {
                 // フォームリセット時の処理
-                forms.forEach((form) => {
-                    form.addEventListener('reset', (event) => {
-                        // 都道府県リストボックス初期化
-                        common.initListBox(event);
-                    });
+                form.addEventListener('reset', (event) => {
+                    // 都道府県リストボックス初期化
+                    common.initListBox(event);
                 });
             });
         });
