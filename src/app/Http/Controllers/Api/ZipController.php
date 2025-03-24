@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\EcZip;
+use Illuminate\Support\Facades\Log;
 
 class ZipController extends Controller
 {
@@ -14,8 +16,15 @@ class ZipController extends Controller
             ->where('code', '=', $code)
             ->first();
 
-        // 認可処理
-        $this->authorize('view');
+        // データが見つからない場合
+        if (!$ecZip) {
+            return response()->json(
+                ['message' => 'Not Found'],
+                404,
+                [],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
 
         // 住所情報を返す
         return response()->json(

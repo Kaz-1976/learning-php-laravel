@@ -11,8 +11,6 @@ use App\Models\EcReceiptDetail;
 use App\Policies\ReceiptImagePolicy;
 use App\Models\EcAddress;
 use App\Policies\AddressInfoPolicy;
-use App\Models\EcZip;
-use App\Policies\ZipInfoPolicy;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,7 +32,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Policy
-        Gate::policy(EcZip::class, ZipInfoPolicy::class);
         Gate::policy(EcAddress::class, AddressInfoPolicy::class);
         Gate::policy(EcProduct::class, ProductImagePolicy::class);
         Gate::policy(EcReceiptDetail::class, ReceiptImagePolicy::class);
