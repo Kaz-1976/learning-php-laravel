@@ -59,6 +59,7 @@ Route::middleware([\App\Http\Middleware\CheckNormal::class])->group(function () 
         Route::post('address/search', [MyAddressController::class, 'search'])->name('address.search');
         Route::post('address/store', [MyAddressController::class, 'store'])->name('address.store');
         Route::post('address/update', [MyAddressController::class, 'update'])->name('address.update');
+        Route::post('address/destroy', [MyAddressController::class, 'destroy'])->name('address.delete');
 
         // 購入履歴ページ
         Route::get('receipt', [MyReceiptController::class, 'index'])->name('receipt.index');

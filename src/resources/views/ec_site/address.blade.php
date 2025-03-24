@@ -118,7 +118,7 @@
                     <form
                         class="flex flex-col md:flex-row basis-full gap-4 w-full p-4 {{ $loop->first ? 'border-t-2' : '' }} border-b-2 border-sky-50 {{ $ecAddress->enable_flg ? ($ecAddress->admin_flg ? 'bg-sky-300 dark:bg-sky-800' : 'bg-sky-400 dark:bg-sky-700') : 'bg-sky-200 dark:bg-sky-900' }}"
                         id="update-{{ $ecAddress->id }}"
-                        action="{{ url('/mypage/address/update', null, app()->isProduction()) }}" method="POST">
+                        action="{{ url('mypage/address/update', null, app()->isProduction()) }}" method="POST">
                         @csrf
                         {{-- 隠し項目 --}}
                         <input type="hidden" name="id" value="{{ $ecAddress->id }}" />
@@ -198,14 +198,23 @@
                         {{-- ボタン --}}
                         <div class="flex flex-col-reverse basis-1/5 gap-2">
                             <div class="flex flex-row-reverse md:flex-col-reverse gap-2 basis-full h-12 md:h-auto">
-                                <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
+                                <div class="flex basis-1/3 md:basis-full h-12 md:h-auto">
                                     <x-primary-button class="w-full" form="update-{{ $ecAddress->id }}" name="update"
                                         :value="$ecAddress->id">
                                         <span
                                             class="flex m-auto text-base md:text-xl text-center font-bold">{{ __('更新') }}</span>
                                     </x-primary-button>
                                 </div>
-                                <div class="flex basis-1/2 md:basis-full h-12 md:h-auto">
+                                <div class="flex basis-1/3 md:basis-full h-12 md:h-auto">
+                                    <x-secondary-button class="w-full" type="submit" name="delete"
+                                        value="{{ $ecAddress->id }}"
+                                        formaction="{{ url('mypage/address/destroy', null, app()->isProduction()) }}"
+                                        formmethod="POST">
+                                        <span
+                                            class="flex m-auto text-base md:text-xl text-center font-bold">{{ __('削除') }}</span>
+                                    </x-secondary-button>
+                                </div>
+                                <div class="flex basis-1/3 md:basis-full h-12 md:h-auto">
                                     <x-secondary-button class="w-full" type="reset" name="reset">
                                         <span
                                             class="flex m-auto text-base md:text-xl text-center font-bold">{{ __('リセット') }}</span>
