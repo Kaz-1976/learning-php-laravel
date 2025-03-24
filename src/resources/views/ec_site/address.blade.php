@@ -245,8 +245,7 @@
                 });
             });
             // フォームリセットボタン
-            const forms = document.forms;
-            if (forms.length > 0) {
+            Array.prototype.forEach.call(document.forms, (form) => {
                 // フォームリセット時の処理
                 forms.forEach((form) => {
                     form.addEventListener('reset', (event) => {
@@ -254,7 +253,7 @@
                         common.initListBox(event);
                     });
                 });
-            }
+            });
         });
     </script>
 @endsection
