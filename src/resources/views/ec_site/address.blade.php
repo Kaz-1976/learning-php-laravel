@@ -240,17 +240,21 @@
             // 住所検索ボタンクリック時の処理
             buttons.forEach((button) => {
                 button.addEventListener('click', (event) => {
+                    // 住所検索処理
                     common.getZipInfo(event);
                 });
             });
             // フォームリセットボタン
             const forms = document.forms;
-            // フォームリセット時の処理
-            forms.forEach((form) => {
-                form.addEventListener('reset', (event) => {
-                    common.initListBox(event);
+            if (forms.length > 0) {
+                // フォームリセット時の処理
+                forms.forEach((form) => {
+                    form.addEventListener('reset', (event) => {
+                        // 都道府県リストボックス初期化
+                        common.initListBox(event);
+                    });
                 });
-            });
+            }
         });
     </script>
 @endsection
