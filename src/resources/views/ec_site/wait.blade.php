@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('pagetitle', 'ログイン待機')
+@section('pagetitle', 'ログイン処理中')
 
 @section('content')
     <x-empty-string-box>

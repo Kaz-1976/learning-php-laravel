@@ -72,7 +72,7 @@ export const getZipInfo = (event) => {
 // ------------------------------------------------------------
 // 配送先情報検索処理
 // ------------------------------------------------------------
-export const getAddressInfo = (event) => {
+export const getAddressInfo = (event, user) => {
     // フォームの値を取得
     const form = event.target.closest("form");
     const id = form.querySelector('select[name="id"]').value;
@@ -82,7 +82,7 @@ export const getAddressInfo = (event) => {
     common.csrf();
     // 郵便番号から住所を取得
     axios
-        .get("/api/address/" + id, {
+        .get("/api/address/" + user + "/" + id, {
             headers: {
                 Authorization: "Bearer " + accessToken,
             },

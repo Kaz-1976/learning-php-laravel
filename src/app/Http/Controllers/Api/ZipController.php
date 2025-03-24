@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Models\EcZip;
 
 class ZipController extends Controller
 {
-    public function zip($code)
+    public function get($code)
     {
         // 郵便番号から住所を取得
         $ecZip = EcZip::query()
