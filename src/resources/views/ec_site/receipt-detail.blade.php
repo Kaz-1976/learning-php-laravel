@@ -16,7 +16,7 @@
         <x-empty-string-box>購入履歴詳細がありません。</x-empty-string-box>
     @else
         {{-- レシート情報 --}}
-        <div class="flex flex-col gap-2 my-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50">
+        <div class="flex flex-col gap-2 mt-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50">
             <div class="flex w-full py-4">
                 <h3 class="flex mx-auto text-2xl text-center font-bold text-sky-950 dark:text-sky-50">注文情報</h3>
             </div>
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex flex-col gap-2 my-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50">
+        <div class="flex flex-col gap-2 mt-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50">
             <div class="flex w-full py-4">
                 <h3 class="flex mx-auto text-2xl text-center font-bold text-sky-950 dark:text-sky-50">配送先情報</h3>
             </div>

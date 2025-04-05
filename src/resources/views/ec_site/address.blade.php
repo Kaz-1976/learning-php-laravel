@@ -28,8 +28,15 @@
             return $data[$key] == $value ? 'selected' : '';
         }
     @endphp
+    {{-- ヘッダー --}}
+    <x-link-button-box>
+        <x-link-button class="basis-full" link-type="link" link-to="{{ url('mypage', null, app()->isProduction()) }}">
+            マイページ
+        </x-link-button>
+    </x-link-button-box>
+    {{-- 本体 --}}
     <div class="flex flex-col gap-4">
-        <form class="flex flex-col gap-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
+        <form class="flex flex-col gap-4 mt-4 p-4 border-solid border-2 rounded-lg border-sky-950 dark:border-sky-50"
             id="register" action="{{ url('/mypage/address/store', null, app()->isProduction()) }}" method="POST">
             @csrf
             {{-- 隠し項目 --}}
@@ -230,6 +237,12 @@
             {{ $ecAddresses->render() }}
         </div>
     </div>
+    {{-- フッター --}}
+    <x-link-button-box>
+        <x-link-button class="basis-full" link-type="link" link-to="{{ url('mypage', null, app()->isProduction()) }}">
+            マイページ
+        </x-link-button>
+    </x-link-button-box>
 @endsection
 
 @section('script')
