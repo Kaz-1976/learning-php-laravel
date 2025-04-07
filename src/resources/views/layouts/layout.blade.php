@@ -29,7 +29,7 @@
             @endphp
             {{-- CSS --}}
             @foreach ($cssFiles as $cssFile)
-                <link rel="stylesheet" href="{{ secure_asset('build/' . $cssFile) }}">
+                <link href="{{ secure_asset('build/' . $cssFile) }}" rel="stylesheet">
             @endforeach
             {{-- JavaScript --}}
             @if ($jsFile)
@@ -40,15 +40,15 @@
         <script src="https://kit.fontawesome.com/be9c19f3fa.js" crossorigin="anonymous"></script>
     </head>
 
-    <body class="block w-full m-0 p-0 bg-sky-50 dark:bg-sky-950">
+    <body class="m-0 block w-full bg-sky-50 p-0 dark:bg-sky-950">
         <header
-            class="fixed top-0 z-50 flex flex-row justify-between items-stretch t-0 w-full h-20 px-5 bg-sky-700/75 dark:bg-sky-300/75">
-            <div class="flex my-auto">
-                <h1 class="flex text-3xl text-sky-50 dark:text-sky-950 font-bold align-middle">
+            class="t-0 fixed top-0 z-50 flex h-20 w-full flex-row items-stretch justify-between bg-sky-700/75 px-5 dark:bg-sky-300/75">
+            <div class="my-auto flex">
+                <h1 class="flex align-middle text-3xl font-bold text-sky-50 dark:text-sky-950">
                     <a href="{{ url('', null, app()->isProduction()) }}">{{ config('app.name', 'Laravel') }}</a>
                 </h1>
             </div>
-            <div class="flex flex-row gap-2 my-auto">
+            <div class="my-auto flex flex-row gap-2">
                 @auth
                     @if (Auth::user()->admin_flg)
                         {{-- ユーザー管理 --}}
@@ -86,27 +86,33 @@
                 @endauth
             </div>
         </header>
-        <main class="block w-full md:w-[95%] mx-auto py-24">
+        <main class="mx-auto block w-full py-24 md:w-[95%]">
+            {{-- ページタイトル --}}
             <div class="flex w-full py-12">
-                <h2 class="flex mx-auto text-3xl text-center font-bold text-sky-950 dark:text-sky-50">
+                <h2 class="mx-auto flex text-center text-3xl font-bold text-sky-950 dark:text-sky-50">
                     @yield('pagetitle')
                 </h2>
             </div>
             @if (session('message'))
-                <div class="flex flex-col w-full p-4">
-                    <p class="text-xl text-center font-bold text-sky-950 dark:text-sky-50">{{ session('message') }}
+                <div class="flex w-full flex-col p-4">
+                    <p class="text-center text-xl font-bold text-sky-950 dark:text-sky-50">{{ session('message') }}
                     </p>
                 </div>
             @endif
-            <div class="flex flex-col w-full">
+            {{-- ページ内ヘッダーメニュー --}}
+            @yield('menu')
+            <div class="flex w-full flex-col">
+                {{-- コンテンツ --}}
                 @yield('content')
             </div>
+            {{-- ページ内フッターメニュー --}}
+            @yield('menu')
         </main>
-        <footer class="fixed z-50 flex bottom-0 w-full h-20 bg-sky-700/75 dark:bg-sky-300/75">
+        <footer class="fixed bottom-0 z-50 flex h-20 w-full bg-sky-700/75 dark:bg-sky-300/75">
             @auth
                 {{-- ログインユーザー --}}
-                <div class="flex m-auto leading-8">
-                    <p class="text-lg md:text-xl text-center font-bold text-sky-50 dark:text-sky-950">
+                <div class="m-auto flex leading-8">
+                    <p class="text-center text-lg font-bold text-sky-50 md:text-xl dark:text-sky-950">
                         {{ Auth::user()->user_name }}さんがログイン中
                     </p>
                 </div>
