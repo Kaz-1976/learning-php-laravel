@@ -14,17 +14,17 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ url('ec_site/forgot-password', null, app()->isProduction()) }}">
+                        <form method="POST" action="{{ url('forgot-password', null, app()->isProduction()) }}">
                             @csrf
 
                             <div class="row mb-3">
-                                <label for="email"
-                                    class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                <label class="col-md-4 col-form-label text-md-end"
+                                    for="email">{{ __('Email Address') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email"
-                                        value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    <input class="form-control @error('email') is-invalid @enderror" id="email"
+                                        name="email" type="email" value="{{ old('email') }}" required
+                                        autocomplete="email" autofocus>
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button class="btn btn-primary" type="submit">
                                         {{ __('Send Password Reset Link') }}
                                     </button>
                                 </div>
