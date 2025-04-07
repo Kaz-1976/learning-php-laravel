@@ -101,7 +101,7 @@
             @endif
             {{-- ページ内ヘッダーメニュー --}}
             @yield('menu')
-            <div class="flex w-full flex-col">
+            <div class="my-2 flex w-full flex-col">
                 {{-- コンテンツ --}}
                 @yield('content')
             </div>
