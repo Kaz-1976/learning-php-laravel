@@ -6,7 +6,7 @@
 {{-- ページメニュー --}}
 @section('menu')
     <x-link-button-box>
-        @if ($ecCartDetails->isEmpty())
+        @if (isEmpty($ecCartDetails))
             <x-link-button class="basis-full" link-type="link" link-to="{{ url('items', null, app()->isProduction()) }}">
                 商品一覧
             </x-link-button>
@@ -26,7 +26,7 @@
 
 {{-- ページコンテンツ --}}
 @section('content')
-    @if ($ecCartDetails->isEmpty())
+    @if (isEmpty($ecCartDetails))
         {{-- 本体 --}}
         <x-empty-string-box>ショッピングカートは空です。</x-empty-string-box>
     @else
