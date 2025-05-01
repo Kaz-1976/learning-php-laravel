@@ -76,7 +76,7 @@
                         {{-- 操作ボックス --}}
                         <x-card-box :direction="'row'">
                             {{-- チェック --}}
-                            <x-card-item class="md:1/5 my-auto flex basis-1/3" :direction="'row'">
+                            <x-card-item class="my-auto flex basis-1/3 md:basis-1/5" :direction="'row'">
                                 <x-text-input class="h-8 w-8" id="register-public" name="public_flg" type="checkbox"
                                     :value="old('public_flg')" autofocus />
                                 <x-input-label class="text-md my-auto flex pl-2" for="register-public" :value="__('公開')" />
