@@ -44,7 +44,7 @@
         <header
             class="t-0 fixed top-0 z-50 flex h-20 w-full flex-row items-stretch justify-between bg-sky-700/75 px-5 dark:bg-sky-300/75">
             <div class="my-auto flex">
-                <h1 class="flex align-middle text-3xl font-bold text-sky-50 dark:text-sky-950">
+                <h1 class="flex align-middle text-xl font-bold text-sky-50 sm:text-3xl dark:text-sky-950">
                     <a href="{{ url('', null, app()->isProduction()) }}">{{ config('app.name', 'Laravel') }}</a>
                 </h1>
             </div>
@@ -52,35 +52,61 @@
                 @auth
                     @if (Auth::user()->admin_flg)
                         {{-- ユーザー管理 --}}
-                        <a class="block text-3xl text-sky-50 dark:text-sky-950"
+                        <a class="flex w-12 flex-col text-sky-50 dark:text-sky-950"
                             href="{{ url('admin/users', null, app()->isProduction()) }}" title="ユーザー管理">
-                            <i class="fa-solid fa-users fa-fw m-auto object-cover"></i>
+                            <div class="flex basis-full">
+                                <i class="fa-solid fa-users fa-fw m-auto object-cover text-3xl"></i>
+                            </div>
+                            <div class="flex basis-full">
+                                <span class="block w-full text-center text-xs">Users</span>
+                            </div>
                         </a>
                         {{-- 商品管理 --}}
                         @if (Auth::user()->user_id != env('DEFAULT_ADMIN_ID', 'ec_admin'))
-                            <a class="block text-3xl text-sky-50 dark:text-sky-950"
+                            <a class="flex w-12 flex-col text-sky-50 dark:text-sky-950"
                                 href="{{ url('admin/products', null, app()->isProduction()) }}" title="商品管理">
-                                <i class="fa-solid fa-boxes-stacked fa-fw m-auto object-cover"></i>
+                                <div class="flex basis-full">
+                                    <i class="fa-solid fa-boxes-stacked fa-fw m-auto object-cover text-3xl"></i>
+                                </div>
+                                <div class="flex basis-full">
+                                    <span class="block w-full text-center text-xs">Products</span>
+                                </div>
                             </a>
                         @endif
                     @else
                         {{-- マイページ --}}
-                        <a class="block text-3xl text-sky-50 dark:text-sky-950"
+                        <a class="flex w-12 flex-col text-sky-50 dark:text-sky-950"
                             href="{{ url('mypage', null, app()->isProduction()) }}" title="マイページ">
-                            <i class="fa-solid fa-user fa-fw m-auto object-cover"></i>
+                            <div class="flex basis-full">
+                                <i class="fa-solid fa-user fa-fw m-auto object-cover text-3xl"></i>
+                            </div>
+                            <div class="flex basis-full">
+                                <span class="block w-full text-center text-xs">My Page</span>
+                            </div>
                         </a>
                         {{-- ショッピングカート --}}
-                        <a class="block text-3xl text-sky-50 dark:text-sky-950"
+                        <a class="flex w-12 flex-col text-sky-50 dark:text-sky-950"
                             href="{{ url('cart', null, app()->isProduction()) }}" title="ショッピングカート">
-                            <i class="fa-solid fa-cart-shopping fa-fw m-auto object-cover"></i>
+                            <div class="flex basis-full">
+                                <i class="fa-solid fa-cart-shopping fa-fw m-auto object-cover text-3xl"></i>
+                            </div>
+                            <div class="flex basis-full">
+                                <span class="block w-full text-center text-xs">Cart</span>
+                            </div>
                         </a>
                     @endif
                     {{-- ログアウト --}}
                     <form class="block" method="POST" action="{{ url('logout', null, app()->isProduction()) }}"
                         onsubmit="return common.logout();">
                         @csrf
-                        <button class="block text-3xl text-sky-50 dark:text-sky-950" type="submit" title="ログアウト">
-                            <i class="fa-solid fa-right-from-bracket fa-fw m-auto object-cover"></i>
+                        <button class="flex w-12 flex-col justify-center text-sky-50 dark:text-sky-950" type="submit"
+                            title="ログアウト">
+                            <div class="flex text-4xl">
+                                <i class="fa-solid fa-right-from-bracket fa-fw m-auto object-cover text-3xl"></i>
+                            </div>
+                            <div class="flex basis-full">
+                                <span class="block w-full text-center text-xs">Logout</span>
+                            </div>
                         </button>
                     </form>
                 @endauth
