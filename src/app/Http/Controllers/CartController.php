@@ -78,17 +78,19 @@ class CartController extends Controller
                     // カートID
                     $ecCartId = Auth::user()->cart_id;
                 }
-                // カート明細
-                $ecCartDetail = EcCartDetail::createOrFirst(
-                    [
-                        'price' => $request->order_price,
-                        'qty' => $order->order_qty
-                    ],
-                    [
-                        'cart_id' => $ecCartId,
-                        'product_id' => $request->id,
-                    ]
-                );
+                // カート明細取得・生成
+                $ecCartDetail = EcCartDetail::query()
+                    ->where('cart_id', '=', $ecCartId)
+                    ->where('product_id', '=', $request->id)
+                    ->first();
+                if (empty($ecCartDetail)) {
+                    $ecCartDetail = new EcCartDetail();
+                }
+                // カート明細更新
+                $ecCartDetail->price = $request->order_price;
+                $ecCartDetail->qty += $order->order_qty;
+                $ecCartDetail->cart_id = $ecCartId;
+                $ecCartDetail->product_id = $request->id;
                 $ecCartDetail->save();
             });
         } catch (\Exception $e) {

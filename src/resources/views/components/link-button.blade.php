@@ -5,7 +5,7 @@
                 'class' => 'flex p-2 rounded bg-sky-900 dark:bg-sky-100',
                 'href' => url($linkTo, null, app()->isProduction()),
             ]) }}>
-            <span class="m-auto text-xl font-bold text-sky-50 dark:text-sky-950">{{ $slot }}</span>
+            <span class="text-md m-auto font-bold text-sky-50 md:text-xl dark:text-sky-950">{{ $slot }}</span>
         </a>
     @break
 
@@ -17,9 +17,9 @@
                 'action' => url($linkTo, null, app()->isProduction()),
             ]) }}>
             @csrf
-            <input type="hidden" name="{{ $linkInputName }}" value="{{ $linkInputValue }}">
-            <button class="w-full h-full p-2" type="submit" name="{{ $linkButtonName }}">
-                <span class="text-center text-xl font-bold text-sky-50 dark:text-sky-950">{{ $slot }}</span>
+            <input name="{{ $linkInputName }}" type="hidden" value="{{ $linkInputValue }}">
+            <button class="h-full w-full p-2" name="{{ $linkButtonName }}" type="submit">
+                <span class="text-md text-center font-bold text-sky-50 md:text-xl dark:text-sky-950">{{ $slot }}</span>
             </button>
         </form>
     @break

@@ -1,3 +1,19 @@
+@php
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\DB;
+
+    if (Auth::check()) {
+        // 現在のユーサーのカート内の商品点数を取得
+        $ecCart = DB::table('ec_cart_details')
+            ->selectRaw('SUM(qty) as qty')
+            ->where('cart_id', '=', Auth::user()->cart_id)
+            ->first();
+        $qty = $ecCart->qty;
+    } else {
+        $qty = null;
+    }
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -42,57 +58,47 @@
 
     <body class="m-0 block w-full bg-sky-50 p-0 dark:bg-sky-950">
         <header
-            class="t-0 fixed top-0 z-50 flex h-20 w-full flex-row items-stretch justify-between bg-sky-700/75 px-5 dark:bg-sky-300/75">
+            class="t-0 fixed top-0 z-50 flex h-20 w-full flex-row items-stretch justify-between bg-sky-700/75 px-2 md:px-5 dark:bg-sky-300/75">
             <div class="my-auto flex">
                 <h1 class="flex align-middle text-xl font-bold text-sky-50 sm:text-3xl dark:text-sky-950">
                     <a href="{{ url('', null, app()->isProduction()) }}">{{ config('app.name', 'Laravel') }}</a>
                 </h1>
             </div>
-            <div class="my-auto flex flex-row gap-2">
+            <div class="my-auto flex flex-row gap-1">
                 @auth
                     @if (Auth::user()->admin_flg)
                         {{-- ユーザー管理 --}}
-                        <a class="flex w-12 flex-col text-sky-50 dark:text-sky-950"
+                        <a class="relative flex w-12 basis-full flex-col items-center text-center text-sky-50 dark:text-sky-950"
                             href="{{ url('admin/users', null, app()->isProduction()) }}" title="ユーザー管理">
-                            <div class="flex basis-full">
-                                <i class="fa-solid fa-users fa-fw m-auto object-cover text-3xl"></i>
-                            </div>
-                            <div class="flex basis-full">
-                                <span class="block w-full text-center text-xs">Users</span>
-                            </div>
+                            <i class="fa-solid fa-users fa-fw m-auto object-cover text-xl md:text-3xl"></i>
+                            <span class="w-full text-center text-xs">Users</span>
                         </a>
                         {{-- 商品管理 --}}
                         @if (Auth::user()->user_id != env('DEFAULT_ADMIN_ID', 'ec_admin'))
-                            <a class="flex w-12 flex-col text-sky-50 dark:text-sky-950"
+                            <a class="relative flex w-12 basis-full flex-col items-center text-center text-sky-50 dark:text-sky-950"
                                 href="{{ url('admin/products', null, app()->isProduction()) }}" title="商品管理">
-                                <div class="flex basis-full">
-                                    <i class="fa-solid fa-boxes-stacked fa-fw m-auto object-cover text-3xl"></i>
-                                </div>
-                                <div class="flex basis-full">
-                                    <span class="block w-full text-center text-xs">Products</span>
-                                </div>
+                                <i class="fa-solid fa-boxes-stacked fa-fw m-auto object-cover text-xl md:text-3xl"></i>
+                                <span class="w-full text-center text-xs">Products</span>
                             </a>
                         @endif
                     @else
                         {{-- マイページ --}}
-                        <a class="flex w-12 flex-col text-sky-50 dark:text-sky-950"
+                        <a class="relative flex w-12 basis-full flex-col items-center text-center text-sky-50 dark:text-sky-950"
                             href="{{ url('mypage', null, app()->isProduction()) }}" title="マイページ">
-                            <div class="flex basis-full">
-                                <i class="fa-solid fa-user fa-fw m-auto object-cover text-3xl"></i>
-                            </div>
-                            <div class="flex basis-full">
-                                <span class="block w-full text-center text-xs">My Page</span>
-                            </div>
+                            <i class="fa-solid fa-user fa-fw m-auto object-cover text-xl md:text-3xl"></i>
+                            <span class="w-full text-center text-xs">My Page</span>
                         </a>
                         {{-- ショッピングカート --}}
-                        <a class="flex w-12 flex-col text-sky-50 dark:text-sky-950"
+                        <a class="relative flex w-12 basis-full flex-col items-center text-center text-sky-50 dark:text-sky-950"
                             href="{{ url('cart', null, app()->isProduction()) }}" title="ショッピングカート">
-                            <div class="flex basis-full">
-                                <i class="fa-solid fa-cart-shopping fa-fw m-auto object-cover text-3xl"></i>
-                            </div>
-                            <div class="flex basis-full">
-                                <span class="block w-full text-center text-xs">Cart</span>
-                            </div>
+                            <i class="fa-solid fa-cart-shopping fa-fw relative m-auto object-cover text-xl md:text-3xl"></i>
+                            <span class="w-full text-center text-xs">Cart</span>
+                            @if ($qty)
+                                <span
+                                    class="absolute right-0 top-0 inline-flex -translate-y-1/3 translate-x-1/3 transform items-center justify-center rounded-full bg-sky-900 px-2 py-1 text-xs font-bold leading-none text-sky-100 dark:bg-sky-100 dark:text-sky-900">
+                                    {{ $qty }}
+                                </span>
+                            @endif
                         </a>
                     @endif
                     {{-- ログアウト --}}
@@ -101,12 +107,8 @@
                         @csrf
                         <button class="flex w-12 flex-col justify-center text-sky-50 dark:text-sky-950" type="submit"
                             title="ログアウト">
-                            <div class="flex text-4xl">
-                                <i class="fa-solid fa-right-from-bracket fa-fw m-auto object-cover text-3xl"></i>
-                            </div>
-                            <div class="flex basis-full">
-                                <span class="block w-full text-center text-xs">Logout</span>
-                            </div>
+                            <i class="fa-solid fa-right-from-bracket fa-fw m-auto object-cover text-xl md:text-3xl"></i>
+                            <span class="block w-full text-center text-xs">Logout</span>
                         </button>
                     </form>
                 @endauth
@@ -115,13 +117,14 @@
         <main class="mx-auto block w-full py-24 md:w-[95%]">
             {{-- ページタイトル --}}
             <div class="flex w-full py-12">
-                <h2 class="mx-auto flex text-center text-3xl font-bold text-sky-950 dark:text-sky-50">
+                <h2 class="mx-auto flex text-center text-2xl font-bold text-sky-950 md:text-3xl dark:text-sky-50">
                     @yield('pagetitle')
                 </h2>
             </div>
             @if (session('message'))
                 <div class="flex w-full flex-col p-4">
-                    <p class="text-center text-xl font-bold text-sky-950 dark:text-sky-50">{{ session('message') }}
+                    <p class="text-md text-center font-bold text-sky-950 md:text-xl dark:text-sky-50">
+                        {{ session('message') }}
                     </p>
                 </div>
             @endif
