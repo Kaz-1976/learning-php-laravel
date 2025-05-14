@@ -14,7 +14,7 @@ class MyReceiptController extends Controller
         // レシート情報
         $ecReceipts = EcReceipt::query()
             ->where('user_id', '=', Auth::id())
-            ->orderBy('id', 'asc')
+            ->orderBy('id', 'desc')
             ->paginate(6);
 
         //
