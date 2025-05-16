@@ -38,7 +38,7 @@
             </div>
             <div class="flex flex-col gap-2 sm:flex-row">
                 <div class="flex basis-1/6 flex-col gap-1">
-                    <x-input-label for="cart-no" :value="__('郵便番号')" />
+                    <x-input-label for="cart-zip" :value="__('郵便番号')" />
                     <x-text-input class="mt-1 block w-full" id="cart-zip" type="text" :disabled="true"
                         :value="$ecCart->ec_addresses->zip" />
                 </div>
@@ -50,8 +50,8 @@
             </div>
             <div class="flex flex-col gap-2 sm:flex-row">
                 <div class="flex basis-full flex-col gap-1">
-                    <x-input-label for="cart-date" :value="__('住所２')" />
-                    <x-text-input class="mt-1 block w-full" id="cart-address1" type="text" :disabled="true"
+                    <x-input-label for="cart-address2" :value="__('住所２')" />
+                    <x-text-input class="mt-1 block w-full" id="cart-address2" type="text" :disabled="true"
                         :value="$ecCart->ec_addresses->address2" />
                 </div>
             </div>

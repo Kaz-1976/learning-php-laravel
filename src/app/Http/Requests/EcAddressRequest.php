@@ -22,7 +22,7 @@ class EcAddressRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => '宛先名',
+            'name' => '配送先名',
             'zip' => '郵便番号',
             'pref' => '都道府県',
             'address1' => '住所１',

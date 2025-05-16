@@ -33,33 +33,6 @@ class MyAddressController extends Controller
         );
     }
 
-    public function search(Request $request)
-    {
-        // リクエストデータ取得
-        $id = $request->has('id') ? $request->id : 0;
-        // 検証済みデータ
-        $valid_data = $request->validate([
-            'zip' => 'required|digits:7|exists:ec_zips,code',
-        ]);
-        // 郵便番号マスターデータ取得
-        $ecZip = EcZip::query()
-            ->where('code', '=', $valid_data['zip'])
-            ->first();
-        // フォームデータ
-        $form = [
-            'id' => $id,
-            'name' => $request->name,
-            'zip' => $ecZip->code,
-            'pref' => $ecZip->pref_code,
-            'address1' => $ecZip->area_name,
-            'address2' => $request->address2,
-        ];
-        // レスポンス
-        return redirect(url('mypage/address', null, app()->isProduction()))
-            ->with('form', $form)
-            ->with('search', $id);
-    }
-
     public function store(EcAddressRequest $request)
     {
         // 検証済みデータ

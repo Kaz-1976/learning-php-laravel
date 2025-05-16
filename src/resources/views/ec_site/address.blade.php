@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 {{-- ページタイトル --}}
-@section('pagetitle', '宛先管理')
+@section('pagetitle', '配送先管理')
 
 {{-- ページメニュー --}}
 @section('menu')
@@ -25,7 +25,7 @@
                 {{-- 宛先名 --}}
                 <div class="flex basis-full flex-row gap-2">
                     <div class="flex basis-full flex-col justify-stretch">
-                        <x-input-label for="register-address2" :value="__('宛先名')" />
+                        <x-input-label for="register-name" :value="__('宛先名')" />
                         <x-text-input class="mt-1 flex w-full" id="register-name" name="name" type="text"
                             :value="old('name')" autofocus autocomplete="name" placeholder="" />
                         @if (old('register') == 0)
@@ -116,7 +116,7 @@
                                 {{-- 宛先名 --}}
                                 <div class="flex basis-full flex-row gap-2">
                                     <div class="flex basis-full flex-col justify-stretch">
-                                        <x-input-label for="update-{{ $ecAddress->id }}-address2" :value="__('宛先名')" />
+                                        <x-input-label for="update-{{ $ecAddress->id }}-address2" :value="__('配送先名')" />
                                         <x-text-input class="mt-1 flex w-full" id="update-{{ $ecAddress->id }}-name"
                                             name="name" type="text" :value="$ecAddress->name" required autofocus
                                             autocomplete="name" placeholder="" />
