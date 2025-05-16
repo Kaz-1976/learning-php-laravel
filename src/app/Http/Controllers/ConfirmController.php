@@ -45,10 +45,10 @@ class ConfirmController extends Controller
     public function store(Request $request)
     {
         try {
-            // カートID取得
-            $cart_id = Auth::user()->cart_id;
             // トランザクション開始
-            DB::transaction(function () use ($cart_id,  $request) {
+            DB::transaction(function () use ($request) {
+                // カートID取得
+                $cart_id = Auth::user()->cart_id;
                 // カート情報取得
                 $ecCart = EcCart::query()
                     ->with('ec_addresses.ec_prefs')

@@ -92,6 +92,8 @@ class CartController extends Controller
                 $ecCartDetail->cart_id = $ecCartId;
                 $ecCartDetail->product_id = $request->id;
                 $ecCartDetail->save();
+                // コミット
+                DB::commit();
             });
         } catch (\Exception $e) {
             // ロールバック
