@@ -59,6 +59,7 @@
                         <x-input-label for="zip" :value="__('郵便番号')" />
                         <x-text-input class="mt-1 block" id="zip" name="zip" type="text" :value="''"
                             :disabled="true" />
+                        <x-input-error class="mt-2" :messages="$errors->get('zip')" />
                     </div>
                     <div class="hidden basis-1/2 flex-col justify-stretch">
                         <x-secondary-button class="h-full w-full basis-full" name="search">
@@ -77,6 +78,7 @@
                             <option value="{{ $pref['code'] }}">{{ $pref['name'] }}</option>
                         @endforeach
                     </select>
+                    <x-input-error class="mt-2" :messages="$errors->get('pref')" />
                 </div>
             </div>
             {{-- 住所１ --}}
@@ -85,6 +87,7 @@
                     <x-input-label for="address1" :value="__('住所１')" />
                     <x-text-input class="mt-1 flex w-full" id="address1" name="address1" type="text" :value="''"
                         :disabled="true" />
+                    <x-input-error class="mt-2" :messages="$errors->get('address1')" />
                 </div>
             </div>
             {{-- 住所２ --}}
@@ -93,6 +96,7 @@
                     <x-input-label for="address2" :value="__('住所２')" />
                     <x-text-input class="mt-1 flex w-full" id="address2" name="address2" type="text" :value="''"
                         :disabled="true" />
+                    <x-input-error class="mt-2" :messages="$errors->get('address2')" />
                 </div>
             </div>
         </form>

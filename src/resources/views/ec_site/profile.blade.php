@@ -57,7 +57,7 @@
             {{-- パスワード --}}
             <div>
                 <x-input-label for="register-password" :value="__('Password')" />
-                <x-text-input class="mt-1 block w-full" id="register-password" name="password" type="password" required
+                <x-text-input class="mt-1 block w-full" id="register-password" name="password" type="password"
                     autocomplete="new-password" placeholder="ABCabc0123!@#$%^&*_" />
                 @if (old('register') == '1')
                     <x-input-error class="mt-2" :messages="$errors->get('password')" />
@@ -67,7 +67,7 @@
             <div>
                 <x-input-label for="register-password-confirm" :value="__('Confirm Password')" />
                 <x-text-input class="mt-1 block w-full" id="register-password-confirm" name="password_confirmation"
-                    type="password" required autocomplete="new-password" placeholder="ABCabc0123!@#$%^&*_" />
+                    type="password" autocomplete="new-password" placeholder="ABCabc0123!@#$%^&*_" />
                 @if (old('register') == '1')
                     <x-input-error class="mt-2" :messages="$errors->get('password_confirmation')" />
                 @endif
@@ -81,7 +81,7 @@
                     </div>
                     <div class="my-auto flex basis-1/2 flex-row">
                         <x-primary-button class="flex basis-full" name="register" form="register" :value="1">
-                            <span class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('Register') }}</span>
+                            <span class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('更新') }}</span>
                         </x-primary-button>
                     </div>
                 </div>

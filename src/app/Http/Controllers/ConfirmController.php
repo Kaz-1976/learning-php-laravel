@@ -10,7 +10,6 @@ use App\Models\EcProduct;
 use App\Models\EcCart;
 use App\Models\EcCartDetail;
 use App\Models\EcReceipt;
-use App\Models\EcReceiptDetail;
 
 class ConfirmController extends Controller
 {
@@ -44,11 +43,11 @@ class ConfirmController extends Controller
     }
     public function store(Request $request)
     {
+        // カートID取得
+        $cart_id = Auth::user()->cart_id;
+        // トランザクション開始
         try {
-            // トランザクション開始
-            DB::transaction(function () use ($request) {
-                // カートID取得
-                $cart_id = Auth::user()->cart_id;
+            $result = DB::transaction(function () use ($request, $cart_id) {
                 // カート情報取得
                 $ecCart = EcCart::query()
                     ->with('ec_addresses.ec_prefs')
@@ -67,17 +66,23 @@ class ConfirmController extends Controller
                     if (empty($ecCartDetail->ec_products) || $ecCartDetail->ec_products->public_flg == 0) {
                         // ロールバック
                         DB::rollBack();
-                        //
-                        return redirect(url('confirm', null, app()->isProduction()))
-                            ->with('message', '商品が存在しません。 商品名： ' . (empty($ecCartDetail->ec_products) ? 'NULL' : $ecCartDetail->ec_products->name));
+                        // メッセージ設定
+                        $result['message'] = '商品が存在しません。 商品名： ' . (empty($ecCartDetail->ec_products) ? 'NULL' : $ecCartDetail->ec_products->name);
+                        // ステータス設定
+                        $result['status'] = false;
+                        // リターン
+                        return $result;
                     }
                     // 商品在庫チェック
                     if ($ecCartDetail->ec_products->qty < $ecCartDetail->qty) {
                         // ロールバック
                         DB::rollBack();
-                        //
-                        return redirect(url('confirm', null, app()->isProduction()))
-                            ->with('message', '注文数量に対して在庫が不足しています。 商品名： ' . $ecCartDetail->ec_products->name . ' 在庫数： ' . $ecCartDetail->ec_products->qty);
+                        // メッセージ設定
+                        $result['message'] =  '注文数量に対して在庫が不足しています。 商品名： ' . $ecCartDetail->ec_products->name . ' 在庫数： ' . $ecCartDetail->ec_products->qty;
+                        // ステータス設定
+                        $result['status'] = false;
+                        // リターン
+                        return $result;
                     }
                     // 商品レコード取得
                     $ec_product = EcProduct::find($ecCartDetail->product_id);
@@ -111,15 +116,37 @@ class ConfirmController extends Controller
                 $ecReceipt->address2 = $ecCart->ec_addresses->address2;
                 $ecReceipt->save();
                 // レシート明細情報登録
+                $batchSize = 100;
+                $batchData = [];
                 foreach ($ecCartDetails as $ecCartDetail) {
-                    $ecReceiptDetail = new EcReceiptDetail();
-                    $ecReceiptDetail->receipt_id = $ecReceipt->id;
-                    $ecReceiptDetail->name = $ecCartDetail->ec_products->name;
-                    $ecReceiptDetail->image_type = $ecCartDetail->ec_products->image_type;
-                    $ecReceiptDetail->image_data = $ecCartDetail->ec_products->image_data;
-                    $ecReceiptDetail->price = $ecCartDetail->ec_products->price;
-                    $ecReceiptDetail->qty = $ecCartDetail->qty;
-                    $ecReceiptDetail->save();
+                    // バッチデータ登録
+                    $batchData[] = [
+                        'receipt_id' => $ecReceipt->id,
+                        'name' => $ecCartDetail->ec_products->name,
+                        'image_type' => $ecCartDetail->ec_products->image_type,
+                        'image_data' => $ecCartDetail->ec_products->image_data,
+                        'price' => $ecCartDetail->ec_products->price,
+                        'qty' => $ecCartDetail->qty,
+                        'created_by' => Auth::id(),
+                        'created_at' => now(),
+                        'updated_by' => Auth::id(),
+                        'updated_at' => now()
+                    ];
+                    // バッチサイズに達したら登録
+                    if (count($batchData) >= $batchSize) {
+                        DB::transaction(function () use (&$batchData) {
+                            // バッチインサート
+                            DB::table('ec_receipt_details')->insert($batchData);
+                            // バッチデータリセット
+                            $batchData = [];
+                        });
+                    }
+                }
+                // 残りのデータを登録
+                if (!empty($batchData)) {
+                    DB::transaction(function () use (&$batchData) {
+                        DB::table('ec_receipt_details')->insert($batchData);
+                    });
                 }
                 // カート明細情報削除
                 EcCartDetail::query()
@@ -133,20 +160,30 @@ class ConfirmController extends Controller
                 DB::commit();
                 // レシートIDをセッションに保存
                 session()->put('receipt_id', $ecReceipt->id);
+                // メッセージ設定
+                $result['message'] = 'ご利用ありがとうございました。';
+                // ステータス設定
+                $result['status'] = true;
+                // リターン
+                return $result;
             });
         } catch (\Exception $e) {
-            // ロールバック
-            DB::rollBack();
+            // メッセージ設定
+            $result['message'] = '購入処理でエラーが発生しました。';
+            // ステータス設定
+            $result['status'] = false;
             // ログ出力
-            Log::error('購入処理に失敗しました。');
+            Log::error($result['message']);
             Log::error('カートID： ' . $cart_id);
             Log::error($e);
-            // リダイレクト
-            return redirect(url('confirm', null, app()->isProduction()))
-                ->with('message', '購入処理でエラーが発生しました。');
         }
         // リダイレクト
-        return redirect(url('complete', null, app()->isProduction()))
-            ->with('message', 'ご利用ありがとうございました。');
+        if ($result['status']) {
+            return redirect(url('complete', null, app()->isProduction()))
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url('confirm', null, app()->isProduction()))
+                ->with('message', $result['message']);
+        }
     }
 }

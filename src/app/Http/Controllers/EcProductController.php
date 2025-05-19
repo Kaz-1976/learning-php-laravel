@@ -49,17 +49,27 @@ class EcProductController extends Controller
             // 登録
             $ecProduct->save();
             // メッセージ設定
-            $message = '商品情報を登録しました。';
+            $result['message'] = '商品情報を登録しました。';
+            // ステータス設定
+            $result['status'] = true;
         } catch (\Exception $e) {
-            // ログ出力
-            Log::error('商品情報の登録に失敗しました。');
-            Log::error($e);
             // メッセージ設定
-            $message = '商品情報の登録に失敗しました。';
+            $result['message'] = '商品情報の登録に失敗しました。';
+            // ステータス設定
+            $result['status'] = false;
+            // ログ出力
+            Log::error(($result['message']));
+            Log::error($e);
         }
-        // リターン
-        return redirect(url(null, null, app()->isProduction())->previous())
-            ->with('message', $message);
+        // リダイレクト
+        if ($result['status']) {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->withInput($request->except('password'))
+                ->with('message', $result['message']);
+        }
     }
 
     // 商品更新
@@ -67,40 +77,54 @@ class EcProductController extends Controller
     {
         // 検証済みデータ
         $valid_data = $request->safe();
-
+        // 商品レコード取得
+        $ecProduct = EcProduct::find($request->id);
+        // DB処理
         switch (true) {
             case $request->has('public'):
                 // 商品公開フラグ更新
-                $message = DB::transaction(function () use ($request, $valid_data) {
+                if ($ecProduct) {
                     try {
-                        // 商品レコード取得
-                        $ecProduct = EcProduct::find($request->id);
                         // 公開フラグ更新
                         $ecProduct->public_flg = $ecProduct->public_flg == 1 ? 0 : 1;
                         // 保存
                         $ecProduct->save();
+                        // メッセージ設定
+                        $result['message'] = '商品を' . ($request->public_flg == 1 ? '非公開' : '公開') . '設定にしました。商品名： ' . $valid_data->name;
+                        // ステータス設定
+                        $result['status'] = true;
                     } catch (\Exception $e) {
+                        // メッセージ設定
+                        $result['message'] = '商品の' . ($request->public_flg == 1 ? '非公開' : '公開') . '設定に失敗しました。商品名： ' . $valid_data->name;
+                        // ステータス設定
+                        $result['status'] = false;
                         // ログ出力
-                        Log::error('商品の' . ($request->public_flg == 1 ? '非公開' : '公開') . '設定に失敗しました。');
+                        Log::error($result['message']);
                         Log::error('商品ID： ' . $request->id . ' 商品名： ' . $valid_data->name);
                         Log::error($e);
-                        // メッセージ設定
-                        $message = '商品の' . ($request->public_flg == 1 ? '非公開' : '公開') . '設定に失敗しました。商品名： ' . $valid_data->name;
-                        // リターン
-                        return $message;
                     }
+                } else {
                     // メッセージ設定
-                    $message = '商品を' . ($request->public_flg == 1 ? '非公開' : '公開') . '設定にしました。商品名： ' . $valid_data->name;
-                    // リターン
-                    return $message;
-                });
+                    $result['message'] = '商品が見つかりません。';
+                    // ステータス設定
+                    $result['status'] = false;
+                    // ログ出力
+                    Log::error($result['message']);
+                    Log::error('商品ID： ' . $request->id . ' ／ 商品名： ' . $valid_data->name);
+                }
                 break;
             case $request->has('update'):
-                // 商品情報更新
-                $message = DB::transaction(function () use ($request, $valid_data) {
+                if ($ecProduct) {
+                    // メッセージ設定
+                    $result['message'] = '商品が見つかりません。';
+                    // ステータス設定
+                    $result['status'] = false;
+                    // ログ出力
+                    Log::error($result['message']);
+                    Log::error('商品ID： ' . $request->id . ' 商品名： ' . $valid_data->name);
+                } else {
+                    // 商品情報更新
                     try {
-                        // 商品レコード取得
-                        $ecProduct = EcProduct::find($request->id);
                         // 商品設定
                         $ecProduct->name = $valid_data->name;
                         $ecProduct->qty = $valid_data->qty;
@@ -112,25 +136,31 @@ class EcProductController extends Controller
                         }
                         // 保存
                         $ecProduct->save();
-                    } catch (\Exception $e) {
-                        // ログ出力
-                        Log::error('商品情報の更新に失敗しました。');
-                        Log::error('商品ID： ' . $request->id . ' ／ 商品名： ' . $valid_data->name);
-                        Log::error($e);
                         // メッセージ設定
-                        $message = '商品情報の更新に失敗しました。商品ID： ' . $request->id . ' ／ 商品名： ' . $valid_data->name;
-                        // リターン
-                        return $message;
+                        $result['message'] = '商品情報を更新しました。商品ID： ' . $request->id . ' ／ 商品名： ' . $valid_data->name;
+                        // ステータス設定
+                        $result['status'] = true;
+                    } catch (\Exception $e) {
+                        // メッセージ設定
+                        $result['message'] = '商品情報の更新に失敗しました。';
+                        // ステータス設定
+                        $result['status'] = false;
+                        // ログ出力
+                        Log::error($result['message']);
+                        Log::error('商品ID： ' . $request->id . ' 商品名： ' . $valid_data->name);
+                        Log::error($e);
                     }
-                    // メッセージ設定
-                    $message = '商品情報を更新しました。商品ID： ' . $request->id . ' ／ 商品名： ' . $valid_data->name;
-                    // リターン
-                    return $message;
-                });
+                }
                 break;
         }
-        //
-        return redirect(url(null, null, app()->isProduction())->previous())
-            ->with('message', $message);
+        // リダイレクト
+        if ($result['status']) {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->withInput($request->except('password'))
+                ->with('message', $result['message']);
+        }
     }
 }

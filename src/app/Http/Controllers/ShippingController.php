@@ -35,18 +35,17 @@ class ShippingController extends Controller
         );
     }
 
-    public function store(EcAddressRequest $request)
+    public function store(Request $request)
     {
-        try {
-            DB::transaction(function () use ($request) {
-                // カートID取得
-                $cart_id = Auth::user()->cart_id;
-                // カート情報取得
-                $cart = EcCart::find($cart_id);
+        // トランザクション開始
+        $result = DB::transaction(function () use ($request) {
+            try {
                 // カート情報更新
-                if ($request->id == 0) {
+                if ($request->id === '0') {
                     // 検証済データ取得
-                    $valid_data = $request->safe();
+                    $ecAddressRequest = new EcAddressRequest();
+                    $ecAddressRequestRules = $ecAddressRequest->rules();
+                    $valid_data = $request->validate($ecAddressRequestRules);
                     // 配送先情報生成
                     $ecAddress = new EcAddress();
                     // 配送先情報登録
@@ -59,28 +58,39 @@ class ShippingController extends Controller
                     $ecAddress->save();
                     // 配送先ID設定
                     $id = $ecAddress->id;
+                    // メッセージ設定
+                    $result['message'] = '配送先情報を登録しました。';
                 } else {
                     $id = $request->id;
+                    // メッセージ設定
+                    $result['message'] = '';
                 }
                 // カート情報更新
+                $cart = EcCart::find(Auth::user()->cart_id);
                 $cart->address_id = $id;
                 $cart->save();
-                // コミット
-                DB::commit();
-            });
-        } catch (\Exception $e) {
-            // ロールバック
-            DB::rollBack();
-            // ログ出力
-            Log::error('配送先情報の登録に失敗しました。');
-            Log::error($e);
-            // メッセージ設定
-            $message = '配送先情報の登録に失敗しました。';
-            // リダイレクト
-            return redirect(url(null, null, app()->isProduction())->previous())
-                ->with('message', $message);
-        }
+                // ステータス設定
+                $result['status'] = true;
+            } catch (\Exception $e) {
+                // メッセージ設定
+                $result['message'] = '配送先情報の登録に失敗しました。';
+                // ステータス設定
+                $result['status'] = false;
+                // ログ出力
+                Log::error($result['message']);
+                Log::error($e);
+            }
+            // リターン
+            return $result;
+        });
         // リダイレクト
-        return redirect(url('confirm', null, app()->isProduction()));
+        if ($result['status']) {
+            return redirect(url('confirm', null, app()->isProduction()))
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url('shipping', null, app()->isProduction()))
+                ->withInput($request->except('password'))
+                ->with('message', $result['message']);
+        }
     }
 }

@@ -18,7 +18,7 @@ class MyAddressController extends Controller
         $ecPrefs = EcPref::query()
             ->orderBy('code', 'asc')
             ->get();
-        // 宛先情報取得
+        // 配送先情報取得
         $ecAddresses = EcAddress::query()
             ->where('user_id', '=', Auth::id())
             ->orderBy('id', 'asc')
@@ -37,94 +37,131 @@ class MyAddressController extends Controller
     {
         // 検証済みデータ
         $valid_data = $request->safe();
-        // 宛先生成
-        $ecAddress = new EcAddress();
+        // DB処理
         try {
-            // 宛先設定
+            // 配送先生成
+            $ecAddress = new EcAddress();
+            // 配送先設定
             $ecAddress->user_id = Auth::id();
             $ecAddress->name = $valid_data['name'];
             $ecAddress->zip = $valid_data['zip'];
             $ecAddress->pref = $valid_data['pref'];
             $ecAddress->address1 = mb_convert_kana($valid_data['address1'], 'ASKV');
             $ecAddress->address2 = mb_convert_kana($valid_data['address2'], 'ASKV');
-            // 宛先登録
+            // 配送先登録
             $ecAddress->save();
             // メッセージ設定
-            $message = '宛先の登録を完了しました。';
+            $result['message'] = '配送先の登録を完了しました。';
+            // ステータス設定
+            $result['status'] = true;
         } catch (\Exception $e) {
-            // ログ出力
-            Log::error('宛先の登録に失敗しました。');
-            Log::error($e);
             // メッセージ設定
-            $message = '宛先の登録に失敗しました。';
+            $result['message'] = '配送先の登録に失敗しました。';
+            // ステータス設定
+            $result['status'] = false;
+            // ログ出力
+            Log::error($result['message']);
+            Log::error($e);
         }
         // リダイレクト
-        return redirect(url(null, null, app()->isProduction())->previous())
-            ->with('message', $message);
+        if ($result['status']) {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->withInput($request->except('password'))
+                ->with('message', $result['message']);
+        }
     }
 
     public function update(EcAddressRequest $request)
     {
         // 検証済みデータ
         $valid_data = $request->safe();
-        // 宛先取得
+        // 配送先取得
         $ecAddress = EcAddress::find($request->id);
         // 更新処理
         if ($ecAddress) {
+            // メッセージ設定
+            $result['message'] = '配送先が見つかりません。';
+            // ステータス設定
+            $result['status'] = false;
+            // ログ出力
+            Log::error($result['message']);
+            Log::error('配送先ID： ' . $request->id);
+        } else {
             try {
-                // 宛先設定
+                // 配送先設定
                 $ecAddress->user_id = Auth::id();
                 $ecAddress->name = $valid_data['name'];
                 $ecAddress->zip = $valid_data['zip'];
                 $ecAddress->pref = $valid_data['pref'];
                 $ecAddress->address1 = mb_convert_kana($valid_data['address1'], 'ASKV');
                 $ecAddress->address2 = mb_convert_kana($valid_data['address2'], 'ASKV');
-                // 宛先更新
+                // 配送先更新
                 $ecAddress->save();
                 // メッセージ設定
-                $message = '宛先の更新を完了しました。';
+                $result['message'] = '配送先の更新を完了しました。';
+                // ステータス設定
+                $result['status'] = true;
             } catch (\Exception $e) {
-                // ログ出力
-                Log::error('宛先の更新に失敗しました。');
-                Log::error($e);
                 // メッセージ設定
-                $message = '宛先の更新に失敗しました。';
+                $result['message'] = '配送先の更新に失敗しました。';
+                // ステータス設定
+                $result['status'] = false;
+                // ログ出力
+                Log::error($result['message']);
+                Log::error('配送先ID： ' . $request->id);
+                Log::error($e);
             }
-        } else {
-            // メッセージ設定
-            $message = '宛先が見つかりません。';
         }
         // リダイレクト
-        return redirect(url(null, null, app()->isProduction())->previous())
-            ->with('message', $message);
+        if ($result['status']) {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->withInput($request->except('password'))
+                ->with('message', $result['message']);
+        }
     }
 
     public function destroy(Request $request)
     {
         // リクエストデータ取得
         $id = $request->id;
-        // 宛先取得
+        // 配送先取得
         $ecAddress = EcAddress::find($id);
         // 削除処理
         if ($ecAddress) {
+            // メッセージ設定
+            $result['message'] = '配送先が見つかりません。';
+            // ステータス設定
+            $result['status'] = false;
+            // ログ出力
+            Log::error($result['message']);
+            Log::error('配送先ID： ' . $request->id);
+        } else {
             try {
-                // 宛先削除
+                // 配送先削除
                 $ecAddress->delete();
                 // メッセージ設定
-                $message = '宛先の削除を完了しました。';
+                $result['message'] = '配送先の削除を完了しました。';
+                // ステータス設定
+                $result['status'] = true;
             } catch (\Exception $e) {
-                // ログ出力
-                Log::error('宛先の削除に失敗しました。');
-                Log::error($e);
                 // メッセージ設定
-                $message = '宛先の削除に失敗しました。';
+                $result['message'] = '配送先の削除に失敗しました。';
+                // ステータス設定
+                $result['status'] = false;
+                // ログ出力
+                Log::error($result['message']);
+                Log::error('配送先ID： ' . $request->id);
+                Log::error($e);
             }
-        } else {
-            // メッセージ設定
-            $message = '宛先が見つかりません。';
         }
         // リダイレクト
         return redirect(url(null, null, app()->isProduction())->previous())
-            ->with('message', $message);
+            ->with('message', $result['message']);
     }
 }

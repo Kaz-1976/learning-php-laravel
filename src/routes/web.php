@@ -53,6 +53,7 @@ Route::middleware([\App\Http\Middleware\CheckNormal::class])->group(function () 
 
         // 個人情報ページ
         Route::get('profile', [MyProfileController::class, 'index'])->name('profile.index');
+        Route::post('profile/update', [MyProfileController::class, 'update'])->name('profile.update');
 
         // 宛先情報ページ
         Route::get('address', [MyAddressController::class, 'index'])->name('address.index');

@@ -15,12 +15,12 @@
         </div>
         <div class="flex flex-row flex-wrap border-b-2 border-t-2 border-sky-950 py-2 dark:border-sky-50">
             @foreach ($ecProducts as $ecProduct)
-                <form class="flex w-full flex-col gap-1 p-1 sm:w-1/2 md:w-1/3 lg:w-1/4" id="item-{{ $ecProduct->id }}"
+                <form class="flex w-full flex-col gap-2 p-1 sm:w-1/2 md:w-1/3 lg:w-1/4" id="item-{{ $ecProduct->id }}"
                     action="{{ url('cart/store', null, app()->isProduction()) }}" method="POST">
                     @csrf
                     <input name="id" type="hidden" value="{{ $ecProduct->id }}">
                     <input name="name" type="hidden" value="{{ $ecProduct->name }}">
-                    <div class="flex w-full flex-row rounded-lg bg-sky-200 p-1 dark:bg-sky-700">
+                    <div class="flex w-full basis-12 flex-row rounded-lg bg-sky-200 p-1 dark:bg-sky-700">
                         <p class="m-auto flex text-center text-xl font-bold text-sky-950 dark:text-sky-50">
                             {{ $ecProduct->name }}
                         </p>
@@ -62,13 +62,13 @@
                     </div>
                     <div class="flex">
                         @if ($ecProduct->qty == 0)
-                            <x-primary-button class="inline-flex h-8 basis-full flex-row justify-center gap-2"
+                            <x-primary-button class="inline-flex h-12 basis-full flex-row justify-center gap-2"
                                 name="update" title="在庫切れ" :value="$ecProduct->id" disabled>
                                 <i class="fa-solid fa-minus m-auto"></i>
                                 <span class="flex text-sm font-bold">在庫切れ</span>
                             </x-primary-button>
                         @else
-                            <x-primary-button class="inline-flex h-8 basis-full flex-row justify-center gap-2"
+                            <x-primary-button class="inline-flex h-12 basis-full flex-row justify-center gap-2"
                                 name="update" title="カートに入れる" :value="$ecProduct->id">
                                 <i class="fa-solid fa-cart-arrow-down fa-2xl flex"></i>
                                 <span class="flex text-sm font-bold">カートに入れる</span>

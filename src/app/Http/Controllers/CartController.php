@@ -56,7 +56,7 @@ class CartController extends Controller
         $order = $request->safe();
         // トランザクション
         try {
-            DB::transaction(function () use ($order, $request) {
+            $result = DB::transaction(function () use ($order, $request) {
                 // カートID取得
                 if (empty(Auth::user()->cart_id)) {
                     // カートを生成する
@@ -92,22 +92,31 @@ class CartController extends Controller
                 $ecCartDetail->cart_id = $ecCartId;
                 $ecCartDetail->product_id = $request->id;
                 $ecCartDetail->save();
-                // コミット
-                DB::commit();
+                // メッセージ設定
+                $result['message'] = '商品をカートに登録しました。 商品名： ' . $request->name . '　数量： ' . $order->order_qty . '点';
+                // ステータス設定
+                $result['status'] = true;
+                // リターン
+                return $result;
             });
         } catch (\Exception $e) {
-            // ロールバック
-            DB::rollBack();
+            // メッセージ設定
+            $result['message'] = '商品のカートへの登録に失敗しました。';
+            // ステータス設定
+            $result['status'] = false;
             // ログ出力
-            Log::error("商品のカートへの登録に失敗しました。");
+            Log::error($result['message']);
             Log::error($e);
-            //
-            return redirect(url(null, null, app()->isProduction())->previous())
-                ->with('message', '商品のカートへの登録に失敗しました。');
         }
         // リダイレクト
-        return redirect(url(null, null, app()->isProduction())->previous())
-            ->with('message', '商品をカートに登録しました。 商品名： ' . $request->name . '　数量： ' . $order->order_qty . '点');
+        if ($result['status']) {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url(null, null, app()->isProduction())->previous())
+                ->withInput($request->except('password'))
+                ->with('message', $result['message']);
+        }
     }
 
     public function update(EcCartDetailUpdateRequest $request)
@@ -118,37 +127,109 @@ class CartController extends Controller
         $id = $request->id;
         // 明細レコード取得
         $ecCartDetail = EcCartDetail::find($id);
-        // 明細レコード更新
-        $ecCartDetail->price = $request->price;
-        $ecCartDetail->qty = $valid_data->qty;
-        $ecCartDetail->save();
-        //
-        return redirect(url('cart', null, app()->isProduction()))
-            ->with('message', '商品名： ' . $request->name . ' の注文数量を更新しました。');
+        // DB処理
+        if (empty($ecCartDetail)) {
+            // メッセージ設定
+            $result['message'] = 'カートに商品が見つかりません。商品名： ' . $request->name;
+            // ステータス設定
+            $result['status'] = false;
+            // ログ出力
+            Log::error($result['message']);
+        } else {
+            try {
+                // 明細レコード更新
+                $ecCartDetail->price = $request->price;
+                $ecCartDetail->qty = $valid_data->qty;
+                $ecCartDetail->save();
+                // メッセージ設定
+                $result['message'] = ' 注文数量を更新しました。商品名： ' . $request->name . ' ／ 数量： ' . $valid_data->qty;
+                // ステータス設定
+                $result['status'] = true;
+            } catch (\Exception $e) {
+                // メッセージ設定
+                $result['message'] = '商品の注文数量の更新に失敗しました。';
+                // ステータス設定
+                $result['status'] = false;
+                // ログ出力
+                Log::error('商品の注文数量の更新に失敗しました。');
+                Log::error($e);
+            }
+        }
+        // リダイレクト
+        if ($result['status']) {
+            return redirect(url('cart', null, app()->isProduction()))
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url('cart', null, app()->isProduction()))
+                ->withInput($request->except('password'))
+                ->with('message', $result['message']);
+        }
     }
 
     public function delete(Request $request)
     {
         // 明細ID
         $id = $request->id;
-        // 明細レコード取得
-        EcCartDetail::find($id)
-            ->delete();
-        //
-        return redirect(url('cart', null, app()->isProduction()))
-            ->with('message', '商品名： ' . $request->name . ' をカートから削除しました。');
+        // DB処理
+        try {
+            // 明細レコード取得
+            EcCartDetail::find($id)
+                ->delete();
+            // メッセージ設定
+            $result['message'] = '商品をカートから削除しました。商品名： ' . $request->name;
+            // ステータス設定
+            $result['status'] = true;
+        } catch (\Exception $e) {
+            // メッセージ設定
+            $result['message'] = '商品をカートから削除に失敗しました。';
+            // ステータス設定
+            $result['status'] = false;
+            // ログ出力
+            Log::error($result['message']);
+            Log::error($e);
+        }
+        // リダイレクト
+        if ($result['status']) {
+            return redirect(url('cart', null, app()->isProduction()))
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url('cart', null, app()->isProduction()))
+                ->withInput($request->except('password'))
+                ->with('message', $result['message']);
+        }
     }
 
     public function clear(Request $request)
     {
         // カートID
         $id = Auth::user()->cart_id;
-        // カートIDに紐付くカート明細レコード削除
-        EcCartDetail::query()
-            ->where('cart_id', $id)
-            ->delete();
-        //
-        return redirect(url('cart', null, app()->isProduction()))
-            ->with('message', 'ショッピングカートを空にしました。');
+        // DB処理
+        try {
+            // カートIDに紐付くカート明細レコード削除
+            EcCartDetail::query()
+                ->where('cart_id', $id)
+                ->delete();
+            // メッセージ設定
+            $result['message'] = 'ショッピングカートを空にしました。';
+            // ステータス設定
+            $result['status'] = true;
+        } catch (\Exception $e) {
+            // メッセージ設定
+            $result['message'] = 'ショッピングカートを空にすることができませんでした。';
+            // ステータス設定
+            $result['status'] = false;
+            // ログ出力
+            Log::error($result['message']);
+            Log::error($e);
+        }
+        // リダイレクト
+        if ($result['status']) {
+            return redirect(url('cart', null, app()->isProduction()))
+                ->with('message', $result['message']);
+        } else {
+            return redirect(url('cart', null, app()->isProduction()))
+                ->withInput($request->except('password'))
+                ->with('message', $result['message']);
+        }
     }
 }

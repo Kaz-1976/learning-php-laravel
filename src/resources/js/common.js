@@ -86,21 +86,25 @@ export const setShippingForm = event => {
             // フォーム設定：配送先名
             innerDiv = form.querySelector('input[name="name"]').parentElement.closest('div');
             outerDiv = innerDiv.parentElement ? innerDiv.parentElement.closest('div') : null;
-            outerDiv.classList.remove('hidden');
-            outerDiv.classList.add('flex');
+            if (outerDiv) {
+                outerDiv.classList.remove('hidden');
+                outerDiv.classList.add('flex');
+            }
             form.querySelector('input[name="name"]').value = '';
             form.querySelector('input[name="name"]').removeAttribute('disabled');
             form.querySelector('input[name="name"]').removeAttribute('readonly');
+            form.querySelector('input[name="name"]').setAttribute('required', true);
+            form.querySelector('input[name="name"]').focus();
             // フォーム設定：郵便番号
-            form.querySelector('input[name="zip"]').closest('div').style.display = 'flex';
-            form.querySelector('input[name="zip"]').closest('div').setAttribute('width', '30%');
+            form.querySelector('input[name="zip"]').parentElement.closest('div').classList.remove('w-full');
+            form.querySelector('input[name="zip"]').parentElement.closest('div').classList.add('w-3/10');
             form.querySelector('input[name="zip"]').value = '';
             form.querySelector('input[name="zip"]').removeAttribute('disabled');
             form.querySelector('input[name="zip"]').removeAttribute('readonly');
+            form.querySelector('input[name="zip"]').setAttribute('required', true);
             // フォーム設定：住所検索ボタン
-            div = form.querySelector('button[name="search"]').parentElement.closest('div');
-            div.classList.remove('hidden');
-            div.classList.add('flex');
+            form.querySelector('button[name="search"]').parentElement.closest('div').classList.remove('hidden');
+            form.querySelector('button[name="search"]').parentElement.closest('div').classList.add('flex');
             // フォーム設定：都道府県（表示）
             form.querySelector('input[name="pref"]').classList.remove('flex');
             form.querySelector('input[name="pref"]').classList.add('hidden');
@@ -110,12 +114,15 @@ export const setShippingForm = event => {
             // フォーム設定：都道府県（リスト）
             form.querySelector('select[name="pref"]').classList.remove('hidden');
             form.querySelector('select[name="pref"]').classList.add('flex');
+            form.querySelector('select[name="pref"]').value = '';
             form.querySelector('select[name="pref"]').removeAttribute('disabled');
             form.querySelector('select[name="pref"]').removeAttribute('readonly');
+            form.querySelector('select[name="pref"]').setAttribute('required', true);
             // フォーム設定：住所１
             form.querySelector('input[name="address1"]').value = '';
             form.querySelector('input[name="address1"]').removeAttribute('disabled');
             form.querySelector('input[name="address1"]').removeAttribute('readonly');
+            form.querySelector('input[name="address1"]').setAttribute('required', true);
             // フォーム設定：住所２
             form.querySelector('input[name="address2"]').value = '';
             form.querySelector('input[name="address2"]').removeAttribute('disabled');
@@ -125,32 +132,45 @@ export const setShippingForm = event => {
             // フォーム設定：配送先名
             innerDiv = form.querySelector('input[name="name"]').parentElement.closest('div');
             outerDiv = innerDiv.parentElement ? innerDiv.parentElement.closest('div') : null;
-            outerDiv.classList.remove('flex');
-            outerDiv.classList.add('hidden');
+            if (outerDiv) {
+                outerDiv.classList.remove('flex');
+                outerDiv.classList.add('hidden');
+            }
+            form.querySelector('input[name="name"]').value = '';
+            form.querySelector('input[name="name"]').removeAttribute('required');
             form.querySelector('input[name="name"]').setAttribute('disabled', true);
             form.querySelector('input[name="name"]').setAttribute('readonly', true);
             // フォーム設定：郵便番号
+            form.querySelector('input[name="zip"]').parentElement.closest('div').classList.remove('w-3/10');
+            form.querySelector('input[name="zip"]').parentElement.closest('div').classList.add('w-full');
+            form.querySelector('input[name="zip"]').value = '';
+            form.querySelector('input[name="zip"]').removeAttribute('required');
             form.querySelector('input[name="zip"]').setAttribute('disabled', true);
             form.querySelector('input[name="zip"]').setAttribute('readonly', true);
-            form.querySelector('input[name="zip"]').setAttribute('width', '100%');
             // フォーム設定：住所検索ボタン
-            div = form.querySelector('button[name="search"]').parentElement.closest('div');
-            div.classList.remove('flex');
-            div.classList.add('hidden');
+            form.querySelector('button[name="search"]').parentElement.closest('div').classList.remove('flex');
+            form.querySelector('button[name="search"]').parentElement.closest('div').classList.add('hidden');
             // フォーム設定：都道府県（表示）
             form.querySelector('input[name="pref"]').classList.remove('hidden');
             form.querySelector('input[name="pref"]').classList.add('flex');
+            form.querySelector('input[name="pref"]').value = '';
+            form.querySelector('input[name="pref"]').removeAttribute('required');
             form.querySelector('input[name="pref"]').setAttribute('disabled', true);
             form.querySelector('input[name="pref"]').setAttribute('readonly', true);
             // フォーム設定：都道府県（リスト）
             form.querySelector('select[name="pref"]').classList.remove('flex');
             form.querySelector('select[name="pref"]').classList.add('hidden');
+            form.querySelector('select[name="pref"]').value = '';
+            form.querySelector('select[name="pref"]').removeAttribute('required');
             form.querySelector('select[name="pref"]').setAttribute('disabled', true);
             form.querySelector('select[name="pref"]').setAttribute('readonly', true);
             // フォーム設定：住所１
+            form.querySelector('input[name="address1"]').value = '';
+            form.querySelector('input[name="address1"]').removeAttribute('required');
             form.querySelector('input[name="address1"]').setAttribute('disabled', true);
             form.querySelector('input[name="address1"]').setAttribute('readonly', true);
             // フォーム設定：住所２
+            form.querySelector('input[name="address2"]').value = '';
             form.querySelector('input[name="address2"]').setAttribute('disabled', true);
             form.querySelector('input[name="address2"]').setAttribute('readonly', true);
             break;
