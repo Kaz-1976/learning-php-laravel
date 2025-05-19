@@ -29,14 +29,6 @@ class MyProfileController extends Controller
         // ユーザーレコード取得
         $ecUser = EcUser::find(Auth::id());
         if ($ecUser) {
-            // メッセージ設定
-            $result['message'] = 'ユーザーが見つかりません。';
-            // ステータス設定
-            $result['status'] = false;
-            // ログ出力
-            Log::error($result['message']);
-            Log::error('ユーザーID： ' . $ecUser->user_id);
-        } else {
             try {
                 // ユーザーレコード設定
                 $ecUser->user_name = $valid_data->user_id;
@@ -63,6 +55,14 @@ class MyProfileController extends Controller
                 Log::error('ユーザーID： ' . $ecUser->user_id);
                 Log::error($e);
             }
+        } else {
+            // メッセージ設定
+            $result['message'] = 'ユーザーが見つかりません。';
+            // ステータス設定
+            $result['status'] = false;
+            // ログ出力
+            Log::error($result['message']);
+            Log::error('ユーザーID： ' . $ecUser->user_id);
         }
         // セッションID再生成有効
         $request->session()->regenerate(true);

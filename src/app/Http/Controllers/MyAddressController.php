@@ -128,20 +128,10 @@ class MyAddressController extends Controller
 
     public function destroy(Request $request)
     {
-        // リクエストデータ取得
-        $id = $request->id;
         // 配送先取得
-        $ecAddress = EcAddress::find($id);
+        $ecAddress = EcAddress::find($request->id);
         // 削除処理
         if ($ecAddress) {
-            // メッセージ設定
-            $result['message'] = '配送先が見つかりません。';
-            // ステータス設定
-            $result['status'] = false;
-            // ログ出力
-            Log::error($result['message']);
-            Log::error('配送先ID： ' . $request->id);
-        } else {
             try {
                 // 配送先削除
                 $ecAddress->delete();
@@ -159,6 +149,14 @@ class MyAddressController extends Controller
                 Log::error('配送先ID： ' . $request->id);
                 Log::error($e);
             }
+        } else {
+            // メッセージ設定
+            $result['message'] = '配送先が見つかりません。';
+            // ステータス設定
+            $result['status'] = false;
+            // ログ出力
+            Log::error($result['message']);
+            Log::error('配送先ID： ' . $request->id);
         }
         // リダイレクト
         return redirect(url(null, null, app()->isProduction())->previous())
