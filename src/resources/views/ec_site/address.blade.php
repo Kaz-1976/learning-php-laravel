@@ -137,7 +137,7 @@
                                         @endif
                                     </div>
                                     <div class="flex basis-1/2 justify-stretch">
-                                        <x-secondary-button class="h-full w-full" name="search" type="submit">
+                                        <x-secondary-button class="h-full w-full" name="search">
                                             <span
                                                 class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('住所検索') }}</span>
                                         </x-secondary-button>
