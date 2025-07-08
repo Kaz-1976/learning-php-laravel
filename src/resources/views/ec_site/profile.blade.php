@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 {{-- ページタイトル --}}
-@section('pagetitle', '登録情報')
+@section('pagetitle', '個人情報')
 
 {{-- ページメニュー --}}
 @section('menu')
@@ -76,12 +76,12 @@
                 <div class="flex h-auto basis-full flex-row gap-2">
                     <div class="my-auto flex basis-1/2 flex-row">
                         <x-secondary-button class="flex basis-full" name="reset" type='reset' :value="1">
-                            <span class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('リセット') }}</span>
+                            <span class="m-auto flex text-center text-base font-bold">{{ __('リセット') }}</span>
                         </x-secondary-button>
                     </div>
                     <div class="my-auto flex basis-1/2 flex-row">
                         <x-primary-button class="flex basis-full" name="register" form="register" :value="1">
-                            <span class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('更新') }}</span>
+                            <span class="m-auto flex text-center text-base font-bold">{{ __('更新') }}</span>
                         </x-primary-button>
                     </div>
                 </div>

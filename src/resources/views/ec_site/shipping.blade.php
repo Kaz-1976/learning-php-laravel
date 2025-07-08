@@ -37,7 +37,7 @@
                 </div>
                 <div class="my-auto flex flex-row md:basis-1/2">
                     <x-primary-button class="flex basis-full" name="select" form="select" :value="0">
-                        <span class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('決定') }}</span>
+                        <span class="m-auto flex text-center text-base font-bold">{{ __('決定') }}</span>
                     </x-primary-button>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="hidden basis-1/2 flex-col justify-stretch">
                         <x-secondary-button class="h-full w-full basis-full" name="search">
-                            <span class="md:text-md m-auto flex text-center text-sm font-bold">{{ __('住所検索') }}</span>
+                            <span class="m-auto flex text-center text-base font-bold">{{ __('住所検索') }}</span>
                         </x-secondary-button>
                     </div>
                 </div>

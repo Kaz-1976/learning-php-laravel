@@ -84,25 +84,23 @@
                         <div class="my-auto flex basis-1/2 flex-row">
                             <x-text-input class="h-8 w-8" id="register-enable" name="enable_flg" type="checkbox"
                                 autofocus />
-                            <x-input-label class="my-auto flex pl-2" for="register-enable" :value="__('有効')" />
+                            <x-input-label class="my-auto flex pl-2 text-base" for="register-enable" :value="__('有効')" />
                         </div>
                         <div class="my-auto flex basis-1/2 flex-row">
                             <x-text-input class="h-8 w-8" id="register-admin" name="admin_flg" type="checkbox" autofocus />
-                            <x-input-label class="my-auto flex pl-2" for="register-admin" :value="__('管理者')" />
+                            <x-input-label class="my-auto flex pl-2 text-base" for="register-admin" :value="__('管理者')" />
                         </div>
                     </x-card-box>
                     {{-- ボタン --}}
                     <x-card-box class="h-12 md:h-auto md:basis-2/3" :direction="'row'">
                         <div class="my-auto flex basis-1/2 flex-row">
                             <x-secondary-button class="flex basis-full" name="reset" type='reset' :value="1">
-                                <span
-                                    class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('リセット') }}</span>
+                                <span class="m-auto flex text-center text-base font-bold">{{ __('リセット') }}</span>
                             </x-secondary-button>
                         </div>
                         <div class="my-auto flex basis-1/2 flex-row">
                             <x-primary-button class="flex basis-full" name="register" form="register" :value="1">
-                                <span
-                                    class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('Register') }}</span>
+                                <span class="m-auto flex text-center text-base font-bold">{{ __('Register') }}</span>
                             </x-primary-button>
                         </div>
                     </x-card-box>
@@ -195,7 +193,7 @@
                                     <div class="flex h-12 basis-1/2 md:h-auto md:basis-full">
                                         <x-secondary-button class="w-full" name="reset" type="reset">
                                             <span
-                                                class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('リセット') }}</span>
+                                                class="m-auto flex text-center text-base font-bold">{{ __('リセット') }}</span>
                                         </x-secondary-button>
                                     </div>
                                 </div>
@@ -205,7 +203,7 @@
                                             <x-secondary-button class="w-full" name="admin" type="submit"
                                                 :value="$ecUser->id">
                                                 <span
-                                                    class="m-auto flex text-center text-base font-bold md:text-xl">{{ __($ecUser->admin_flg ? '一般' : '管理者') }}</span>
+                                                    class="m-auto flex text-center text-base font-bold">{{ __($ecUser->admin_flg ? '一般' : '管理者') }}</span>
                                             </x-secondary-button>
                                         @endif
                                     </div>
@@ -214,7 +212,7 @@
                                             <x-secondary-button class="w-full" name="enable" type="submit"
                                                 :value="$ecUser->id">
                                                 <span
-                                                    class="m-auto flex text-center text-base font-bold md:text-xl">{{ __($ecUser->enable_flg ? '無効' : '有効') }}</span>
+                                                    class="m-auto flex text-center text-base font-bold">{{ __($ecUser->enable_flg ? '無効' : '有効') }}</span>
                                             </x-secondary-button>
                                         @endif
                                     </div>

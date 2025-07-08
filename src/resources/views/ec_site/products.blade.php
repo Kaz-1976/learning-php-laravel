@@ -76,24 +76,24 @@
                         {{-- 操作ボックス --}}
                         <x-card-box :direction="'row'">
                             {{-- チェック --}}
-                            <x-card-item class="my-auto flex basis-1/5 md:basis-1/3" :direction="'row'">
+                            <x-card-item class="my-auto flex basis-1/3" :direction="'row'">
                                 <x-text-input class="h-8 w-8" id="register-public" name="public_flg" type="checkbox"
                                     :value="old('public_flg')" autofocus />
-                                <x-input-label class="text-md my-auto flex pl-2" for="register-public" :value="__('公開')" />
+                                <x-input-label class="my-auto flex pl-2 text-base" for="register-public"
+                                    :value="__('公開')" />
                             </x-card-item>
                             {{-- ボタン --}}
-                            <x-card-box class="basis-4/5 md:basis-2/3" :direction="'row-reverse'">
+                            <x-card-box class="basis-2/3" :direction="'row-reverse'">
                                 <x-card-item class="my-auto flex basis-1/2" :direction="'row'">
                                     <x-primary-button class="flex basis-full" name="register" :value="1">
                                         <span
-                                            class="md:text-md m-auto flex text-center text-xs font-bold">{{ __('Register') }}</span>
+                                            class="m-auto flex text-center text-base font-bold">{{ __('Register') }}</span>
                                     </x-primary-button>
                                 </x-card-item>
                                 <x-card-item class="my-auto flex basis-1/2" :direction="'row'">
                                     <x-secondary-button class="flex basis-full" name="reset" type='reset'
                                         :value="1">
-                                        <span
-                                            class="md:text-md m-auto flex text-center text-xs font-bold">{{ __('リセット') }}</span>
+                                        <span class="m-auto flex text-center text-base font-bold">{{ __('リセット') }}</span>
                                     </x-secondary-button>
                                 </x-card-item>
                             </x-card-box>
@@ -177,14 +177,14 @@
                                             id="update-{{ $ecProduct->id }}-btn-submit" name="update"
                                             form="update-{{ $ecProduct->id }}" :value="$ecProduct->id">
                                             <span
-                                                class="md:text-md m-auto flex text-center text-xs font-bold">{{ __('更新') }}</span>
+                                                class="m-auto flex text-center text-base font-bold">{{ __('更新') }}</span>
                                         </x-primary-button>
                                     </x-card-item>
                                     <x-card-item class="flex basis-1/3">
                                         <x-secondary-button class="flex basis-full"
                                             id="update-{{ $ecProduct->id }}-btn-reset" name="reset" type="reset">
                                             <span
-                                                class="md:text-md m-auto flex text-center text-xs font-bold">{{ __('リセット') }}</span>
+                                                class="m-auto flex text-center text-base font-bold">{{ __('リセット') }}</span>
                                         </x-secondary-button>
                                     </x-card-item>
                                     <x-card-item class="flex basis-1/3">
@@ -192,7 +192,7 @@
                                             id="update-{{ $ecProduct->id }}-btn-public" name="public" type="submit"
                                             :value="$ecProduct->id">
                                             <span
-                                                class="md:text-md m-auto flex text-center text-xs font-bold">{{ __($ecProduct->public_flg ? '非公開' : '公開') }}</span>
+                                                class="m-auto flex text-center text-base font-bold">{{ __($ecProduct->public_flg ? '非公開' : '公開') }}</span>
                                         </x-secondary-button>
                                     </x-card-item>
                                 </x-card-box>

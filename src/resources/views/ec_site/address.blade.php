@@ -45,7 +45,7 @@
                     </div>
                     <div class="flex basis-1/2 justify-stretch">
                         <x-secondary-button class="h-full w-full" id="register-get-address" name="search">
-                            <span class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('住所検索') }}</span>
+                            <span class="m-auto flex text-center text-base font-bold">{{ __('住所検索') }}</span>
                         </x-secondary-button>
                     </div>
                 </div>
@@ -87,12 +87,12 @@
                 <div class="flex flex-row-reverse justify-between gap-2">
                     <div class="my-auto flex basis-1/2 flex-row">
                         <x-primary-button class="flex basis-full" name="register" form="register" :value="0">
-                            <span class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('Register') }}</span>
+                            <span class="m-auto flex text-center text-base font-bold">{{ __('Register') }}</span>
                         </x-primary-button>
                     </div>
                     <div class="my-auto flex basis-1/2 flex-row">
                         <x-secondary-button class="flex basis-full" name="reset" type='reset' :value="0">
-                            <span class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('リセット') }}</span>
+                            <span class="m-auto flex text-center text-base font-bold">{{ __('リセット') }}</span>
                         </x-secondary-button>
                     </div>
                 </div>
