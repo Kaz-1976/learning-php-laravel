@@ -44,7 +44,7 @@
 
 ## 画面遷移図
 
-![画面遷移図](documents\画面遷移図.drawio.png)
+![画面遷移図](https://github.com/Kaz-1976/learning-php-laravel/blob/02e2d22f9dad74bc6f80e6aff34a1a02f7074ee4/documents/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3.drawio.png)
 
 ## 機能詳細
 
