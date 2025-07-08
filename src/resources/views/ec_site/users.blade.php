@@ -187,7 +187,7 @@
                                         <x-primary-button class="w-full" name="update"
                                             form="update-{{ $ecUser->id }}" :value="$ecUser->id">
                                             <span
-                                                class="m-auto flex text-center text-base font-bold md:text-xl">{{ __('更新') }}</span>
+                                                class="m-auto flex text-center text-base font-bold">{{ __('更新') }}</span>
                                         </x-primary-button>
                                     </div>
                                     <div class="flex h-12 basis-1/2 md:h-auto md:basis-full">
